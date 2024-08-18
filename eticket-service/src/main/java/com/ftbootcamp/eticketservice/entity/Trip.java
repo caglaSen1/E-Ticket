@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +21,9 @@ public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToMany(mappedBy = "trip")
+    private List<Ticket> tickets;
 
     @Column(name = TripEntityConstants.DEPARTURE_TIME, nullable = false)
     private LocalDateTime departureTime;
@@ -36,8 +40,8 @@ public class Trip {
     @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;
 
-    @Column(name = TripEntityConstants.AVAILABLE_SEATS, nullable = false)
-    private int availableSeats;
+    @Column(name = TripEntityConstants.CAPACITY, nullable = false)
+    private int capacity;
 
     @Column(name = TripEntityConstants.PRICE, nullable = false)
     private double price;

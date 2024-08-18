@@ -20,6 +20,8 @@ public class TripService {
     private final TripRepository tripRepository;
     private final TripBusinessRules tripBusinessRules;
 
+    // TODO: +createTrip(), +cancelTrip()
+
     public TripResponse create(TripCreateRequest tripCreateRequest) {
         // TODO: Add business rules
 

@@ -32,7 +32,7 @@ public class UserService {
     private final RoleBusinessRules roleBusinessRules;
     private final RoleService roleService;
 
-    // TODO: add update method
+    // TODO: add update method, viewPersonalInfo() - profile, updatePersonalInfo
 
     public UserDetailsResponse createUser(UserCreateRequest request) {
         userBusinessRules.checkEmailNull(request.getEmail());

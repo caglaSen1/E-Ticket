@@ -5,15 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97570bb4-01ce-4a61-8545-4b11f3273257" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/dto/request/TicketCreateRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/entity/Ticket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/repository/TicketRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/service/TicketService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticket-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/EticketServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/EticketServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticket-user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-user-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/EticketUserServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/EticketUserServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/converter/TripConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/converter/TripConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/dto/request/TripCreateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/dto/request/TripCreateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/dto/request/TripUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/dto/request/TripUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/dto/response/TripResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/dto/response/TripResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/entity/Trip.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/entity/Trip.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/entity/constant/TripEntityConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/entity/constant/TripEntityConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/entity/constant/UserEntityConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/entity/constant/TicketEntityConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/repository/TripRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/repository/TripRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/service/TripService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/service/TripService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/repository/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/repository/RoleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +118,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1723966364664</updated>
-      <workItem from="1723966365636" duration="7783000" />
+      <workItem from="1723966365636" duration="12000000" />
     </task>
     <servers />
   </component>
