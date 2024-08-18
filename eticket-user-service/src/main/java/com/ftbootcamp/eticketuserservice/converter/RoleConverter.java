@@ -25,7 +25,10 @@ public class RoleConverter {
     }
 
     public static Role toUpdatedRoleEntity(Role role, RoleUpdateRequest roleUpdateRequest) {
-        role.setName(roleUpdateRequest.getName().toUpperCase());
+        if(roleUpdateRequest.getName() != null){
+            role.setName(roleUpdateRequest.getName().toUpperCase());
+        }
+
         return role;
     }
 }

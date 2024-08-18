@@ -47,7 +47,7 @@ public class RoleController {
     @Operation(summary = "Delete role", description = "Delete role by id")
     public GenericResponse<String> deleteRole(@PathVariable Long id) {
         roleService.deleteRole(id);
-        return GenericResponse.success("Role deleted successfully", HttpStatus.OK);
+        return GenericResponse.success(null, HttpStatus.OK);
     }
 
 }

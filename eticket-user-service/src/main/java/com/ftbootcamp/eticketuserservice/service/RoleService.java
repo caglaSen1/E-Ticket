@@ -39,10 +39,9 @@ public class RoleService {
     }
 
     public RoleResponse updateRole(RoleUpdateRequest roleUpdateRequest) {
-        roleBusinessRules.checkRoleExistById(roleUpdateRequest.getId());
         roleBusinessRules.checkRoleAlreadyExistByName(roleUpdateRequest.getName());
 
-        Role roleToUpdate = roleRepository.findById(roleUpdateRequest.getId()).get();
+        Role roleToUpdate = roleBusinessRules.checkRoleExistById(roleUpdateRequest.getId());
         Role updatedRole = RoleConverter.toUpdatedRoleEntity(roleToUpdate, roleUpdateRequest);
 
         roleRepository.save(updatedRole);

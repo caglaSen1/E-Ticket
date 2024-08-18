@@ -1,6 +1,5 @@
 package com.ftbootcamp.eticketuserservice.converter;
 
-import com.ftbootcamp.eticketuserservice.dto.request.UserCreateRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.UserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.UserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.User;
