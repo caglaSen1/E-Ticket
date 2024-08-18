@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class RoleConverter {
 
     public static Role toEntity(RoleSaveRequest roleSaveRequest) {
-        return new Role(roleSaveRequest.getName());
+        return new Role(roleSaveRequest.getName().toUpperCase());
     }
 
     public static RoleResponse roleToRoleResponse(Role role) {
