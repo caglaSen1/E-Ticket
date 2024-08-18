@@ -20,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+import static com.ftbootcamp.eticketuserservice.core.PasswordHasher.hashPassword;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -36,7 +38,11 @@ public class UserService {
         userBusinessRules.checkEmailAlreadyExist(request.getEmail());
         userBusinessRules.checkPasswordValid(request.getPassword());
 
-        User createdUser = new User(request.getEmail(), request.getPassword());
+        // Hash password
+        String hashedPassword = hashPassword(request.getPassword());
+
+        // Create User
+        User createdUser = new User(request.getEmail(), hashedPassword);
         userRepository.save(createdUser);
 
         // Add default role to user
