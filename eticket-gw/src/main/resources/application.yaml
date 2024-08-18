@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: eticket-gw
+  cloud:
+    gateway:
+      routes:
+        - id: eticket-service
+          uri: lb://ETICKET-SERVICE
+          predicates:
+            - Path=/api/v1/trips/**
+        - id: eticket-user-service
+          uri: lb://ETICKET-USER-SERVICE
+          predicates:
+            - Path=/api/v1/users/**
+        - id: eticket-user-service
+          uri: lb://ETICKET-USER-SERVICE
+          predicates:
+            - Path=/api/v1/roles/**
+
+server:
+  port: 9090

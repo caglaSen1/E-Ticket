@@ -1,15 +1,15 @@
-package com.ftbootcamp.eticketuserservice;
+package com.ftbootcamp.eticketgw;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@EnableDiscoveryClient
 @SpringBootApplication
-public class EticketUserServiceApplication {
+@EnableDiscoveryClient
+public class EticketGwApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EticketUserServiceApplication.class, args);
+        SpringApplication.run(EticketGwApplication.class, args);
     }
 
 }

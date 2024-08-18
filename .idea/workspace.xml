@@ -5,42 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97570bb4-01ce-4a61-8545-4b11f3273257" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/eticket-service/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/EticketServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/controller/TripController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/converter/TripConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/dto/request/TripCreateRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/dto/request/TripUpdateRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/dto/response/GenericResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/dto/response/GenericResponseConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/dto/response/TripResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/entity/Trip.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/entity/constant/TripEntityConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/entity/constant/UserEntityConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/entity/enums/VehicleType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/exception/ETicketException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/exception/ExceptionMessages.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/repository/TripRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/rules/TripBusinessRules.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/service/TripService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eticket-service/src/test/java/com/ftbootcamp/eticketservice/EticketServiceApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/controller/RoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/controller/RoleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/converter/RoleConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/converter/RoleConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/converter/UserConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/converter/UserConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/service/RoleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticket-user-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-user-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/EticketServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/EticketServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-user-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/EticketUserServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-user-service/src/main/java/com/ftbootcamp/eticketuserservice/EticketUserServiceApplication.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +61,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -98,10 +72,24 @@
       <recent name="E:\FT_Teknoloji_Bootcamp\Final Project\E-Ticket\eticket-service\src\main\java\com\ftbootcamp\eticketservice\entity" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.EticketServiceApplication">
+  <component name="RunManager" selected="Spring Boot.EticketUserServiceApplication">
+    <configuration name="EticketGwApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="eticket-gw" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ftbootcamp.eticketgw.EticketGwApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="EticketServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="eticket-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.ftbootcamp.eticketservice.EticketServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EticketServiceDiscoveryApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="eticket-service-discovery" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ftbootcamp.eticketservicediscovery.EticketServiceDiscoveryApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -122,7 +110,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1723966364664</updated>
-      <workItem from="1723966365636" duration="6192000" />
+      <workItem from="1723966365636" duration="7783000" />
     </task>
     <servers />
   </component>

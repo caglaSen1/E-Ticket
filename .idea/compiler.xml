@@ -7,8 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="eticket-service" />
         <module name="eticket-user-service" />
+        <module name="eticket-service" />
+        <module name="eticket-service-discovery" />
+        <module name="eticket-gw" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -17,7 +19,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="eticket-gw" options="-parameters" />
       <module name="eticket-service" options="-parameters" />
+      <module name="eticket-service-discovery" options="-parameters" />
       <module name="eticket-user-service" options="-parameters" />
       <module name="ticket-service" options="-parameters" />
     </option>
