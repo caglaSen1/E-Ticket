@@ -6,14 +6,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@Builder
 @Entity
 @Table(name = "trips")
 public class Trip {
@@ -22,13 +19,10 @@ public class Trip {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "trip")
-    private List<Ticket> tickets;
-
     @Column(name = TripEntityConstants.DEPARTURE_TIME, nullable = false)
     private LocalDateTime departureTime;
 
-    @Column(name = TripEntityConstants.ARRIVAL_TIME)
+    @Column(name = TripEntityConstants.ARRIVAL_TIME, nullable = false)
     private LocalDateTime arrivalTime;
 
     @Column(name = TripEntityConstants.DEPARTURE_CITY, nullable = false)
@@ -43,9 +37,25 @@ public class Trip {
     @Column(name = TripEntityConstants.CAPACITY, nullable = false)
     private int capacity;
 
+    @Column(name = TripEntityConstants.REMAINING_TICKET_COUNT, nullable = false)
+    private int remainingTicketCount;
+
     @Column(name = TripEntityConstants.PRICE, nullable = false)
     private double price;
 
     @Column(name = TripEntityConstants.CREATED_DATE)
     private LocalDateTime createdDate;
+
+    public Trip(LocalDateTime departureTime, LocalDateTime arrivalTime, String departureCity, String arrivalCity,
+                VehicleType vehicleType, int capacity, double price) {
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.departureCity = departureCity;
+        this.arrivalCity = arrivalCity;
+        this.vehicleType = vehicleType;
+        this.capacity = capacity;
+        this.remainingTicketCount = capacity;
+        this.price = price;
+        this.createdDate = LocalDateTime.now();
+    }
 }

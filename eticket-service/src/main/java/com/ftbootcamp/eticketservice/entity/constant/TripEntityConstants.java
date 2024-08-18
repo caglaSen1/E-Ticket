@@ -10,6 +10,7 @@ public class TripEntityConstants {
     public static final String DEPARTURE_CITY = "departure_city";
     public static final String ARRIVAL_CITY = "arrival_city";
     public static final String CAPACITY = "capacity";
-    public static final String CREATED_DATE = "created_date";
+    public static final String REMAINING_TICKET_COUNT = "remaining_ticket_count";
     public static final String PRICE = "price";
+    public static final String CREATED_DATE = "created_date";
 }

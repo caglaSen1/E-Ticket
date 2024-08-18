@@ -8,8 +8,9 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class TicketCreateRequest {
+public class TicketBuyRequest {
 
-    private long tripId;
-    private int seatNumber;
+    private long userId;
+    private long ticketId;
+
 }

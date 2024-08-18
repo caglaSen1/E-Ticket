@@ -4,12 +4,10 @@ import com.ftbootcamp.eticketservice.entity.constant.TicketEntityConstants;
 import jakarta.persistence.*;
 import lombok.*;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@Builder
 @Entity
 @Table(name = "tickets")
 public class Ticket {
@@ -23,12 +21,22 @@ public class Ticket {
     private Trip trip;
 
     @Column(name = TicketEntityConstants.SEAT_NUMBER, nullable = false)
-    private int seatNumber;
-
-    @Column(name = TicketEntityConstants.PASSENGER_ID)
-    private long passengerId;
+    private String seatNo;
 
     @Column(name = TicketEntityConstants.PRICE)
-    private final double price = trip.getPrice();
+    private double price;
+
+    @Column(name = TicketEntityConstants.PASSENGER_EMAIL)
+    private String passengerEmail;
+
+    @Column(name = TicketEntityConstants.IS_TAKEN)
+    private boolean isTaken;
+
+    public Ticket(Trip trip, String seatNo) {
+        this.trip = trip;
+        this.seatNo = seatNo;
+        this.price = trip.getPrice();
+        this.isTaken = false;
+    }
 
 }

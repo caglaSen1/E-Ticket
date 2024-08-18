@@ -19,23 +19,27 @@ public class TripService {
 
     private final TripRepository tripRepository;
     private final TripBusinessRules tripBusinessRules;
+    private final TicketService ticketService;
 
-    // TODO: +createTrip(), +cancelTrip()
+    // TODO: +cancelTrip()
 
-    public TripResponse create(TripCreateRequest tripCreateRequest) {
+    public TripResponse create(TripCreateRequest request) {
         // TODO: Add business rules
 
-        Trip trip = Trip.builder()
-                .departureTime(tripCreateRequest.getDepartureTime())
-                .departureCity(tripCreateRequest.getDepartureCity())
-                .arrivalCity(tripCreateRequest.getArrivalCity())
-                .vehicleType(tripCreateRequest.getVehicleType())
-                .availableSeats(tripCreateRequest.getAvailableSeats())
-                .price(tripCreateRequest.getPrice())
-                .createdDate(LocalDateTime.now())
-                .build();
+        Trip trip = new Trip(
+                request.getDepartureTime(),
+                request.getArrivalTime(),
+                request.getDepartureCity(),
+                request.getArrivalCity(),
+                request.getVehicleType(),
+                request.getCapacity(),
+                request.getPrice()
+        );
 
         tripRepository.save(trip);
+
+        // Generate tickets for the trip
+        ticketService.generateTicketsForTrip(trip);
 
         return TripConverter.toTripResponse(trip);
     }
