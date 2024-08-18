@@ -1,6 +1,6 @@
-package com.ftbootcamp.eticketuserservice.model;
+package com.ftbootcamp.eticketuserservice.entity;
 
-import com.ftbootcamp.eticketuserservice.model.constant.RoleEntityConstants;
+import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Set;

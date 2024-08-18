@@ -1,9 +1,9 @@
-package com.ftbootcamp.eticketuserservice.model;
+package com.ftbootcamp.eticketuserservice.entity;
 
-import com.ftbootcamp.eticketuserservice.model.constant.UserEntityConstants;
-import com.ftbootcamp.eticketuserservice.model.enums.Gender;
-import com.ftbootcamp.eticketuserservice.model.enums.StatusType;
-import com.ftbootcamp.eticketuserservice.model.enums.UserType;
+import com.ftbootcamp.eticketuserservice.entity.constant.UserEntityConstants;
+import com.ftbootcamp.eticketuserservice.entity.enums.Gender;
+import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
+import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;

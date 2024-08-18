@@ -1,4 +1,4 @@
-package com.ftbootcamp.eticketuserservice.model.constant;
+package com.ftbootcamp.eticketuserservice.entity.constant;
 
 import lombok.NoArgsConstructor;
 
