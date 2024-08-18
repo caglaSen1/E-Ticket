@@ -6,8 +6,9 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @ToString
-public class RoleSaveRequest {
-    private String name;
+public class UserPasswordChangeRequest {
+
+    private String email;
+    private String password;
 }

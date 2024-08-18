@@ -1,6 +1,6 @@
 package com.ftbootcamp.eticketuserservice.controller;
 
-import com.ftbootcamp.eticketuserservice.dto.request.RoleSaveRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.RoleCreateRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.RoleUpdateRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.GenericResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.RoleResponse;
@@ -21,7 +21,7 @@ public class RoleController {
 
     @PostMapping()
     @Operation(summary = "Add role", description = "Add role with given role information")
-    public GenericResponse<RoleResponse> addRole(@RequestBody RoleSaveRequest request) {
+    public GenericResponse<RoleResponse> addRole(@RequestBody RoleCreateRequest request) {
         return GenericResponse.success(roleService.create(request), HttpStatus.CREATED);
     }
 

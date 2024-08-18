@@ -10,6 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@Builder
 @Entity
 @Table(name = "roles")
 public class Role {

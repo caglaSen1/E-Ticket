@@ -1,6 +1,7 @@
 package com.ftbootcamp.eticketuserservice.rules;
 
 import com.ftbootcamp.eticketuserservice.entity.Role;
+import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
 import com.ftbootcamp.eticketuserservice.exception.ETicketException;
 import com.ftbootcamp.eticketuserservice.exception.ExceptionMessages;
 import com.ftbootcamp.eticketuserservice.repository.RoleRepository;
@@ -15,31 +16,37 @@ public class RoleBusinessRules {
 
     private final RoleRepository roleRepository;
 
-    public void checkNameNull(String name, String request) {
+    public void checkNameNull(String name) {
         if (name == null || name.isEmpty()) {
-            handleException(ExceptionMessages.ROLE_NAME_CANNOT_BE_NULL, request);
+            handleException(ExceptionMessages.ROLE_NAME_CANNOT_BE_NULL, "");
         }
     }
 
-    public Role checkRoleExistById(Long id, String request) {
+    public Role checkRoleExistById(Long id) {
         if (roleRepository.findById(id).isEmpty()) {
-            handleException(ExceptionMessages.ROLE_NOT_FOUND, request);
+            handleException(ExceptionMessages.ROLE_NOT_FOUND, "Id: " + id);
         }
 
         return roleRepository.findById(id).get();
     }
 
-    public Role checkRoleExistByName(String name, String request) {
+    public Role checkRoleExistByName(String name) {
         if (roleRepository.findByName(name.toUpperCase()).isEmpty()) {
-            handleException(ExceptionMessages.ROLE_NOT_FOUND, request);
+            handleException(ExceptionMessages.ROLE_NOT_FOUND, "Name: " + name);
         }
 
         return roleRepository.findByName(name.toUpperCase()).get();
     }
 
-    public void checkRoleAlreadyExistByName(String name, String request) {
+    public void checkRoleAlreadyExistByName(String name) {
         if (roleRepository.findByName(name.toUpperCase()).isPresent()) {
-            handleException(ExceptionMessages.ROLE_ALREADY_EXIST, request);
+            handleException(ExceptionMessages.ROLE_ALREADY_EXIST, "Name: " + name);
+        }
+    }
+
+    public void checkRoleToRemoveIsDefault(String roleName) {
+        if (roleName.equals(RoleEntityConstants.DEFAULT_ROLE_NAME)) {
+            handleException(ExceptionMessages.DEFAULT_ROLE_CANNOT_BE_REMOVED, "Role: " + roleName);
         }
     }
 
@@ -54,6 +61,4 @@ public class RoleBusinessRules {
 
         throw new ETicketException(exceptionMessage, logMessage);
     }
-
-
 }

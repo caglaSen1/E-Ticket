@@ -1,7 +1,7 @@
 package com.ftbootcamp.eticketuserservice.service;
 
 import com.ftbootcamp.eticketuserservice.converter.RoleConverter;
-import com.ftbootcamp.eticketuserservice.dto.request.RoleSaveRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.RoleCreateRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.RoleUpdateRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.RoleResponse;
 import com.ftbootcamp.eticketuserservice.entity.Role;
@@ -19,39 +19,28 @@ public class RoleService {
     private final RoleRepository roleRepository;
     private final RoleBusinessRules roleBusinessRules;
 
-    public RoleResponse create(RoleSaveRequest roleSaveRequest) {
-        roleBusinessRules.checkNameNull(roleSaveRequest.getName(), "");
-        roleBusinessRules.checkRoleAlreadyExistByName(roleSaveRequest.getName(),
-                "Name: " + roleSaveRequest.getName());
+    public RoleResponse create(RoleCreateRequest roleCreateRequest) {
+        roleBusinessRules.checkNameNull(roleCreateRequest.getName());
+        roleBusinessRules.checkRoleAlreadyExistByName(roleCreateRequest.getName());
 
-        Role role = RoleConverter.toEntity(roleSaveRequest);
+        Role role = new Role(roleCreateRequest.getName().toUpperCase());
         roleRepository.save(role);
 
         return RoleConverter.roleToRoleResponse(role);
     }
 
     public RoleResponse getRoleById(Long id) {
-        roleBusinessRules.checkRoleExistById(id, "Id: " + id);
-
-        Role role = roleRepository.findById(id).get();
-
-        return RoleConverter.roleToRoleResponse(role);
+        return RoleConverter.roleToRoleResponse(roleBusinessRules.checkRoleExistById(id));
     }
 
     public RoleResponse getRoleByName(String name) {
-        roleBusinessRules.checkNameNull(name, "");
-        roleBusinessRules.checkRoleExistByName(name, "Name: " + name);
-
-        Role role = roleRepository.findByName(name.toUpperCase()).get();
-
-        return RoleConverter.roleToRoleResponse(role);
+        roleBusinessRules.checkNameNull(name);
+        return RoleConverter.roleToRoleResponse(roleBusinessRules.checkRoleExistByName(name));
     }
 
     public RoleResponse updateRole(RoleUpdateRequest roleUpdateRequest) {
-        roleBusinessRules.checkRoleExistById(roleUpdateRequest.getId(),
-                "Id: " + roleUpdateRequest.getId());
-        roleBusinessRules.checkRoleAlreadyExistByName(roleUpdateRequest.getName(),
-                "Name: " + roleUpdateRequest.getName());
+        roleBusinessRules.checkRoleExistById(roleUpdateRequest.getId());
+        roleBusinessRules.checkRoleAlreadyExistByName(roleUpdateRequest.getName());
 
         Role roleToUpdate = roleRepository.findById(roleUpdateRequest.getId()).get();
         Role updatedRole = RoleConverter.toUpdatedRoleEntity(roleToUpdate, roleUpdateRequest);
@@ -62,7 +51,19 @@ public class RoleService {
     }
 
     public void deleteRole(Long id) {
-        roleBusinessRules.checkRoleExistById(id, "Id: " + id);
+        roleBusinessRules.checkRoleExistById(id);
         roleRepository.deleteById(id);
+    }
+
+    public Role createDefaultRoleIfNotExist(String name) {
+        if(roleRepository.findByName(name).isEmpty()) {
+            roleRepository.save(new Role(name));
+        }
+
+        return roleRepository.findByName(name).get();
+    }
+
+    public void save(Role role) {
+        roleRepository.save(role);
     }
 }
