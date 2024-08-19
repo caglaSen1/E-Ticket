@@ -4,7 +4,6 @@ import com.ftbootcamp.eticketservice.entity.constant.TripEntityConstants;
 import com.ftbootcamp.eticketservice.entity.enums.VehicleType;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -34,11 +33,11 @@ public class Trip {
     @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;
 
-    @Column(name = TripEntityConstants.CAPACITY, nullable = false)
-    private int capacity;
+    @Column(name = TripEntityConstants.TOTAL_TICKET_COUNT, nullable = false)
+    private int totalTicketCount;
 
-    @Column(name = TripEntityConstants.REMAINING_TICKET_COUNT, nullable = false)
-    private int remainingTicketCount;
+    @Column(name = TripEntityConstants.SOLD_TICKET_COUNT, nullable = false)
+    private int soldTicketCount;
 
     @Column(name = TripEntityConstants.PRICE, nullable = false)
     private double price;
@@ -47,14 +46,14 @@ public class Trip {
     private LocalDateTime createdDate;
 
     public Trip(LocalDateTime departureTime, LocalDateTime arrivalTime, String departureCity, String arrivalCity,
-                VehicleType vehicleType, int capacity, double price) {
+                VehicleType vehicleType, int totalTicketCount, double price) {
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
         this.departureCity = departureCity;
         this.arrivalCity = arrivalCity;
         this.vehicleType = vehicleType;
-        this.capacity = capacity;
-        this.remainingTicketCount = capacity;
+        this.totalTicketCount = totalTicketCount;
+        this.soldTicketCount = 0;
         this.price = price;
         this.createdDate = LocalDateTime.now();
     }

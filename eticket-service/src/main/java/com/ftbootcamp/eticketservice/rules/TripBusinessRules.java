@@ -7,6 +7,7 @@ import com.ftbootcamp.eticketservice.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -23,6 +24,34 @@ public class TripBusinessRules {
         return tripRepository.findById(id).get();
     }
 
+    public void checkIfThereAreAnySoldTickets(long tripId) {
+        int soldTicketCount = checkTripExistById(tripId).getSoldTicketCount();
+
+        if(soldTicketCount > 0){
+            handleException(ExceptionMessages.SOLD_TICKETS_EXISTS_TRIP_CANNOT_UPDATED_DELETED, "");
+        }
+    }
+
+    public void checkArrivalTimeValid(LocalDateTime departureTime, LocalDateTime arrivalTime) {
+        if (arrivalTime.isBefore(departureTime)) {
+            handleException(ExceptionMessages.ARRIVAL_EARLIER_THAN_DEPARTURE,
+                    "Arrival time: " + arrivalTime + ", Departure time: " + departureTime);
+        }
+    }
+
+    public void checkTotalTicketCountValid(int totalTicketCount) {
+        if (totalTicketCount <= 0) {
+            handleException(ExceptionMessages.TOTAL_TICKET_LESS_THAN_ZERO,
+                    "Total ticket count: " + totalTicketCount);
+        }
+    }
+
+    public void checkPriceValid(double price) {
+        if (price <= 0) {
+            handleException(ExceptionMessages.PRICE_LESS_THAN_ZERO, "Price: " + price);
+        }
+    }
+
     private void handleException(String exceptionMessage, String request) {
         String logMessage;
 
@@ -34,4 +63,5 @@ public class TripBusinessRules {
 
         throw new ETicketException(exceptionMessage, logMessage);
     }
+
 }

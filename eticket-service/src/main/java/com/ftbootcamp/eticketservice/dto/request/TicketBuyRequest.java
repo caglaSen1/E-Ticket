@@ -12,5 +12,4 @@ public class TicketBuyRequest {
 
     private long userId;
     private long ticketId;
-
 }

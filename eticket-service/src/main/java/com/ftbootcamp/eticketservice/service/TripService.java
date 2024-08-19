@@ -7,10 +7,10 @@ import com.ftbootcamp.eticketservice.dto.response.TripResponse;
 import com.ftbootcamp.eticketservice.entity.Trip;
 import com.ftbootcamp.eticketservice.repository.TripRepository;
 import com.ftbootcamp.eticketservice.rules.TripBusinessRules;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +24,9 @@ public class TripService {
     // TODO: +cancelTrip()
 
     public TripResponse create(TripCreateRequest request) {
-        // TODO: Add business rules
+        tripBusinessRules.checkArrivalTimeValid(request.getDepartureTime(), request.getArrivalTime());
+        tripBusinessRules.checkTotalTicketCountValid(request.getTotalTicketCount());
+        tripBusinessRules.checkPriceValid(request.getPrice());
 
         Trip trip = new Trip(
                 request.getDepartureTime(),
@@ -32,7 +34,7 @@ public class TripService {
                 request.getDepartureCity(),
                 request.getArrivalCity(),
                 request.getVehicleType(),
-                request.getCapacity(),
+                request.getTotalTicketCount(),
                 request.getPrice()
         );
 
@@ -47,13 +49,17 @@ public class TripService {
     // TODO: getAllAvailableTrips()
 
     public TripResponse getTripById(Long id) {
-        // TODO: Add business rules
-
         return TripConverter.toTripResponse(tripBusinessRules.checkTripExistById(id));
     }
 
     public TripResponse updateTrip(TripUpdateRequest request) {
         Trip tripToUpdate = tripBusinessRules.checkTripExistById(request.getId());
+
+        tripBusinessRules.checkIfThereAreAnySoldTickets(tripToUpdate.getId());
+        tripBusinessRules.checkArrivalTimeValid(request.getDepartureTime(), request.getArrivalTime());
+        tripBusinessRules.checkTotalTicketCountValid(request.getTotalTicketCount());
+        tripBusinessRules.checkPriceValid(request.getPrice());
+
         Trip updatedTrip = TripConverter.toUpdatedTripEntity(tripToUpdate, request);
 
         tripRepository.save(updatedTrip);
@@ -61,8 +67,13 @@ public class TripService {
         return TripConverter.toTripResponse(updatedTrip);
     }
 
+    @Transactional
     public void deleteTrip(Long id) {
         tripBusinessRules.checkTripExistById(id);
+        tripBusinessRules.checkIfThereAreAnySoldTickets(id);
+
+        ticketService.deleteTicketsByTripId(id);
+
         tripRepository.deleteById(id);
     }
 }

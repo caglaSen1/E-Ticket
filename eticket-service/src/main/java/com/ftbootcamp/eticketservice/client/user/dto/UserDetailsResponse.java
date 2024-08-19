@@ -1,8 +1,9 @@
-package com.ftbootcamp.eticketuserservice.dto.response;
+package com.ftbootcamp.eticketservice.client.user.dto;
 
-import com.ftbootcamp.eticketuserservice.entity.enums.Gender;
-import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
-import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
+import com.ftbootcamp.eticketservice.client.user.dto.RoleResponse;
+import com.ftbootcamp.eticketservice.client.user.enums.Gender;
+import com.ftbootcamp.eticketservice.client.user.enums.StatusType;
+import com.ftbootcamp.eticketservice.client.user.enums.UserType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
@@ -17,6 +18,7 @@ import java.util.List;
 public class UserDetailsResponse {
 
     private String email;
+
     private LocalDateTime birthDate;
 
     @Enumerated(EnumType.STRING)

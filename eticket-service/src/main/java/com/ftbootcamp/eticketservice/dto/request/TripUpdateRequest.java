@@ -19,6 +19,6 @@ public class TripUpdateRequest {
     private String departureCity;
     private String arrivalCity;
     private VehicleType vehicleType;
-    private int capacity;
+    private int totalTicketCount;
     private double price;
 }

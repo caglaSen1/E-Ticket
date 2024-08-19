@@ -6,8 +6,7 @@ import lombok.NoArgsConstructor;
 public final class TicketEntityConstants {
 
     public static final String SEAT_NUMBER = "seat_number";
-    public static final String PASSENGER_ID = "passenger_id";
     public static final String PRICE = "price";
     public static final String PASSENGER_EMAIL = "passenger_email";
-    public static final String IS_TAKEN = "is_taken";
+    public static final String IS_BOUGHT = "is_bought";
 }

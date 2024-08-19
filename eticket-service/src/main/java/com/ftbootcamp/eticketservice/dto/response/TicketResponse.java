@@ -14,5 +14,5 @@ public class TicketResponse {
     private String seatNo;
     private String passengerEmail;
     private double price;
-    private boolean isTaken;
+    private boolean isBought;
 }

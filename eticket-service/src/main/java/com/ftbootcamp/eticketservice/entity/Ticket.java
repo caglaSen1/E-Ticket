@@ -29,14 +29,13 @@ public class Ticket {
     @Column(name = TicketEntityConstants.PASSENGER_EMAIL)
     private String passengerEmail;
 
-    @Column(name = TicketEntityConstants.IS_TAKEN)
-    private boolean isTaken;
+    @Column(name = TicketEntityConstants.IS_BOUGHT)
+    private boolean isBought;
 
     public Ticket(Trip trip, String seatNo) {
         this.trip = trip;
         this.seatNo = seatNo;
         this.price = trip.getPrice();
-        this.isTaken = false;
+        this.isBought = false;
     }
-
 }

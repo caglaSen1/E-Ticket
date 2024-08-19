@@ -15,7 +15,9 @@ public class TripConverter {
                 .departureCity(trip.getDepartureCity())
                 .arrivalCity(trip.getArrivalCity())
                 .vehicleType(trip.getVehicleType())
-                .capacity(trip.getCapacity())
+                .totalTicketCount(trip.getTotalTicketCount())
+                .soldTicketCount(trip.getSoldTicketCount())
+                .price(trip.getPrice())
                 .build();
     }
 
@@ -35,8 +37,11 @@ public class TripConverter {
         if(request.getVehicleType() != null) {
             trip.setVehicleType(request.getVehicleType());
         }
-        if(request.getCapacity() != 0) {
-            trip.setCapacity(request.getCapacity());
+        if(request.getTotalTicketCount() != 0) {
+            trip.setTotalTicketCount(request.getTotalTicketCount());
+        }
+        if(request.getPrice() != 0) {
+            trip.setPrice(request.getPrice());
         }
         return trip;
     }

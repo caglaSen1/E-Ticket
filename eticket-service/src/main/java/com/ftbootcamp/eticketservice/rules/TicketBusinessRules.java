@@ -1,11 +1,9 @@
 package com.ftbootcamp.eticketservice.rules;
 
 import com.ftbootcamp.eticketservice.entity.Ticket;
-import com.ftbootcamp.eticketservice.entity.Trip;
 import com.ftbootcamp.eticketservice.exception.ETicketException;
 import com.ftbootcamp.eticketservice.exception.ExceptionMessages;
 import com.ftbootcamp.eticketservice.repository.TicketRepository;
-import com.ftbootcamp.eticketservice.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,6 +21,12 @@ public class TicketBusinessRules {
         }
 
         return ticketRepository.findById(id).get();
+    }
+
+    public void checkTicketSold(Ticket ticket) {
+        if (ticket.isBought()) {
+            handleException(ExceptionMessages.TICKET_ALREADY_SOLD, "Ticket: " + ticket.getId());
+        }
     }
 
     private void handleException(String exceptionMessage, String request) {
