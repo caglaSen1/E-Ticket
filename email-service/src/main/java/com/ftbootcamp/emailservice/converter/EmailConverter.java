@@ -1,6 +1,5 @@
 package com.ftbootcamp.emailservice.converter;
 
-import com.ftbootcamp.emailservice.dto.request.EmailSendRequest;
 import com.ftbootcamp.emailservice.dto.response.EmailResponse;
 import com.ftbootcamp.emailservice.entity.Email;
 import lombok.NoArgsConstructor;
@@ -25,4 +24,5 @@ public class EmailConverter {
                 .map(EmailConverter::toResponse)
                 .toList();
     }
+
 }

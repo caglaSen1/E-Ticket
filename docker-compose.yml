@@ -10,8 +10,20 @@ services:
     ports:
       - "5433:5432"
 
+
   mongo:
     image: mongo
     container_name: eticket-mongo
     ports:
       - "27017:27017"
+
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: eticket-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: 123456
+    ports:
+      - "5672:5672"
+      - "15672:15672"
