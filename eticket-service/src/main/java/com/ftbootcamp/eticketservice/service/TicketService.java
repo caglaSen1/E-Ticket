@@ -26,6 +26,9 @@ public class TicketService {
     public TicketResponse buyTicket(TicketBuyRequest request) {
         // Get user with userClient (sencronous):
         UserDetailsResponse user = userService.getUserById(request.getUserId());
+
+        // TODO: Get payment
+
         Ticket ticket = ticketBusinessRules.checkTicketExistById(request.getTicketId());
         ticketBusinessRules.checkTicketSold(ticket);
 

@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/eticket-user-service/pom.xml" />
         <option value="$PROJECT_DIR$/eticket-service-discovery/pom.xml" />
         <option value="$PROJECT_DIR$/eticket-gw/pom.xml" />
+        <option value="$PROJECT_DIR$/email-service/pom.xml" />
       </list>
     </option>
   </component>

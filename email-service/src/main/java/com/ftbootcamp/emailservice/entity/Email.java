@@ -1,0 +1,41 @@
+package com.ftbootcamp.emailservice.entity;
+
+import com.ftbootcamp.emailservice.entity.constant.EntityConstants;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Document(collection = "emails")
+public class Email {
+
+    @Id
+    private String id;
+
+    @Field(name = EntityConstants.TO)
+    private String to;
+
+    @Field(name = EntityConstants.TEXT)
+    private String text;
+
+    @Field(name = EntityConstants.CREATED_DATE_TIME)
+    private LocalDateTime createdDateTime;
+
+    public Email(String to, String text) {
+        this.to = to;
+        this.text = text;
+        this.createdDateTime = LocalDateTime.now();
+    }
+
+    public Email(String to, EmailTemplate emailTemplate) {
+        this.to = to;
+        this.text = emailTemplate.getText();
+        this.createdDateTime = LocalDateTime.now();
+    }
+}
