@@ -24,6 +24,10 @@ spring:
           uri: lb://EMAIL-SERVICE
           predicates:
             - Path=/api/v1/email-templates/**
+        - id: email-service
+          uri: lb://EMAIL-SERVICE
+          predicates:
+            - Path=/api/v1/emails/**
 
 server:
   port: 9090
