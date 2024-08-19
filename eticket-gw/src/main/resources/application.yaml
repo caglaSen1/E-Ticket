@@ -20,6 +20,10 @@ spring:
           uri: lb://ETICKET-USER-SERVICE
           predicates:
             - Path=/api/v1/roles/**
+        - id: email-service
+          uri: lb://EMAIL-SERVICE
+          predicates:
+            - Path=/api/v1/email-templates/**
 
 server:
   port: 9090
