@@ -55,7 +55,9 @@ public class EmailTemplateService {
     public EmailTemplateResponse update(EmailTemplateUpdateRequest request){
         EmailTemplate emailTemplateToUpdate = emailTemplateBusinessRules.checkTemplateExistById(request.getId());
 
-        emailTemplateBusinessRules.checkNameAlreadyExist(request.getName());
+        if(!request.getName().toUpperCase().equals(emailTemplateToUpdate.getName())){
+            emailTemplateBusinessRules.checkNameAlreadyExist(request.getName());
+        }
 
         EmailTemplate updatedTemplate = EmailTemplateConverter.toUpdatedTemplateEntity(emailTemplateToUpdate, request);
 
