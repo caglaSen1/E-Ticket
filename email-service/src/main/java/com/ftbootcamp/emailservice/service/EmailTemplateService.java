@@ -36,7 +36,8 @@ public class EmailTemplateService {
     }
 
     public List<EmailTemplateResponse> getAll(){
-        return emailTemplateRepository.findAll().stream()
+        return emailTemplateRepository.findAll()
+                .stream()
                 .map(EmailTemplateConverter::toResponse)
                 .collect(Collectors.toList());
     }

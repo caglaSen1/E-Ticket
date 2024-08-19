@@ -32,10 +32,4 @@ public class Email {
         this.text = text;
         this.createdDateTime = LocalDateTime.now();
     }
-
-    public Email(String to, EmailTemplate emailTemplate) {
-        this.to = to;
-        this.text = emailTemplate.getText();
-        this.createdDateTime = LocalDateTime.now();
-    }
 }
