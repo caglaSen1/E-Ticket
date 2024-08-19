@@ -9,3 +9,9 @@ services:
       POSTGRES_PASSWORD: 12345
     ports:
       - "5433:5432"
+
+  mongo:
+    image: mongo
+    container_name: eticket-mongo
+    ports:
+      - "27017:27017"

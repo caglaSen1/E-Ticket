@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "email-templates")
 public class EmailTemplate {
@@ -20,12 +19,18 @@ public class EmailTemplate {
     @Id
     private String id;
 
-    @Field(name = EntityConstants.TEMPLATE_NAME)
-    private String templateName;
+    @Field(name = EntityConstants.NAME)
+    private String name;
 
     @Field(name = EntityConstants.TEXT)
     private String text;
 
     @Field(name = EntityConstants.CREATED_DATE_TIME)
     private LocalDateTime createdDateTime;
+
+    public EmailTemplate(String name, String text) {
+        this.name = name.toUpperCase();
+        this.text = text;
+        this.createdDateTime = LocalDateTime.now();
+    }
 }

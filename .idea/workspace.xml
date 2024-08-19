@@ -5,14 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97570bb4-01ce-4a61-8545-4b11f3273257" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/entity/Email.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/entity/EmailTemplate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/entity/constant/EntityConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/controller/EmailTemplateController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/converter/EmailTemplateConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/dto/request/EmailTemplateCreateRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/dto/request/EmailTemplateUpdateRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/dto/response/EmailTemplateResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/dto/response/GenericResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/dto/response/GenericResponseConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/exception/EmailException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/exception/ExceptionMessages.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/repository/EmailTemplateRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/rules/EmailTemplateBusinessRules.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/service/EmailTemplateService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/service/TicketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/service/TicketService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/entity/EmailTemplate.java" beforeDir="false" afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/entity/EmailTemplate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/entity/constant/EntityConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/entity/constant/EntityConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/email-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/email-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eticket-user-service/docker-compose.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,16 +82,16 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\FT_Teknoloji_Bootcamp\Final Project\E-Ticket\email-service\src\main\java\com\ftbootcamp\emailservice" />
+      <recent name="E:\FT_Teknoloji_Bootcamp\Final Project\E-Ticket\email-service\src\main\java\com\ftbootcamp\emailservice\dto\request" />
+      <recent name="E:\FT_Teknoloji_Bootcamp\Final Project\E-Ticket\email-service\src\main\java\com\ftbootcamp\emailservice\dto\response" />
       <recent name="E:\FT_Teknoloji_Bootcamp\Final Project\E-Ticket\eticket-service\src\main\java\com\ftbootcamp\eticketservice\client\user" />
       <recent name="E:\FT_Teknoloji_Bootcamp\Final Project\E-Ticket\eticket-service\src\main\java\com\ftbootcamp\eticketservice" />
-      <recent name="E:\FT_Teknoloji_Bootcamp\Final Project\E-Ticket\eticket-service\src\main\java\com\ftbootcamp\eticketservice\dto\response" />
-      <recent name="E:\FT_Teknoloji_Bootcamp\Final Project\E-Ticket\eticket-service\src\main\java\com\ftbootcamp\eticketservice\entity" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.ftbootcamp.eticketservice.client.user" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.EticketServiceApplication">
+  <component name="RunManager" selected="Spring Boot.EmailServiceApplication">
     <configuration name="EmailServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="email-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.ftbootcamp.emailservice.EmailServiceApplication" />
@@ -130,7 +141,7 @@
       <workItem from="1724003721538" duration="1041000" />
       <workItem from="1724023587690" duration="3872000" />
       <workItem from="1724029554645" duration="12679000" />
-      <workItem from="1724080386474" duration="1873000" />
+      <workItem from="1724080386474" duration="9793000" />
     </task>
     <servers />
   </component>
@@ -140,10 +151,15 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/eticket-service/src/main/java/com/ftbootcamp/eticketservice/service/TicketService.java</url>
           <line>27</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/email-service/src/main/java/com/ftbootcamp/emailservice/service/EmailTemplateService.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
