@@ -1,7 +1,7 @@
 package com.ftbootcamp.eticketservice.producer;
 
 import com.ftbootcamp.eticketservice.config.RabbitMQProducerConfig;
-import com.ftbootcamp.eticketservice.producer.dto.EmailSendRequest;
+import com.ftbootcamp.eticketservice.producer.dto.NotificationSendRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -16,13 +16,13 @@ public class RabbitMqProducer {
 
     private final RabbitMQProducerConfig rabbitMQProducerConfig;
 
-    public void sendTicketInfoMessage(EmailSendRequest emailSendRequest) {
+    public void sendTicketInfoMessage(NotificationSendRequest notificationSendRequest) {
 
         rabbitTemplate.convertAndSend(rabbitMQProducerConfig.getExchange(), rabbitMQProducerConfig.getRoutingKey(),
-                emailSendRequest);
+                notificationSendRequest);
 
         log.info("Message sent to queue. Queue: {}, Message: {}",
-                rabbitMQProducerConfig.getQueueName(), emailSendRequest.toString());
+                rabbitMQProducerConfig.getQueueName(), notificationSendRequest.toString());
 
     }
 }

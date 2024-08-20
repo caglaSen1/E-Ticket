@@ -8,7 +8,8 @@ import com.ftbootcamp.eticketservice.dto.response.TicketResponse;
 import com.ftbootcamp.eticketservice.entity.Ticket;
 import com.ftbootcamp.eticketservice.entity.Trip;
 import com.ftbootcamp.eticketservice.producer.RabbitMqProducer;
-import com.ftbootcamp.eticketservice.producer.dto.EmailSendRequest;
+import com.ftbootcamp.eticketservice.producer.dto.NotificationSendRequest;
+import com.ftbootcamp.eticketservice.producer.enums.NotificationType;
 import com.ftbootcamp.eticketservice.repository.TicketRepository;
 import com.ftbootcamp.eticketservice.rules.TicketBusinessRules;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +46,8 @@ public class TicketService {
 
         // Send ticket info message with RabbitMQ Service (Asencronize):
         String infoMessage = generateTicketInfoMessage(user, ticket);
-        rabbitMqProducer.sendTicketInfoMessage(new EmailSendRequest(user.getEmail(), infoMessage));
+        rabbitMqProducer.sendTicketInfoMessage(new NotificationSendRequest(NotificationType.EMAIL, user.getEmail(),
+                infoMessage));
 
         return TicketConverter.toTicketResponse(ticket);
     }

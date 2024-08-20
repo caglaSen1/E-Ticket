@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class RabbitMQProducerConfig {
 
-    @Value("${rabbitmq.send.email.queue}")
+    @Value("${rabbitmq.send.notification.queue}")
     private String queueName;
 
     @Value("${rabbitmq.exchange}")
@@ -26,7 +26,7 @@ public class RabbitMQProducerConfig {
 
     @Bean
     public Queue queue() {
-        return new Queue(queueName, false);
+        return new Queue(queueName, true);
     }
 
     @Bean

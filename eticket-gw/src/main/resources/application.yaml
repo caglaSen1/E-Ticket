@@ -20,12 +20,12 @@ spring:
           uri: lb://ETICKET-USER-SERVICE
           predicates:
             - Path=/api/v1/roles/**
-        - id: email-service
-          uri: lb://EMAIL-SERVICE
+        - id: notification-service
+          uri: lb://NOTIFICATION-SERVICE
           predicates:
             - Path=/api/v1/email-templates/**
-        - id: email-service
-          uri: lb://EMAIL-SERVICE
+        - id: notification-service
+          uri: lb://NOTIFICATION-SERVICE
           predicates:
             - Path=/api/v1/emails/**
 
