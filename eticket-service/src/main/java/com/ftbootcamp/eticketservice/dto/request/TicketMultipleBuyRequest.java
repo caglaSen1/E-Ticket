@@ -12,6 +12,6 @@ import java.util.List;
 @ToString
 public class TicketMultipleBuyRequest {
 
-    private long userId;
-    private List<Long> ticketIds;
+    private long buyerId;
+    private List<PassengerTicketRequest> passengerTicketRequests;
 }

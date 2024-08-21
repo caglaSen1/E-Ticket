@@ -6,6 +6,7 @@ import com.ftbootcamp.eticketuserservice.entity.abstracts.User;
 import com.ftbootcamp.eticketuserservice.entity.concrete.AdminUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.CompanyUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.IndividualUser;
+import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -55,14 +56,18 @@ public class UserConverter {
             userDetailsResponse.setLastName(individual.getLastName());
             userDetailsResponse.setBirthDate(individual.getBirthDate());
             userDetailsResponse.setGender(individual.getGender());
+            userDetailsResponse.setInstanceOf(RoleEntityConstants.INDIVIDUAL_USER_ROLE_NAME);
         } else if (user instanceof AdminUser) {
             AdminUser admin = (AdminUser) user;
             userDetailsResponse.setFirstName(admin.getFirstName());
             userDetailsResponse.setLastName(admin.getLastName());
             userDetailsResponse.setGender(admin.getGender());
+            userDetailsResponse.setInstanceOf(RoleEntityConstants.ADMIN_USER_ROLE_NAME);
         } else if (user instanceof CompanyUser) {
             CompanyUser company = (CompanyUser) user;
             userDetailsResponse.setCompanyName(company.getCompanyName());
+            userDetailsResponse.setTaxNumber(company.getTaxNumber());
+            userDetailsResponse.setInstanceOf(RoleEntityConstants.CORPORATE_USER_ROLE_NAME);
         }
 
         return userDetailsResponse;

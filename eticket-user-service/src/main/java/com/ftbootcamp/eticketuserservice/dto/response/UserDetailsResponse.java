@@ -27,5 +27,6 @@ public class UserDetailsResponse {
     private Long taxNumber;
     private UserType userType;
     private StatusType statusType;
+    private String instanceOf;
 
 }
