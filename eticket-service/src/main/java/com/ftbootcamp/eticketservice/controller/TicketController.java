@@ -3,6 +3,7 @@ package com.ftbootcamp.eticketservice.controller;
 import com.ftbootcamp.eticketservice.dto.request.TicketBuyRequest;
 import com.ftbootcamp.eticketservice.dto.request.TicketMultipleBuyRequest;
 import com.ftbootcamp.eticketservice.dto.response.GenericResponse;
+import com.ftbootcamp.eticketservice.dto.response.TicketGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.dto.response.TicketResponse;
 import com.ftbootcamp.eticketservice.service.TicketService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,14 +39,41 @@ public class TicketController {
         return GenericResponse.success(ticketService.getTicketById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/trips/{tripId}/all")
-    public GenericResponse<List<TicketResponse>> getAllTicketsByTripId(@PathVariable Long tripId) {
-        return GenericResponse.success(ticketService.getAllTickets(tripId), HttpStatus.OK);
+    @GetMapping("/all")
+    @Operation(summary = "Get all tickets", description = "Get all tickets")
+    public GenericResponse<List<TicketResponse>> getAllTickets() {
+        return GenericResponse.success(ticketService.getAllTickets(), HttpStatus.OK);
     }
 
-    @GetMapping("/trips/{tripId}/not-sold")
-    public GenericResponse<List<TicketResponse>> getNotSoldTicketsByTripId(@PathVariable Long tripId) {
-        return GenericResponse.success(ticketService.getNotSoldTickets(tripId), HttpStatus.OK);
+    @GetMapping("/all-available")
+    public GenericResponse<List<TicketResponse>> getAllAvailableTickets() {
+        return GenericResponse.success(ticketService.getAllAvailableTickets(), HttpStatus.OK);
+    }
+
+    @GetMapping("/all-expired")
+    public GenericResponse<List<TicketResponse>> getAllExpiredTickets() {
+        return GenericResponse.success(ticketService.getAllExpiredTickets(), HttpStatus.OK);
+    }
+
+    @GetMapping("/all-sold")
+    public GenericResponse<List<TicketResponse>> getAllSoldTickets() {
+        return GenericResponse.success(ticketService.getAllSoldTickets(), HttpStatus.OK);
+    }
+
+    @GetMapping("/trips/{tripId}/all")
+    public GenericResponse<List<TicketResponse>> getAllTicketsByTripId(@PathVariable Long tripId) {
+        return GenericResponse.success(ticketService.getAllTicketsByTripId(tripId), HttpStatus.OK);
+    }
+
+    @GetMapping("/trips/{tripId}/all-available")
+    public GenericResponse<List<TicketResponse>> getAvailableTicketsByTripId(@PathVariable Long tripId) {
+        return GenericResponse.success(ticketService.getAllAvailableTicketsByTripId(tripId), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistics")
+    @Operation(summary = "Get general statistics", description = "Get general statistics")
+    public GenericResponse<TicketGeneralStatisticsResponse> getGeneralTicketStatistics() {
+        return GenericResponse.success(ticketService.getGeneralTicketStatistics(), HttpStatus.OK);
     }
 
 }

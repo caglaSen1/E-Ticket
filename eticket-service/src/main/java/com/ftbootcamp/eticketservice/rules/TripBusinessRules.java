@@ -28,7 +28,7 @@ public class TripBusinessRules {
         int soldTicketCount = checkTripExistById(tripId).getSoldTicketCount();
 
         if(soldTicketCount > 0){
-            handleException(ExceptionMessages.SOLD_TICKETS_EXISTS_TRIP_CANNOT_UPDATED_DELETED, "");
+            handleException(ExceptionMessages.SOLD_TICKETS_EXISTS_TRIP_CANNOT_UPDATED_CANCELED, "");
         }
     }
 

@@ -29,8 +29,8 @@ public class Ticket {
     @Column(name = TicketEntityConstants.PASSENGER_EMAIL)
     private String passengerEmail;
 
-    @Column(name = TicketEntityConstants.IS_BOUGHT)
-    private boolean isBought;
+    @Column(name = TicketEntityConstants.IS_SOLD)
+    private boolean isSold = false;
 
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted = false;
@@ -39,6 +39,6 @@ public class Ticket {
         this.trip = trip;
         this.seatNo = seatNo;
         this.price = trip.getPrice();
-        this.isBought = false;
+        this.isSold = false;
     }
 }

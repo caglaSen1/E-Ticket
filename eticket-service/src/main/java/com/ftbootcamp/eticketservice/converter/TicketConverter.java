@@ -1,6 +1,8 @@
 package com.ftbootcamp.eticketservice.converter;
 
+import com.ftbootcamp.eticketservice.dto.response.TicketGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.dto.response.TicketResponse;
+import com.ftbootcamp.eticketservice.dto.response.TripGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.entity.Ticket;
 import lombok.NoArgsConstructor;
 import java.util.List;
@@ -14,7 +16,7 @@ public class TicketConverter {
                 .seatNo(ticket.getSeatNo())
                 .price(ticket.getPrice())
                 .passengerEmail(ticket.getPassengerEmail())
-                .isBought(ticket.isBought())
+                .isBought(ticket.isSold())
                 .build();
     }
 
@@ -22,5 +24,19 @@ public class TicketConverter {
         return tickets.stream()
                 .map(TicketConverter::toTicketResponse)
                 .toList();
+    }
+
+    public static TicketGeneralStatisticsResponse toTicketGeneralStatisticsResponse(int totalTicketCount,
+                                                                                     int totalAvailableTicketCount,
+                                                                                     int totalExpiredTicketCount,
+                                                                                     int totalSoldTicketCount,
+                                                                                     double totalSoldTicketPrice) {
+        return TicketGeneralStatisticsResponse.builder()
+                .totalTicketCount(totalTicketCount)
+                .totalAvailableTicketCount(totalAvailableTicketCount)
+                .totalExpiredTicketCount(totalExpiredTicketCount)
+                .totalSoldTicketCount(totalSoldTicketCount)
+                .totalSoldTicketPrice(totalSoldTicketPrice)
+                .build();
     }
 }

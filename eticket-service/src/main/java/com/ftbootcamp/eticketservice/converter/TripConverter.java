@@ -1,7 +1,9 @@
 package com.ftbootcamp.eticketservice.converter;
 
 import com.ftbootcamp.eticketservice.dto.request.TripUpdateRequest;
+import com.ftbootcamp.eticketservice.dto.response.TripGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.dto.response.TripResponse;
+import com.ftbootcamp.eticketservice.dto.response.TripStatisticsResponse;
 import com.ftbootcamp.eticketservice.entity.Trip;
 import lombok.NoArgsConstructor;
 
@@ -44,5 +46,28 @@ public class TripConverter {
             trip.setPrice(request.getPrice());
         }
         return trip;
+    }
+
+    public static TripStatisticsResponse toTripStatisticsResponse(int totalTicketCount, int soldTicketCount,
+                                                                  double totalSoldTicketPrice) {
+
+        return TripStatisticsResponse.builder()
+                .totalTicketCount(totalTicketCount)
+                .soldTicketCount(soldTicketCount)
+                .totalSoldTicketPrice(totalSoldTicketPrice)
+                .build();
+    }
+
+    public static TripGeneralStatisticsResponse toGeneralTripStatisticsResponse(int totalTripCount,
+                                                                                 int totalAvailableTripCount,
+                                                                                 int totalExpiredNotCanceledTripCount,
+                                                                                 int totalCancelledTripCount) {
+
+          return TripGeneralStatisticsResponse.builder()
+                 .totalTripCount(totalTripCount)
+                 .totalAvailableTripCount(totalAvailableTripCount)
+                 .totalExpiredNotCanceledTripCount(totalExpiredNotCanceledTripCount)
+                 .totalCancelledTripCount(totalCancelledTripCount)
+                 .build();
     }
 }

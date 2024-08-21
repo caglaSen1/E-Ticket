@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,17 +43,19 @@ public class TicketBusinessRules {
         return foundedTickets;
     }
 
-    public void checkTicketSold(Ticket ticket) {
-        if (ticket.isBought()) {
+    public void checkTicketIsAvailable(Ticket ticket) {
+        if (ticket.isSold()) {
             handleException(ExceptionMessages.TICKET_ALREADY_SOLD, "Ticket: " + ticket.getId());
+        }
+        if(ticket.getTrip().getArrivalTime().atZone(ZoneId.systemDefault())
+                .toInstant().toEpochMilli() < System.currentTimeMillis()){
+            handleException(ExceptionMessages.TICKET_EXPIRED, "Ticket: " + ticket.getId());
         }
     }
 
-    public void checkTicketListSold(List<Ticket> tickets) {
+    public void checkTicketListIsAvailable(List<Ticket> tickets) {
         for (Ticket ticket : tickets) {
-            if (ticket.isBought()) {
-                handleException(ExceptionMessages.TICKET_ALREADY_SOLD + " Ticket: " + ticket.getId(), "Ticket: " + ticket.getId());
-            }
+            checkTicketIsAvailable(ticket);
         }
     }
 

@@ -3,13 +3,17 @@ package com.ftbootcamp.eticketservice.controller;
 import com.ftbootcamp.eticketservice.dto.request.TripCreateRequest;
 import com.ftbootcamp.eticketservice.dto.request.TripUpdateRequest;
 import com.ftbootcamp.eticketservice.dto.response.GenericResponse;
+import com.ftbootcamp.eticketservice.dto.response.TripGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.dto.response.TripResponse;
+import com.ftbootcamp.eticketservice.dto.response.TripStatisticsResponse;
 import com.ftbootcamp.eticketservice.service.TripService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/trips")
@@ -29,6 +33,37 @@ public class TripController {
     @Operation(summary = "Get trip by id", description = "Get trip by id")
     public GenericResponse<TripResponse> getTripById(@PathVariable Long id) {
         return GenericResponse.success(tripService.getTripById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/all-available")
+    @Operation(summary = "Get all available trips", description = "Get all available trips")
+    public GenericResponse<List<TripResponse>> getAllAvailableTrips() {
+        return GenericResponse.success(tripService.getAllAvailableTrips(), HttpStatus.OK);
+    }
+
+    @GetMapping("/all-expired")
+    @Operation(summary = "Get all expired but not canceled trips",
+            description = "Get all expired but not canceled trips")
+    public GenericResponse<List<TripResponse>> getAllExpiredTrips() {
+        return GenericResponse.success(tripService.getAllExpiredNotCanceledTrips(), HttpStatus.OK);
+    }
+
+    @GetMapping("/all-cancelled")
+    @Operation(summary = "Get all cancelled trips", description = "Get all cancelled trips")
+    public GenericResponse<List<TripResponse>> getAllCancelledTrips() {
+        return GenericResponse.success(tripService.getAllCancelledTrips(), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistics")
+    @Operation(summary = "Get general statistics", description = "Get general statistics")
+    public GenericResponse<TripGeneralStatisticsResponse> getGeneralTripStatistics() {
+        return GenericResponse.success(tripService.getGeneralTripStatistics(), HttpStatus.OK);
+    }
+
+    @GetMapping("/statistics/{id}")
+    @Operation(summary = "Get trip statistics", description = "Get trip statistics by id")
+    public GenericResponse<TripStatisticsResponse> getTripStatistics(@PathVariable Long id) {
+        return GenericResponse.success(tripService.getTripStatistics(id), HttpStatus.OK);
     }
 
     @PutMapping("/update")

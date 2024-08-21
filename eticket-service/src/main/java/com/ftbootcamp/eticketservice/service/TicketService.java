@@ -2,13 +2,13 @@ package com.ftbootcamp.eticketservice.service;
 
 import com.ftbootcamp.eticketservice.client.user.UserClientService;
 import com.ftbootcamp.eticketservice.client.user.constants.RoleNameConstants;
-import com.ftbootcamp.eticketservice.client.user.dto.RoleResponse;
 import com.ftbootcamp.eticketservice.client.user.dto.UserDetailsResponse;
 import com.ftbootcamp.eticketservice.client.user.enums.Gender;
 import com.ftbootcamp.eticketservice.converter.TicketConverter;
 import com.ftbootcamp.eticketservice.dto.request.PassengerTicketRequest;
 import com.ftbootcamp.eticketservice.dto.request.TicketBuyRequest;
 import com.ftbootcamp.eticketservice.dto.request.TicketMultipleBuyRequest;
+import com.ftbootcamp.eticketservice.dto.response.TicketGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.dto.response.TicketResponse;
 import com.ftbootcamp.eticketservice.entity.Ticket;
 import com.ftbootcamp.eticketservice.entity.Trip;
@@ -41,12 +41,12 @@ public class TicketService {
         UserDetailsResponse user = userService.getUserById(request.getUserId());
 
         Ticket ticket = ticketBusinessRules.checkTicketExistById(request.getTicketId());
-        ticketBusinessRules.checkTicketSold(ticket);
+        ticketBusinessRules.checkTicketIsAvailable(ticket);
 
         // TODO: Get payment
 
         ticket.setPassengerEmail(user.getEmail());
-        ticket.setBought(true);
+        ticket.setSold(true);
         ticket.getTrip().setSoldTicketCount(ticket.getTrip().getSoldTicketCount() + 1);
 
         ticketRepository.save(ticket);
@@ -72,7 +72,7 @@ public class TicketService {
                         .toList()
         );
 
-        ticketBusinessRules.checkTicketListSold(tickets);
+        ticketBusinessRules.checkTicketListIsAvailable(tickets);
 
         // Control Project Requirements:
         controlProjectRequirements(buyer, tickets, request.getPassengerTicketRequests());
@@ -81,7 +81,7 @@ public class TicketService {
 
         for (Ticket ticket : tickets) {
             ticket.setPassengerEmail(buyer.getEmail());
-            ticket.setBought(true);
+            ticket.setSold(true);
             ticket.getTrip().setSoldTicketCount(ticket.getTrip().getSoldTicketCount() + 1);
 
             ticketRepository.save(ticket);
@@ -97,19 +97,49 @@ public class TicketService {
         return TicketConverter.toTicketResponseList(tickets);
     }
 
-    public TicketResponse getTicketById(Long id) {
+    public TicketResponse getTicketById(Long id) {;
         return TicketConverter.toTicketResponse(ticketBusinessRules.checkTicketExistById(id));
     }
 
-    public List<TicketResponse> getAllTickets(Long tripId) {
+    public List<TicketResponse> getAllTickets() {
+        return TicketConverter.toTicketResponseList(ticketRepository.findAll());
+    }
+
+    public List<TicketResponse> getAllAvailableTickets() {
+        return TicketConverter.toTicketResponseList(ticketRepository.findAllAvailableTickets());
+    }
+
+    public List<TicketResponse> getAllExpiredTickets() {
+        return TicketConverter.toTicketResponseList(ticketRepository.findAllExpiredTickets());
+    }
+
+    public List<TicketResponse> getAllSoldTickets() {
+        return TicketConverter.toTicketResponseList(ticketRepository.findAllSoldTickets());
+    }
+
+    public List<TicketResponse> getAllTicketsByTripId(Long tripId) {
         return TicketConverter.toTicketResponseList(ticketRepository.findAllByTripId(tripId));
     }
 
-    public List<TicketResponse> getNotSoldTickets(Long tripId) {
-        return TicketConverter.toTicketResponseList(ticketRepository.findNotSoldByTripId(tripId));
+    public List<TicketResponse> getAllAvailableTicketsByTripId(Long tripId) {
+        return TicketConverter.toTicketResponseList(ticketRepository.findAllAvailableTicketsByTripId(tripId));
     }
 
-    // TODO: getAllTicketsCanBought() -> isBought = false, returnTicket(), delete
+    public TicketGeneralStatisticsResponse getGeneralTicketStatistics() {
+        int totalTicketCount = ticketRepository.findAll().size();
+        int totalAvailableTicketCount = ticketRepository.findAllAvailableTickets().size();
+        int totalExpiredTicketCount = ticketRepository.findAllExpiredTickets().size();
+        int totalSoldTicketCount = ticketRepository.findAll().stream().filter(Ticket::isSold).toList().size();
+        double totalSoldTicketPrice = ticketRepository.findAll().stream()
+                .filter(Ticket::isSold)
+                .mapToDouble(Ticket::getPrice)
+                .sum();
+
+        return TicketConverter.toTicketGeneralStatisticsResponse(totalTicketCount, totalAvailableTicketCount,
+                totalExpiredTicketCount, totalSoldTicketCount, totalSoldTicketPrice);
+    }
+
+    // TODO: returnTicket()
 
     public void deleteTicketsByTripId(Long tripId) {
         ticketRepository.findAllByTripId(tripId).forEach(ticket -> {
