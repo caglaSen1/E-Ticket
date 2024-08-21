@@ -32,6 +32,9 @@ public class Ticket {
     @Column(name = TicketEntityConstants.IS_BOUGHT)
     private boolean isBought;
 
+    @Column(name = "is_deleted", nullable = false)
+    private boolean isDeleted = false;
+
     public Ticket(Trip trip, String seatNo) {
         this.trip = trip;
         this.seatNo = seatNo;

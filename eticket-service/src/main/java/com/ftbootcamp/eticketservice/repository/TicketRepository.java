@@ -19,4 +19,5 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     @Modifying
     @Query("DELETE FROM Ticket t WHERE t.trip.id = :tripId")
     void deleteAllByTripId(Long tripId);
+
 }

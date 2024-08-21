@@ -112,7 +112,10 @@ public class TicketService {
     // TODO: getAllTicketsCanBought() -> isBought = false, returnTicket(), delete
 
     public void deleteTicketsByTripId(Long tripId) {
-        ticketRepository.deleteAllByTripId(tripId);
+        ticketRepository.findAllByTripId(tripId).forEach(ticket -> {
+            ticket.setDeleted(true);
+            ticketRepository.save(ticket);
+        });
     }
 
     public void generateTicketsForTrip(Trip trip) {

@@ -31,16 +31,16 @@ public class TripController {
         return GenericResponse.success(tripService.getTripById(id), HttpStatus.OK);
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     @Operation(summary = "Update trip", description = "Update trip with given trip information")
     public GenericResponse<TripResponse> updateTrip(@RequestBody TripUpdateRequest request) {
         return GenericResponse.success(tripService.updateTrip(request), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Delete trip", description = "Delete trip by id")
-    public GenericResponse<String> deleteTrip(@PathVariable Long id) {
-        tripService.deleteTrip(id);
+    @PutMapping("cancel/{id}")
+    @Operation(summary = "Cancel trip", description = "Cancel trip with given trip id")
+    public GenericResponse<String> cancelTrip(@PathVariable Long id) {
+        tripService.cancelTrip(id);
         return GenericResponse.success(null, HttpStatus.OK);
     }
 }

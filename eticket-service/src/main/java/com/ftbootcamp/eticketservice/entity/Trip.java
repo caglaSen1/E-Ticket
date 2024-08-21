@@ -45,6 +45,9 @@ public class Trip {
     @Column(name = TripEntityConstants.CREATED_DATE)
     private LocalDateTime createdDate;
 
+    @Column(name = "is_cancelled", nullable = false)
+    private boolean isCancelled = false;
+
     public Trip(LocalDateTime departureTime, LocalDateTime arrivalTime, String departureCity, String arrivalCity,
                 VehicleType vehicleType, int totalTicketCount, double price) {
         this.departureTime = departureTime;

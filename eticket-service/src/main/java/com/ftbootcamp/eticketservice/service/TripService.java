@@ -68,12 +68,13 @@ public class TripService {
     }
 
     @Transactional
-    public void deleteTrip(Long id) {
-        tripBusinessRules.checkTripExistById(id);
+    public void cancelTrip(Long id) {
+        Trip tripToCancel = tripBusinessRules.checkTripExistById(id);
         tripBusinessRules.checkIfThereAreAnySoldTickets(id);
 
         ticketService.deleteTicketsByTripId(id);
 
-        tripRepository.deleteById(id);
+        tripToCancel.setCancelled(true);
+        tripRepository.save(tripToCancel);
     }
 }
