@@ -1,22 +1,30 @@
 package com.ftbootcamp.eticketuserservice.rules;
 
-import com.ftbootcamp.eticketuserservice.entity.abstracts.User;
+import com.ftbootcamp.eticketuserservice.entity.concrete.CompanyUser;
 import com.ftbootcamp.eticketuserservice.entity.constant.UserEntityConstants;
-import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
 import com.ftbootcamp.eticketuserservice.exception.ETicketException;
 import com.ftbootcamp.eticketuserservice.exception.ExceptionMessages;
+import com.ftbootcamp.eticketuserservice.repository.CompanyUserRepository;
 import com.ftbootcamp.eticketuserservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-
 @RequiredArgsConstructor
 @Slf4j
 @Component
-public class UserBusinessRules {
+public class CompanyUserBusinessRules {
 
+    private final CompanyUserRepository companyUserRepository;
     private final UserRepository userRepository;
+
+    public CompanyUser checkUserExistById(long id) {
+        if (companyUserRepository.findById(id).isEmpty()) {
+            handleException(ExceptionMessages.USER_NOT_FOUND, "Id: " + id);
+        }
+
+        return companyUserRepository.findById(id).get();
+    }
 
     public void checkEmailValid(String email) {
         if (!email.contains("@")) {
@@ -30,6 +38,14 @@ public class UserBusinessRules {
         }
     }
 
+    public CompanyUser checkUserExistByEmail(String email) {
+        if (companyUserRepository.findByEmail(email).isEmpty()) {
+            handleException(ExceptionMessages.USER_NOT_FOUND, "Email: " + email);
+        }
+
+        return companyUserRepository.findByEmail(email).get();
+    }
+
     public void checkPasswordValid(String password) {
         int minPasswordLength = UserEntityConstants.PASSWORD_MIN_LENGTH;
         int maxPasswordLength = UserEntityConstants.PASSWORD_MAX_LENGTH;
@@ -38,29 +54,6 @@ public class UserBusinessRules {
             handleException(ExceptionMessages.USER_PASSWORD_NOT_VALID, "Password: " + password);
         }
     }
-
-    public User checkUserExistById(long id) {
-        if (userRepository.findById(id).isEmpty()) {
-            handleException(ExceptionMessages.USER_NOT_FOUND, "Id: " + id);
-        }
-
-        return userRepository.findById(id).get();
-    }
-
-    public User checkUserExistByEmail(String email) {
-        if (userRepository.findByEmail(email).isEmpty()) {
-            handleException(ExceptionMessages.USER_NOT_FOUND, "Email: " + email);
-        }
-
-        return userRepository.findByEmail(email).get();
-    }
-
-    /*
-    public void checkUserTypeAlreadyPremium(String email) {
-        if (userRepository.findByEmail(email).get().getUserType().equals(UserType.PREMIUM)) {
-            handleException(ExceptionMessages.USER_TYPE_ALREADY_PREMIUM, "Email: " + email);
-        }
-    }*/
 
     private void handleException(String exceptionMessage, String request) {
         String logMessage;
@@ -73,4 +66,5 @@ public class UserBusinessRules {
 
         throw new ETicketException(exceptionMessage, logMessage);
     }
+
 }

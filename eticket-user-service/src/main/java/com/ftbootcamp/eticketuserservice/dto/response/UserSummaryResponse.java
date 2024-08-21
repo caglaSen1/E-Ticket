@@ -7,6 +7,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,16 +17,7 @@ import java.time.LocalDateTime;
 public class UserSummaryResponse {
 
     private String email;
-
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
-    @Enumerated(EnumType.STRING)
-    private UserType userType;
-
-    @Enumerated(EnumType.STRING)
-    private StatusType statusType;
-
+    private String phoneNumber;
     private LocalDateTime createdDate;
 
 }

@@ -1,23 +1,24 @@
-package com.ftbootcamp.eticketuserservice.entity;
+package com.ftbootcamp.eticketuserservice.entity.abstracts;
 
+import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.entity.constant.UserEntityConstants;
-import com.ftbootcamp.eticketuserservice.entity.enums.Gender;
-import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
-import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 @ToString
 @Entity
 @Table(name = "users")
-public class User {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,23 +27,11 @@ public class User {
     @Column(name = UserEntityConstants.EMAIL, nullable = false)
     private String email;
 
+    @Column(name = UserEntityConstants.PHONE_NUMBER)
+    private String phoneNumber;
+
     @Column(name = UserEntityConstants.PASSWORD, nullable = false)
     private String password;
-
-    @Column(name = UserEntityConstants.NATIONAL_ID)
-    private Long nationalId;
-
-    @Column(name = UserEntityConstants.BIRTH_DATE)
-    private LocalDateTime birthDate;
-
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
-    @Enumerated(EnumType.STRING)
-    private UserType userType;
-
-    @Enumerated(EnumType.STRING)
-    private StatusType statusType;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -53,11 +42,10 @@ public class User {
     @Column(name = UserEntityConstants.CREATED_DATE)
     private LocalDateTime createdDate;
 
-    public User(String email, String password) {
+    public User(String email, String phoneNumber, String password) {
         this.email = email;
+        this.phoneNumber = phoneNumber;
         this.password = password;
-        this.userType = UserType.STANDARD;
-        this.statusType = StatusType.WAITING_APPROVAL;
         this.createdDate = LocalDateTime.now();
     }
 }

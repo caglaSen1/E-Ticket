@@ -4,7 +4,7 @@ import com.ftbootcamp.eticketuserservice.converter.RoleConverter;
 import com.ftbootcamp.eticketuserservice.dto.request.RoleCreateRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.RoleUpdateRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.RoleResponse;
-import com.ftbootcamp.eticketuserservice.entity.Role;
+import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.repository.RoleRepository;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,7 @@ public class RoleService {
     private final RoleBusinessRules roleBusinessRules;
 
     public RoleResponse create(RoleCreateRequest roleCreateRequest) {
-        roleBusinessRules.checkNameNull(roleCreateRequest.getName());
-        roleBusinessRules.checkRoleAlreadyExistByName(roleCreateRequest.getName());
+        roleBusinessRules.checkRoleNameAlreadyExist(roleCreateRequest.getName());
 
         Role role = new Role(roleCreateRequest.getName().toUpperCase());
         roleRepository.save(role);
@@ -34,12 +33,11 @@ public class RoleService {
     }
 
     public RoleResponse getRoleByName(String name) {
-        roleBusinessRules.checkNameNull(name);
         return RoleConverter.roleToRoleResponse(roleBusinessRules.checkRoleExistByName(name));
     }
 
     public RoleResponse updateRole(RoleUpdateRequest roleUpdateRequest) {
-        roleBusinessRules.checkRoleAlreadyExistByName(roleUpdateRequest.getName());
+        roleBusinessRules.checkRoleNameAlreadyExist(roleUpdateRequest.getName());
 
         Role roleToUpdate = roleBusinessRules.checkRoleExistById(roleUpdateRequest.getId());
         Role updatedRole = RoleConverter.toUpdatedRoleEntity(roleToUpdate, roleUpdateRequest);
@@ -54,7 +52,7 @@ public class RoleService {
         roleRepository.deleteById(id);
     }
 
-    public Role createDefaultRoleIfNotExist(String name) {
+    public Role createRoleIfNotExist(String name) {
         if(roleRepository.findByName(name).isEmpty()) {
             roleRepository.save(new Role(name));
         }
@@ -62,7 +60,7 @@ public class RoleService {
         return roleRepository.findByName(name).get();
     }
 
-    public void save(Role role) {
+    public void add(Role role) {
         roleRepository.save(role);
     }
 }

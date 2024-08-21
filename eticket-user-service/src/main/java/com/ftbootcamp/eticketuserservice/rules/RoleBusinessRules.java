@@ -1,6 +1,6 @@
 package com.ftbootcamp.eticketuserservice.rules;
 
-import com.ftbootcamp.eticketuserservice.entity.Role;
+import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
 import com.ftbootcamp.eticketuserservice.exception.ETicketException;
 import com.ftbootcamp.eticketuserservice.exception.ExceptionMessages;
@@ -15,12 +15,6 @@ import org.springframework.stereotype.Component;
 public class RoleBusinessRules {
 
     private final RoleRepository roleRepository;
-
-    public void checkNameNull(String name) {
-        if (name == null || name.isEmpty()) {
-            handleException(ExceptionMessages.ROLE_NAME_CANNOT_BE_NULL, "");
-        }
-    }
 
     public Role checkRoleExistById(Long id) {
         if (roleRepository.findById(id).isEmpty()) {
@@ -38,15 +32,19 @@ public class RoleBusinessRules {
         return roleRepository.findByName(name.toUpperCase()).get();
     }
 
-    public void checkRoleAlreadyExistByName(String name) {
+    public void checkRoleNameAlreadyExist(String name) {
         if (roleRepository.findByName(name.toUpperCase()).isPresent()) {
             handleException(ExceptionMessages.ROLE_ALREADY_EXIST, "Name: " + name);
         }
     }
 
-    public void checkRoleToRemoveIsDefault(String roleName) {
-        if (roleName.equals(RoleEntityConstants.DEFAULT_ROLE_NAME)) {
-            handleException(ExceptionMessages.DEFAULT_ROLE_CANNOT_BE_REMOVED, "Role: " + roleName);
+    public void checkRoleToRemoveIsDefault(String roleToRemove) {
+
+        if(roleToRemove.equals(RoleEntityConstants.USER_ROLE_NAME) ||
+                roleToRemove.equals(RoleEntityConstants.ADMIN_USER_ROLE_NAME) ||
+                roleToRemove.equals(RoleEntityConstants.INDIVIDUAL_USER_ROLE_NAME) ||
+                roleToRemove.equals(RoleEntityConstants.CORPORATE_USER_ROLE_NAME)){
+            handleException(ExceptionMessages.DEFAULT_ROLE_CANNOT_BE_REMOVED, "Role: " + roleToRemove);
         }
     }
 

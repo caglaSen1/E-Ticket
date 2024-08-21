@@ -1,4 +1,4 @@
-package com.ftbootcamp.eticketuserservice.entity;
+package com.ftbootcamp.eticketuserservice.entity.concrete;
 
 import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
 import jakarta.persistence.*;
@@ -21,9 +21,6 @@ public class Role {
 
     @Column(name = RoleEntityConstants.NAME, nullable = false)
     private String name;
-
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
 
     public Role(String name) {
         this.name = name;

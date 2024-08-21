@@ -2,7 +2,7 @@ package com.ftbootcamp.eticketuserservice.converter;
 
 import com.ftbootcamp.eticketuserservice.dto.response.UserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.UserSummaryResponse;
-import com.ftbootcamp.eticketuserservice.entity.User;
+import com.ftbootcamp.eticketuserservice.entity.abstracts.User;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -14,9 +14,7 @@ public class UserConverter {
 
         return UserSummaryResponse.builder()
                 .email(user.getEmail())
-                .gender(user.getGender())
-                .userType(user.getUserType())
-                .statusType(user.getStatusType())
+                .phoneNumber(user.getPhoneNumber())
                 .createdDate(user.getCreatedDate())
                 .build();
 
@@ -33,12 +31,9 @@ public class UserConverter {
 
         return UserDetailsResponse.builder()
                 .email(user.getEmail())
-                .birthDate(user.getBirthDate())
-                .gender(user.getGender())
-                .userType(user.getUserType())
-                .statusType(user.getStatusType())
-                .roles(RoleConverter.roleToRoleResponse(user.getRoles()))
+                .phoneNumber(user.getPhoneNumber())
                 .createdDate(user.getCreatedDate())
+                .roles(RoleConverter.roleToRoleResponse(user.getRoles()))
                 .build();
     }
 

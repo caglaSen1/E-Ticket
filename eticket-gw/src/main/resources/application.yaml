@@ -20,6 +20,18 @@ spring:
           uri: lb://ETICKET-USER-SERVICE
           predicates:
             - Path=/api/v1/roles/**
+        - id: eticket-user-service
+          uri: lb://ETICKET-USER-SERVICE
+          predicates:
+            - Path=/api/v1/individual-users/**
+        - id: eticket-user-service
+          uri: lb://ETICKET-USER-SERVICE
+          predicates:
+            - Path=/api/v1/company-users/**
+        - id: eticket-user-service
+          uri: lb://ETICKET-USER-SERVICE
+          predicates:
+            - Path=/api/v1/admin-users/**
         - id: notification-service
           uri: lb://NOTIFICATION-SERVICE
           predicates:
