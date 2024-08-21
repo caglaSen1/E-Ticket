@@ -1,14 +1,9 @@
 package com.ftbootcamp.eticketuserservice.service;
 
 import com.ftbootcamp.eticketuserservice.converter.UserConverter;
-import com.ftbootcamp.eticketuserservice.dto.request.UserPasswordChangeRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserRoleRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.UserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.UserSummaryResponse;
-import com.ftbootcamp.eticketuserservice.entity.abstracts.User;
-import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.repository.UserRepository;
-import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
 import com.ftbootcamp.eticketuserservice.rules.UserBusinessRules;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +26,13 @@ public class UserService {
     }
 
     public UserDetailsResponse getUserById(Long id) {
-        return UserConverter.toUserDetailsResponse(userBusinessRules.checkUserExistById(id));
+        userBusinessRules.checkUserExistById(id);
+        return UserConverter.toUserDetailsReaponse(userRepository.findUserWithDetailsById(id).get());
     }
 
     public UserDetailsResponse getUserByEmail(String email) {
-        return UserConverter.toUserDetailsResponse(userBusinessRules.checkUserExistByEmail(email));
+        userBusinessRules.checkUserExistByEmail(email);
+        return UserConverter.toUserDetailsReaponse(userRepository.findUserWithDetailsByEmail(email).get());
     }
 
     public int getHowManyUsers() {

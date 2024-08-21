@@ -1,7 +1,5 @@
 package com.ftbootcamp.eticketuserservice.controller;
 
-import com.ftbootcamp.eticketuserservice.dto.request.UserPasswordChangeRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserRoleRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.GenericResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.UserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.UserSummaryResponse;

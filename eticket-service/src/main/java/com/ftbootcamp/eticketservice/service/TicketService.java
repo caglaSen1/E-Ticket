@@ -134,6 +134,7 @@ public class TicketService {
         infoMessage.append("Price: ").append(ticket.getPrice()).append("\n");
         infoMessage.append("************************************\n");
 
+        return infoMessage.toString();
     }
 
     private String generateMultipleTicketInfoMessage(UserDetailsResponse user, List<Ticket> tickets) {
