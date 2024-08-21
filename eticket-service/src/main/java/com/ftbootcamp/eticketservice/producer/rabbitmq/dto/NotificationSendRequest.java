@@ -1,6 +1,6 @@
-package com.ftbootcamp.eticketservice.producer.dto;
+package com.ftbootcamp.eticketservice.producer.rabbitmq.dto;
 
-import com.ftbootcamp.eticketservice.producer.enums.NotificationType;
+import com.ftbootcamp.eticketservice.producer.rabbitmq.enums.NotificationType;
 import lombok.*;
 
 @AllArgsConstructor

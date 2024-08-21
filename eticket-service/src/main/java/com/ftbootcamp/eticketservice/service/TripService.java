@@ -7,6 +7,7 @@ import com.ftbootcamp.eticketservice.dto.response.TripGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.dto.response.TripResponse;
 import com.ftbootcamp.eticketservice.dto.response.TripStatisticsResponse;
 import com.ftbootcamp.eticketservice.entity.Trip;
+import com.ftbootcamp.eticketservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketservice.repository.TripRepository;
 import com.ftbootcamp.eticketservice.rules.TripBusinessRules;
 import jakarta.transaction.Transactional;
@@ -25,6 +26,7 @@ public class TripService {
     private final TripRepository tripRepository;
     private final TripBusinessRules tripBusinessRules;
     private final TicketService ticketService;
+    private final KafkaProducer kafkaProducer;
 
     // TODO: +cancelTrip()
 
@@ -47,6 +49,9 @@ public class TripService {
 
         // Generate tickets for the trip
         ticketService.generateTicketsForTrip(trip);
+
+        // Trip send to kafka (It will be consumed by index-service and saved to elasticsearch)
+        kafkaProducer.sendTrip(trip);
 
         return TripConverter.toTripResponse(trip);
     }
@@ -107,6 +112,9 @@ public class TripService {
 
         tripRepository.save(updatedTrip);
 
+        // Trip send to kafka (It will be consumed by index-service and saved to elasticsearch)
+        kafkaProducer.sendTrip(updatedTrip);
+
         return TripConverter.toTripResponse(updatedTrip);
     }
 
@@ -118,5 +126,8 @@ public class TripService {
 
         tripToCancel.setCancelled(true);
         tripRepository.save(tripToCancel);
+
+        // Trip send to kafka (It will be consumed by index-service and saved to elasticsearch)
+        kafkaProducer.sendTrip(tripToCancel);
     }
 }

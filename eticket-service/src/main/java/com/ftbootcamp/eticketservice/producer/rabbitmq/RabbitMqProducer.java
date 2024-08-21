@@ -1,7 +1,7 @@
-package com.ftbootcamp.eticketservice.producer;
+package com.ftbootcamp.eticketservice.producer.rabbitmq;
 
 import com.ftbootcamp.eticketservice.config.RabbitMQProducerConfig;
-import com.ftbootcamp.eticketservice.producer.dto.NotificationSendRequest;
+import com.ftbootcamp.eticketservice.producer.rabbitmq.dto.NotificationSendRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
