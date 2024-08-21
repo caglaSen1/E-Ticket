@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -23,9 +26,33 @@ public class TicketBusinessRules {
         return ticketRepository.findById(id).get();
     }
 
+    public List<Ticket> checkTicketsExistByIdList(List<Long> ids) {
+
+        List<Ticket> foundedTickets = new ArrayList<>();
+
+        for (long id : ids) {
+            if (ticketRepository.findById(id).isEmpty()) {
+                handleException(ExceptionMessages.TICKET_NOT_FOUND, "Id: " + id);
+                return null;
+            }
+
+            foundedTickets.add(ticketRepository.findById(id).get());
+        }
+
+        return foundedTickets;
+    }
+
     public void checkTicketSold(Ticket ticket) {
         if (ticket.isBought()) {
             handleException(ExceptionMessages.TICKET_ALREADY_SOLD, "Ticket: " + ticket.getId());
+        }
+    }
+
+    public void checkTicketListSold(List<Ticket> tickets) {
+        for (Ticket ticket : tickets) {
+            if (ticket.isBought()) {
+                handleException(ExceptionMessages.TICKET_ALREADY_SOLD + " Ticket: " + ticket.getId(), "Ticket: " + ticket.getId());
+            }
         }
     }
 

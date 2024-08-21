@@ -1,6 +1,7 @@
 package com.ftbootcamp.eticketservice.controller;
 
 import com.ftbootcamp.eticketservice.dto.request.TicketBuyRequest;
+import com.ftbootcamp.eticketservice.dto.request.TicketMultipleBuyRequest;
 import com.ftbootcamp.eticketservice.dto.response.GenericResponse;
 import com.ftbootcamp.eticketservice.dto.response.TicketResponse;
 import com.ftbootcamp.eticketservice.service.TicketService;
@@ -23,6 +24,12 @@ public class TicketController {
     @Operation(summary = "Buy ticket", description = "Buy ticket with given ticket information")
     public GenericResponse<TicketResponse> buyTicket(@RequestBody TicketBuyRequest request) {
         return GenericResponse.success(ticketService.buyTicket(request), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/buy-multiple")
+    @Operation(summary = "Buy ticket", description = "Buy ticket with given ticket information")
+    public GenericResponse<List<TicketResponse>> buyMultipleTicket(@RequestBody TicketMultipleBuyRequest request) {
+        return GenericResponse.success(ticketService.buyMultipleTicket(request), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
