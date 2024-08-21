@@ -1,0 +1,15 @@
+package com.ftbootcamp.eticketindexservice;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
+
+@SpringBootApplication
+@EnableElasticsearchRepositories
+public class EticketIndexServiceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(EticketIndexServiceApplication.class, args);
+	}
+
+}

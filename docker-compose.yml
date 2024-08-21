@@ -47,3 +47,14 @@ services:
       KAFKA_CREATE_TOPICS: "message_log_topic:1:1, trip_index_topic:1:1, user_index_topic"
     depends_on:
       - zookeeper
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+    container_name: eticket-elasticsearch
+    environment:
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9400:9400"

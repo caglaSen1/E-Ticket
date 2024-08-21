@@ -40,6 +40,10 @@ spring:
           uri: lb://NOTIFICATION-SERVICE
           predicates:
             - Path=/api/v1/emails/**
+        - id: eticket-index-service
+          uri: lb://ETICKET-INDEX-SERVICE
+          predicates:
+            - Path=/api/v1/documents/**
 
 server:
   port: 9090
