@@ -43,14 +43,31 @@ public class TicketService {
     private final KafkaProducer kafkaProducer;
     private final PaymentClientService paymentClientService;
 
-    public TicketResponse buyTicket(TicketBuyRequest request) {
+    public void takePaymentOfTicket(TicketBuyRequest request) {
         // Get user with userClient (sencronous):
         UserDetailsResponse user = userService.getUserById(request.getUserId());
 
         Ticket ticket = ticketBusinessRules.checkTicketExistById(request.getTicketId());
         ticketBusinessRules.checkTicketIsAvailable(ticket);
 
-        // TODO: Get payment
+        // Get Payment of Ticket with Payment Service (Sencronize):
+        PaymentGenericRequest<TicketBuyRequest> paymentGenericRequest =
+                new PaymentGenericRequest<>(request.getPaymentType(),
+                        new BigDecimal(ticket.getPrice()), user.getEmail(), request,
+                        "TicketBuyRequest");
+
+        paymentClientService.createPayment(paymentGenericRequest);
+
+        kafkaProducer.sendLogMessage(new Log("Payment transaction send to payment-service for ticket. " +
+                "Buyer: " + user.getEmail() + " ticket id: " + ticket.getId()));
+    }
+
+    public void createTicketAfterPayment(TicketBuyRequest request) {
+        // Get user with userClient (sencronous):
+        UserDetailsResponse user = userService.getUserById(request.getUserId());
+
+        Ticket ticket = ticketBusinessRules.checkTicketExistById(request.getTicketId());
+        ticketBusinessRules.checkTicketIsAvailable(ticket);
 
         ticket.setPassengerEmail(user.getEmail());
         ticket.setSold(true);
@@ -67,7 +84,6 @@ public class TicketService {
         kafkaProducer.sendLogMessage(new Log("Ticket bought. ticket id: " + ticket.getId() + ", Buyer: " +
                 user.getEmail()));
 
-        return TicketConverter.toTicketResponse(ticket);
     }
 
     public void takePaymentOfMultipleTicket(TicketMultipleBuyRequest request) {
@@ -95,8 +111,9 @@ public class TicketService {
                 "TicketMultipleBuyRequest");
 
         paymentClientService.createPayment(paymentGenericRequest);
-        log.info("payment servise gönderildi");
 
+        kafkaProducer.sendLogMessage(new Log("Payment transaction send to payment-service for multiple tickets. " +
+                "Buyer: " + buyer.getEmail() + " ticket ids: " + tickets.stream().map(Ticket::getId).toList()));
     }
 
     public void createTicketsAfterPayment(TicketMultipleBuyRequest request) {

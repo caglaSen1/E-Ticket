@@ -3,6 +3,7 @@ package com.ftbootcamp.eticketservice.consumer;
 import aj.org.objectweb.asm.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ftbootcamp.eticketservice.client.payment.dto.request.PaymentGenericRequest;
+import com.ftbootcamp.eticketservice.dto.request.TicketBuyRequest;
 import com.ftbootcamp.eticketservice.dto.request.TicketMultipleBuyRequest;
 import com.ftbootcamp.eticketservice.service.TicketService;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,19 @@ public class RabbitMQConsumer {
         if ("TicketMultipleBuyRequest".equals(request.getPaymentObjectType())) {
             ObjectMapper objectMapper = new ObjectMapper();
 
-            // Convert the paymentObject into TicketMultipleBuyRequest
             TicketMultipleBuyRequest ticketRequest = objectMapper.convertValue(
                     request.getPaymentObject(), TicketMultipleBuyRequest.class);
 
-            // Now you can handle the request with the ticketService
             ticketService.createTicketsAfterPayment(ticketRequest);
+        }
+
+        if("TicketBuyRequest".equals(request.getPaymentObjectType())){
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            TicketBuyRequest ticketRequest = objectMapper.convertValue(
+                    request.getPaymentObject(), TicketBuyRequest.class);
+
+            ticketService.createTicketAfterPayment(ticketRequest);
         }
     }
 }

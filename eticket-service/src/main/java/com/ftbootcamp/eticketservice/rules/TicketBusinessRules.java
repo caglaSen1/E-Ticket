@@ -48,7 +48,7 @@ public class TicketBusinessRules {
         }
         if(ticket.getTrip().getArrivalTime().atZone(ZoneId.systemDefault())
                 .toInstant().toEpochMilli() < System.currentTimeMillis()){
-            throw new ETicketException(ExceptionMessages.TICKET_EXPIRED + "Ticket: " + ticket.getId());
+            throw new ETicketException(ExceptionMessages.TICKET_EXPIRED + " Ticket: " + ticket.getId());
         }
     }
 

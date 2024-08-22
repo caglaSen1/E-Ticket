@@ -22,9 +22,10 @@ public class TicketController {
     private final TicketService ticketService;
 
     @PostMapping("/buy")
-    @Operation(summary = "Buy ticket", description = "Buy ticket with given ticket information")
-    public GenericResponse<TicketResponse> buyTicket(@RequestBody TicketBuyRequest request) {
-        return GenericResponse.success(ticketService.buyTicket(request), HttpStatus.CREATED);
+    @Operation(summary = "Buy ticket for logged in user", description = "Buy ticket for logged in user")
+    public GenericResponse<Void> buyTicket(@RequestBody TicketBuyRequest request) {
+        ticketService.takePaymentOfTicket(request);
+        return GenericResponse.success(null, HttpStatus.CREATED);
     }
 
     @PostMapping("/buy-multiple")
