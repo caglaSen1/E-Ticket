@@ -1,12 +1,12 @@
 package com.ftbootcamp.paymentservice.model;
 
 import com.ftbootcamp.paymentservice.model.constant.PaymentEntityConstants;
+import com.ftbootcamp.paymentservice.model.enums.PaymentType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

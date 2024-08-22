@@ -2,7 +2,6 @@ package com.ftbootcamp.paymentservice.producer;
 
 import com.ftbootcamp.paymentservice.config.RabbitMQProducerConfig;
 import com.ftbootcamp.paymentservice.dto.request.PaymentGenericRequest;
-import com.ftbootcamp.paymentservice.dto.response.PaymentGenericResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -17,13 +16,13 @@ public class RabbitMqProducer {
 
     private final RabbitMQProducerConfig rabbitMQProducerConfig;
 
-    public void sendPaymentToQueue(PaymentGenericRequest<?> request) {
+    public void sendPaymentToEticketQueue(PaymentGenericRequest<?> request) {
 
-        rabbitTemplate.convertAndSend(rabbitMQProducerConfig.getExchange(), rabbitMQProducerConfig.getRoutingKey(),
-                request);
+        rabbitTemplate.convertAndSend(rabbitMQProducerConfig.getExchange(),
+                rabbitMQProducerConfig.getEticketRoutingKey(), request);
 
         log.info("Message sent to queue. Queue: {}, Message: {}",
-                rabbitMQProducerConfig.getQueueName(), request.toString());
+                rabbitMQProducerConfig.getEticketQueueName(), request.toString());
 
     }
 }

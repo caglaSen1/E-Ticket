@@ -13,9 +13,9 @@ public class PaymentClientService {
 
     private final PaymentClient paymentClient;
 
-    public void createPayment(PaymentGenericRequest<?> request) {
+    public void takePayment(PaymentGenericRequest<?> request) {
         try{
-            paymentClient.createPayment(request);
+            paymentClient.processPaymentRequestAndSendToQueue(request);
         } catch (FeignException e){
             throw new PaymentClientException("Failed to connect to payment service. Please try again later.");
         }

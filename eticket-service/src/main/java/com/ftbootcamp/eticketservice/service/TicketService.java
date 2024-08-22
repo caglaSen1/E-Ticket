@@ -25,7 +25,6 @@ import com.ftbootcamp.eticketservice.rules.TicketBusinessRules;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +55,7 @@ public class TicketService {
                         new BigDecimal(ticket.getPrice()), user.getEmail(), request,
                         "TicketBuyRequest");
 
-        paymentClientService.createPayment(paymentGenericRequest);
+        paymentClientService.takePayment(paymentGenericRequest);
 
         kafkaProducer.sendLogMessage(new Log("Payment transaction send to payment-service for ticket. " +
                 "Buyer: " + user.getEmail() + " ticket id: " + ticket.getId()));
@@ -81,8 +80,8 @@ public class TicketService {
                 infoMessage));
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage(new Log("Ticket bought. ticket id: " + ticket.getId() + ", Buyer: " +
-                user.getEmail()));
+        kafkaProducer.sendLogMessage(new Log("Ticket buying process completed. Buyer: " + user.getEmail() +
+                " ticket id: " + ticket.getId()));
 
     }
 
@@ -110,7 +109,7 @@ public class TicketService {
                 new BigDecimal(totalPrice), buyer.getEmail(), request,
                 "TicketMultipleBuyRequest");
 
-        paymentClientService.createPayment(paymentGenericRequest);
+        paymentClientService.takePayment(paymentGenericRequest);
 
         kafkaProducer.sendLogMessage(new Log("Payment transaction send to payment-service for multiple tickets. " +
                 "Buyer: " + buyer.getEmail() + " ticket ids: " + tickets.stream().map(Ticket::getId).toList()));
@@ -141,7 +140,7 @@ public class TicketService {
                 infoMessage));
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage(new Log("Ticket bought. Buyer: " + buyer.getEmail() +
+        kafkaProducer.sendLogMessage(new Log("Ticket buying process completed. Buyer: " + buyer.getEmail() +
                 " ticket ids: " + tickets.stream().map(Ticket::getId).toList()));
     }
 

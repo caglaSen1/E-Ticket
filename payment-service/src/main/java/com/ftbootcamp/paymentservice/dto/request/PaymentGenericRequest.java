@@ -1,6 +1,6 @@
 package com.ftbootcamp.paymentservice.dto.request;
 
-import com.ftbootcamp.paymentservice.model.PaymentType;
+import com.ftbootcamp.paymentservice.model.enums.PaymentType;
 import lombok.*;
 
 import java.math.BigDecimal;

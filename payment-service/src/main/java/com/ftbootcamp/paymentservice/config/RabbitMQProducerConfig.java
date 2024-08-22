@@ -14,19 +14,18 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class RabbitMQProducerConfig {
 
-    @Value("${rabbitmq.send.payment.queue}")
-    private String queueName;
-
     @Value("${rabbitmq.exchange}")
     private String exchange;
 
-    @Value("${rabbitmq.send.payment.routingKey}")
-    private String routingKey;
+    @Value("${rabbitmq.send.eticket.payment.info.queue}")
+    private String eticketQueueName;
 
+    @Value("${rabbitmq.send.eticket.payment.info.routingKey}")
+    private String eticketRoutingKey;
 
     @Bean
     public Queue queue() {
-        return new Queue(queueName, true);
+        return new Queue(eticketQueueName, true);
     }
 
     @Bean
@@ -36,7 +35,7 @@ public class RabbitMQProducerConfig {
 
     @Bean
     public Binding binding(Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(routingKey);
+        return BindingBuilder.bind(queue).to(exchange).with(eticketRoutingKey);
     }
 
     @Bean

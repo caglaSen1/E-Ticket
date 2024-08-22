@@ -10,6 +10,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(PaymentException.class)
     public GenericResponse handlePaymentException(PaymentException e){
 
+        // TODO: Kafka log
         return GenericResponse.failed(e.getMessage());
     }
 }

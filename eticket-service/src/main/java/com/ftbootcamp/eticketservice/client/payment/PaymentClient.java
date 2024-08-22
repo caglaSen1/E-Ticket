@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "payment-service", url = "localhost:9069/api/v1/payments")
 public interface PaymentClient {
 
-    @PostMapping("/createAndSend")
-    void createPayment(@RequestBody PaymentGenericRequest<?> request);
+    @PostMapping("/process-and-send-queue")
+    void processPaymentRequestAndSendToQueue(@RequestBody PaymentGenericRequest<?> request);
 }

@@ -1,6 +1,5 @@
 package com.ftbootcamp.eticketservice.consumer;
 
-import aj.org.objectweb.asm.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ftbootcamp.eticketservice.client.payment.dto.request.PaymentGenericRequest;
 import com.ftbootcamp.eticketservice.dto.request.TicketBuyRequest;
@@ -19,7 +18,7 @@ public class RabbitMQConsumer {
 
     private final TicketService ticketService;
 
-    @RabbitListener(queuesToDeclare = @Queue("${rabbitmq.send.payment.queue}"))
+    @RabbitListener(queuesToDeclare = @Queue("${rabbitmq.send.eticket.payment.info.queue}"))
     public void handleAfterPayment(PaymentGenericRequest<?> request) {
 
         if ("TicketMultipleBuyRequest".equals(request.getPaymentObjectType())) {

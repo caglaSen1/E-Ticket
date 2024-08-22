@@ -2,8 +2,6 @@ package com.ftbootcamp.paymentservice.service;
 
 import com.ftbootcamp.paymentservice.converter.PaymentConverter;
 import com.ftbootcamp.paymentservice.dto.request.PaymentGenericRequest;
-import com.ftbootcamp.paymentservice.dto.request.PaymentRequest;
-import com.ftbootcamp.paymentservice.dto.response.PaymentGenericResponse;
 import com.ftbootcamp.paymentservice.dto.response.PaymentResponse;
 import com.ftbootcamp.paymentservice.model.Payment;
 import com.ftbootcamp.paymentservice.producer.RabbitMqProducer;
@@ -26,28 +24,18 @@ public class PaymentService {
     public void createPaymentAndSendQueue(PaymentGenericRequest<?> request) {
 
         paymentBusinessRules.checkPaymentAmountIsValid(request.getAmount());
+        paymentBusinessRules.checkPaymentTypeIsValid(request.getPaymentType());
 
         // Create payment
         Payment payment = new Payment(request.getPaymentType(), request.getAmount(), request.getUserEmail());
         paymentRepository.save(payment);
 
+        // TODO: Kafka for logging
         log.info("Payment created. request: {}", request);
 
         // Send payment to queue
-        rabbitMqProducer.sendPaymentToQueue(request);
+        rabbitMqProducer.sendPaymentToEticketQueue(request);
 
-    }
-
-    public PaymentResponse createPayment(PaymentRequest request) {
-
-        paymentBusinessRules.checkPaymentAmountIsValid(request.getAmount());
-
-        Payment payment = new Payment(request.getPaymentType(), request.getAmount(), request.getUserEmail());
-        paymentRepository.save(payment);
-
-        log.info("Payment created. request: {}", request);
-
-        return PaymentConverter.toResponse(payment);
     }
 
     public List<PaymentResponse> getAllPayments() {
