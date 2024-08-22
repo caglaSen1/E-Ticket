@@ -1,7 +1,7 @@
 package com.ftbootcamp.eticketservice.client.payment.service;
 
 import com.ftbootcamp.eticketservice.client.payment.PaymentClient;
-import com.ftbootcamp.eticketservice.client.payment.dto.request.PaymentRequest;
+import com.ftbootcamp.eticketservice.client.payment.dto.request.PaymentGenericRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ public class PaymentClientService {
 
     private final PaymentClient paymentClient;
 
-    public void createPayment(PaymentRequest request) {
+    public void createPayment(PaymentGenericRequest<?> request) {
         paymentClient.createPayment(request);
     }
 }

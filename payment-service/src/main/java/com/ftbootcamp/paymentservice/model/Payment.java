@@ -22,7 +22,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = PaymentEntityConstants.PAYMENT_TYPE, nullable = false)
+    @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
 
     @Column(name = PaymentEntityConstants.AMOUNT, nullable = false)

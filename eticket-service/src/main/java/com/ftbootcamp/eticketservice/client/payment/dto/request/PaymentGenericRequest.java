@@ -5,16 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.math.BigDecimal;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class PaymentRequest {
+public class PaymentGenericRequest<T> {
     private PaymentType paymentType;
     private BigDecimal amount;
     private String userEmail;
-    private Object paymentObject;
+    private T paymentObject;
+    private String paymentObjectType;
 }

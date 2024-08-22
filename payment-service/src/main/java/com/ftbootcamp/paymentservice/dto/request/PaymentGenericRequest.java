@@ -10,8 +10,10 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ToString
-public class PaymentRequest{
+public class PaymentGenericRequest<T> {
     private PaymentType paymentType;
     private BigDecimal amount;
     private String userEmail;
+    private T paymentObject;
+    private String paymentObjectType;
 }

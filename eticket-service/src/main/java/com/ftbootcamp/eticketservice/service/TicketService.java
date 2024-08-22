@@ -1,6 +1,6 @@
 package com.ftbootcamp.eticketservice.service;
 
-import com.ftbootcamp.eticketservice.client.payment.dto.request.PaymentRequest;
+import com.ftbootcamp.eticketservice.client.payment.dto.request.PaymentGenericRequest;
 import com.ftbootcamp.eticketservice.client.payment.service.PaymentClientService;
 import com.ftbootcamp.eticketservice.client.user.UserClientService;
 import com.ftbootcamp.eticketservice.client.user.constants.RoleNameConstants;
@@ -70,7 +70,7 @@ public class TicketService {
         return TicketConverter.toTicketResponse(ticket);
     }
 
-    public void getPaymentOfMultipleTicket(TicketMultipleBuyRequest request) {
+    public void takePaymentOfMultipleTicket(TicketMultipleBuyRequest request) {
         // Get user with userClient (sencronous):
         UserDetailsResponse buyer = userService.getUserById(request.getBuyerId());
 
@@ -88,13 +88,26 @@ public class TicketService {
 
         // Get Payment of Tickets with Payment Service (Sencronize):
         double totalPrice = tickets.stream().mapToDouble(Ticket::getPrice).sum();
-        paymentClientService.createPayment(new PaymentRequest(request.getPaymentType(),
-                new BigDecimal(totalPrice), buyer.getEmail(), tickets));
+
+        PaymentGenericRequest<TicketMultipleBuyRequest> paymentGenericRequest =
+                new PaymentGenericRequest<>(request.getPaymentType(),
+                new BigDecimal(totalPrice), buyer.getEmail(), request,
+                "TicketMultipleBuyRequest");
+
+        paymentClientService.createPayment(paymentGenericRequest);
+        log.info("payment servise gönderildi");
 
     }
 
-    public List<TicketResponse> createTicketsAfterPayment(List<Ticket> tickets, UserDetailsResponse buyer,
-                                                          TicketMultipleBuyRequest request){
+    public void createTicketsAfterPayment(TicketMultipleBuyRequest request) {
+
+        UserDetailsResponse buyer = userService.getUserById(request.getBuyerId());
+
+        List<Ticket> tickets = ticketBusinessRules.checkTicketsExistByIdList(
+                request.getPassengerTicketRequests().stream()
+                        .map(PassengerTicketRequest::getTicketId)
+                        .toList()
+        );
 
         for (Ticket ticket : tickets) {
             ticket.setPassengerEmail(buyer.getEmail());
@@ -105,15 +118,14 @@ public class TicketService {
         }
 
         // Send ticket info message with RabbitMQ Service (Asencronize):
-        String infoMessage = generateMultipleTicketInfoMessage(buyer, tickets, request.getPassengerTicketRequests());
+        String infoMessage = generateMultipleTicketInfoMessage(buyer, tickets,
+                request.getPassengerTicketRequests());
         rabbitMqProducer.sendTicketInfoMessage(new NotificationSendRequest(NotificationType.EMAIL, buyer.getEmail(),
                 infoMessage));
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
         kafkaProducer.sendLogMessage(new Log("Ticket bought. Buyer: " + buyer.getEmail() +
-                "ticket ids: " + tickets.stream().map(Ticket::getId).toList()));
-
-        return TicketConverter.toTicketResponseList(tickets);
+                " ticket ids: " + tickets.stream().map(Ticket::getId).toList()));
     }
 
     public TicketResponse getTicketById(Long id) {;

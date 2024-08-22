@@ -29,8 +29,9 @@ public class TicketController {
 
     @PostMapping("/buy-multiple")
     @Operation(summary = "Buy ticket", description = "Buy ticket with given ticket information")
-    public GenericResponse<List<TicketResponse>> buyMultipleTicket(@RequestBody TicketMultipleBuyRequest request) {
-        return GenericResponse.success(ticketService.buyMultipleTicket(request), HttpStatus.CREATED);
+    public GenericResponse<Void> buyMultipleTicket(@RequestBody TicketMultipleBuyRequest request) {
+        ticketService.takePaymentOfMultipleTicket(request);
+        return GenericResponse.success(null, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

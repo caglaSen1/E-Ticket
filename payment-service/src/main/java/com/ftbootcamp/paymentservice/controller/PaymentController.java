@@ -1,7 +1,9 @@
 package com.ftbootcamp.paymentservice.controller;
 
+import com.ftbootcamp.paymentservice.dto.request.PaymentGenericRequest;
 import com.ftbootcamp.paymentservice.dto.request.PaymentRequest;
 import com.ftbootcamp.paymentservice.dto.response.GenericResponse;
+import com.ftbootcamp.paymentservice.dto.response.PaymentGenericResponse;
 import com.ftbootcamp.paymentservice.dto.response.PaymentResponse;
 import com.ftbootcamp.paymentservice.service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,6 +20,13 @@ import java.util.List;
 public class PaymentController {
 
     private final PaymentService paymentService;
+
+    @PostMapping("/createAndSend")
+    @Operation(summary = "Create payment", description = "Create payment with given payment information")
+    public GenericResponse<Void> createPaymentAndSendQueue(@RequestBody PaymentGenericRequest<?> request) {
+        paymentService.createPaymentAndSendQueue(request);
+        return GenericResponse.success(null, HttpStatus.CREATED);
+    }
 
     @PostMapping
     @Operation(summary = "Create payment", description = "Create payment with given payment information")

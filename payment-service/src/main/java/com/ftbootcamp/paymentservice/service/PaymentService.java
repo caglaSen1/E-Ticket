@@ -1,9 +1,12 @@
 package com.ftbootcamp.paymentservice.service;
 
 import com.ftbootcamp.paymentservice.converter.PaymentConverter;
+import com.ftbootcamp.paymentservice.dto.request.PaymentGenericRequest;
 import com.ftbootcamp.paymentservice.dto.request.PaymentRequest;
+import com.ftbootcamp.paymentservice.dto.response.PaymentGenericResponse;
 import com.ftbootcamp.paymentservice.dto.response.PaymentResponse;
 import com.ftbootcamp.paymentservice.model.Payment;
+import com.ftbootcamp.paymentservice.producer.RabbitMqProducer;
 import com.ftbootcamp.paymentservice.repository.PaymentRepository;
 import com.ftbootcamp.paymentservice.rules.PaymentBusinessRules;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,22 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final PaymentBusinessRules paymentBusinessRules;
+    private final RabbitMqProducer rabbitMqProducer;
+
+    public void createPaymentAndSendQueue(PaymentGenericRequest<?> request) {
+
+        paymentBusinessRules.checkPaymentAmountIsValid(request.getAmount());
+
+        // Create payment
+        Payment payment = new Payment(request.getPaymentType(), request.getAmount(), request.getUserEmail());
+        paymentRepository.save(payment);
+
+        log.info("Payment created. request: {}", request);
+
+        // Send payment to queue
+        rabbitMqProducer.sendPaymentToQueue(request);
+
+    }
 
     public PaymentResponse createPayment(PaymentRequest request) {
 
@@ -28,13 +47,7 @@ public class PaymentService {
 
         log.info("Payment created. request: {}", request);
 
-        return PaymentResponse.builder()
-                .paymentType(payment.getPaymentType())
-                .amount(payment.getAmount())
-                .userEmail(payment.getUserEmail())
-                .paymentObject(request.getPaymentObject())
-                .createdDateTime(payment.getCreatedDateTime())
-                .build();
+        return PaymentConverter.toResponse(payment);
     }
 
     public List<PaymentResponse> getAllPayments() {

@@ -1,17 +1,19 @@
-package com.ftbootcamp.paymentservice.dto.request;
+package com.ftbootcamp.paymentservice.dto.response;
 
 import com.ftbootcamp.paymentservice.model.PaymentType;
 import lombok.*;
-
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
-public class PaymentRequest{
+@Builder
+public class PaymentGenericResponse<T> {
     private PaymentType paymentType;
     private BigDecimal amount;
     private String userEmail;
+    private T paymentObject;
+    private LocalDateTime createdDateTime;
 }

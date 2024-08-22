@@ -10,10 +10,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-public class PaymentResponse {
+public class PaymentResponse{
     private PaymentType paymentType;
     private BigDecimal amount;
     private String userEmail;
-    private Object paymentObject;
     private LocalDateTime createdDateTime;
 }
