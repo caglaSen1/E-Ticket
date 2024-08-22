@@ -12,14 +12,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@Document(collection = "emails")
-public class Email {
+@Document(collection = "sms")
+public class Sms {
 
     @Id
     private String id;
 
-    @Field(name = EntityConstants.EMAIL)
-    private String email;
+    @Field(name = EntityConstants.PHONE_NUMBER)
+    private String phoneNumber;
 
     @Field(name = EntityConstants.TEXT)
     private String text;
@@ -27,8 +27,8 @@ public class Email {
     @Field(name = EntityConstants.CREATED_DATE_TIME)
     private LocalDateTime createdDateTime;
 
-    public Email(String email, String text) {
-        this.email = email;
+    public Sms(String phoneNumber, String text) {
+        this.phoneNumber = phoneNumber;
         this.text = text;
         this.createdDateTime = LocalDateTime.now();
     }

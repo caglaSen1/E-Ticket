@@ -26,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -76,8 +77,14 @@ public class TicketService {
 
         // Send ticket info message with RabbitMQ (Asencronize):
         String infoMessage = generateTicketInfoMessage(user, ticket);
-        rabbitMqProducer.sendTicketInfoMessage(new NotificationSendRequest(NotificationType.EMAIL, user.getEmail(),
-                infoMessage));
+
+        List<NotificationType> notificationTypes = new ArrayList<>();
+        notificationTypes.add(NotificationType.EMAIL);
+        if (user.getPhoneNumber() != null) {
+            notificationTypes.add(NotificationType.SMS);
+        }
+        rabbitMqProducer.sendTicketInfoMessage(new NotificationSendRequest(notificationTypes, user.getEmail(),
+                user.getPhoneNumber(), infoMessage));
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
         kafkaProducer.sendLogMessage(new Log("Ticket buying process completed. Buyer: " + user.getEmail() +
@@ -136,8 +143,14 @@ public class TicketService {
         // Send ticket info message with RabbitMQ Service (Asencronize):
         String infoMessage = generateMultipleTicketInfoMessage(buyer, tickets,
                 request.getPassengerTicketRequests());
-        rabbitMqProducer.sendTicketInfoMessage(new NotificationSendRequest(NotificationType.EMAIL, buyer.getEmail(),
-                infoMessage));
+
+        List<NotificationType> notificationTypes = new ArrayList<>();
+        notificationTypes.add(NotificationType.EMAIL);
+        if (buyer.getPhoneNumber() != null) {
+            notificationTypes.add(NotificationType.SMS);
+        }
+        rabbitMqProducer.sendTicketInfoMessage(new NotificationSendRequest(notificationTypes, buyer.getEmail(),
+                buyer.getPhoneNumber(), infoMessage));
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
         kafkaProducer.sendLogMessage(new Log("Ticket buying process completed. Buyer: " + buyer.getEmail() +

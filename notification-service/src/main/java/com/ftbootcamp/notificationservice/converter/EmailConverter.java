@@ -12,7 +12,7 @@ public class EmailConverter {
     public static EmailResponse toResponse(Email email) {
 
         return EmailResponse.builder()
-                .to(email.getTo())
+                .to(email.getEmail())
                 .text(email.getText())
                 .createdDateTime(email.getCreatedDateTime())
                 .build();

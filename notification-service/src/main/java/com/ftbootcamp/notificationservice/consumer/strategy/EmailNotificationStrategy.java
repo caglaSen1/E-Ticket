@@ -1,9 +1,8 @@
 package com.ftbootcamp.notificationservice.consumer.strategy;
 
-import com.ftbootcamp.notificationservice.dto.request.EmailSendRequest;
-import com.ftbootcamp.notificationservice.service.EmailService;
-import com.ftbootcamp.notificationservice.consumer.converter.EmailNotificationConverter;
+import com.ftbootcamp.notificationservice.consumer.converter.NotificationConverter;
 import com.ftbootcamp.notificationservice.consumer.request.NotificationSendRequest;
+import com.ftbootcamp.notificationservice.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +14,8 @@ public class  EmailNotificationStrategy implements NotificationStrategy {
 
     @Override
     public void sendNotification(NotificationSendRequest request) {
-        EmailSendRequest emailSendRequest = EmailNotificationConverter.toEmailSendRequest(request);
-        emailService.sendEmail(emailSendRequest);
-        System.out.println("E-posta Gönderildi.");
+        emailService.sendEmail(NotificationConverter.toEmailSendRequest(request));
+
+        // TODO: kafka log
     }
 }

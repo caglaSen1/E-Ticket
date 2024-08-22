@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.ftbootcamp.eticketuserservice.core.PasswordHasher.hashPassword;
@@ -60,8 +61,13 @@ public class AdminUserService {
 
         // Send message to user with RabbitMQ Service (Asencronize):
         String infoMessage = "Welcome to our system. Your account created successfully.";
-        rabbitMqProducer.sendMessage(new NotificationSendRequest(NotificationType.EMAIL, createdUser.getEmail(),
-                infoMessage));
+        List<NotificationType> notificationTypes = new ArrayList<>();
+        notificationTypes.add(NotificationType.EMAIL);
+        if (createdUser.getPhoneNumber() != null) {
+            notificationTypes.add(NotificationType.SMS);
+        }
+        rabbitMqProducer.sendMessage(new NotificationSendRequest(notificationTypes, createdUser.getEmail(),
+                createdUser.getPhoneNumber(), infoMessage));
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
         kafkaProducer.sendLogMessage(new Log("Admin user created. User id: " + createdUser.getId()));

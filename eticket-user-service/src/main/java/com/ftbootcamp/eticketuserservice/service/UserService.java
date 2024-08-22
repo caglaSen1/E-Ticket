@@ -19,8 +19,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserBusinessRules userBusinessRules;
 
-    // TODO: add update method, viewPersonalInfo() - profile, updatePersonalInfo
-
     public List<UserSummaryResponse> getAllUsers() {
         return UserConverter.toUserSummaryResponse(userRepository.findAll());
     }
