@@ -1,7 +1,7 @@
 package com.ftbootcamp.eticketservice.exception;
 
 import com.ftbootcamp.eticketservice.dto.response.GenericResponse;
-import com.ftbootcamp.eticketservice.producer.entity.LogMessage;
+import com.ftbootcamp.eticketservice.producer.entity.Log;
 import com.ftbootcamp.eticketservice.producer.kafka.KafkaProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ETicketException.class)
     public GenericResponse handleETicketException(ETicketException e){
 
-        kafkaProducer.sendErrorLogMessage(new LogMessage(e.getMessage()));
+        kafkaProducer.sendExceptionLogMessage(new Log(e.getMessage()));
 
         return GenericResponse.failed(e.getMessage());
     }

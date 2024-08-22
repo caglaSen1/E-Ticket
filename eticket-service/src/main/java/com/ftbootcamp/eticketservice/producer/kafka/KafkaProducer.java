@@ -1,7 +1,7 @@
 package com.ftbootcamp.eticketservice.producer.kafka;
 
 import com.ftbootcamp.eticketservice.entity.Trip;
-import com.ftbootcamp.eticketservice.producer.entity.LogMessage;
+import com.ftbootcamp.eticketservice.producer.entity.Log;
 import com.ftbootcamp.eticketservice.producer.kafka.constants.KafkaTopicConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +20,13 @@ public class KafkaProducer {
         indexKafkaTemplate.send(KafkaTopicConstants.TRIP_INDEX_TOPIC, trip);
     }
 
-    public void sendLogMessage(LogMessage message) {
+    public void sendLogMessage(Log message) {
         log.info("log message sent: {}", message);
         indexKafkaTemplate.send(KafkaTopicConstants.LOG_MESSAGE_TOPIC, message);
     }
 
-    public void sendErrorLogMessage(LogMessage errorMessage) {
-        log.info("log message sent: {}", errorMessage);
-        indexKafkaTemplate.send(KafkaTopicConstants.ERROR_LOG_MESSAGE_TOPIC, errorMessage);
+    public void sendExceptionLogMessage(Log exceptionMessage) {
+        log.info("log message sent: {}", exceptionMessage);
+        indexKafkaTemplate.send(KafkaTopicConstants.EXCEPTION_LOG_MESSAGE_TOPIC, exceptionMessage);
     }
 }

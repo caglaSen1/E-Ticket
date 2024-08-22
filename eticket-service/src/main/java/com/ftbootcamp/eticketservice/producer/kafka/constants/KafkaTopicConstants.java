@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 public final class KafkaTopicConstants {
 
     public static final String LOG_MESSAGE_TOPIC = "log_message_topic";
-    public static final String ERROR_LOG_MESSAGE_TOPIC = "error_log_message_topic";
+    public static final String EXCEPTION_LOG_MESSAGE_TOPIC = "exception_log_message_topic";
     public static final String TRIP_INDEX_TOPIC = "trip_index_topic";
 }

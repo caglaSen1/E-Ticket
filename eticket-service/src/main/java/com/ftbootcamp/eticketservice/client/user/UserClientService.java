@@ -17,7 +17,7 @@ public class UserClientService {
         GenericResponse<UserDetailsResponse> response = userClient.getUserById(id);
 
         if (response.getStatus().equals(GenericResponseConstants.FAILED)) {
-            throw new ETicketException(response.getMessage(), "Failed to get user by id");
+            throw new ETicketException("Failed to get user" + response.getMessage());
         }
 
         return response.getData();

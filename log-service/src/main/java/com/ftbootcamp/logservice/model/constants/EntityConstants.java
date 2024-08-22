@@ -1,4 +1,4 @@
-package com.ftbootcamp.logservice.entity.constants;
+package com.ftbootcamp.logservice.model.constants;
 
 import lombok.NoArgsConstructor;
 

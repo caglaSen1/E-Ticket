@@ -13,7 +13,7 @@ import com.ftbootcamp.eticketservice.dto.response.TicketResponse;
 import com.ftbootcamp.eticketservice.entity.Ticket;
 import com.ftbootcamp.eticketservice.entity.Trip;
 import com.ftbootcamp.eticketservice.exception.ETicketException;
-import com.ftbootcamp.eticketservice.producer.entity.LogMessage;
+import com.ftbootcamp.eticketservice.producer.entity.Log;
 import com.ftbootcamp.eticketservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketservice.producer.rabbitmq.RabbitMqProducer;
 import com.ftbootcamp.eticketservice.producer.rabbitmq.dto.NotificationSendRequest;
@@ -60,7 +60,7 @@ public class TicketService {
                 infoMessage));
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage(new LogMessage("Ticket bought. ticket id: " + ticket.getId() + ", Buyer: " +
+        kafkaProducer.sendLogMessage(new Log("Ticket bought. ticket id: " + ticket.getId() + ", Buyer: " +
                 user.getEmail()));
 
         return TicketConverter.toTicketResponse(ticket);
@@ -98,7 +98,7 @@ public class TicketService {
                 infoMessage));
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage(new LogMessage("Ticket bought. Buyer: " + buyer.getEmail() +
+        kafkaProducer.sendLogMessage(new Log("Ticket bought. Buyer: " + buyer.getEmail() +
                 "ticket ids: " + tickets.stream().map(Ticket::getId).toList()));
 
         return TicketConverter.toTicketResponseList(tickets);
@@ -154,7 +154,7 @@ public class TicketService {
             ticketRepository.save(ticket);
 
             // Send log message with Kafka for saving in MongoDB (Asencronize):
-            kafkaProducer.sendLogMessage(new LogMessage("Ticket soft deleted. ticket id: " + ticket.getId()));
+            kafkaProducer.sendLogMessage(new Log("Ticket soft deleted. ticket id: " + ticket.getId()));
         });
     }
 
@@ -168,7 +168,7 @@ public class TicketService {
             ticketRepository.save(ticket);
 
             // Send log message with Kafka for saving in MongoDB (Asencronize):
-            kafkaProducer.sendLogMessage(new LogMessage("Ticket generated. ticket id: " + ticket.getId()));
+            kafkaProducer.sendLogMessage(new Log("Ticket generated. ticket id: " + ticket.getId()));
         }
     }
 
@@ -278,23 +278,20 @@ public class TicketService {
         if (instanceOf.equals(RoleNameConstants.INDIVIDUAL_USER_ROLE_NAME)) {
             tripTicketsMap.forEach((trip, ticketList) -> {
                 if (ticketList.size() > 2) {
-                    throw new ETicketException("Individual users can buy at most 5 tickets for a trip.",
-                            "Log: Error: Individual users can buy at most 5 tickets for a trip.");
+                    throw new ETicketException("Exception: Individual users can buy at most 5 tickets for a trip.");
                 }
             });
 
             if (malePassengerCountForOrder > 1) {
-                throw new ETicketException("Individual users can buy tickets for up to 2 male passengers in a " +
-                        "single order.", "Log: Error: Individual users can buy tickets for up to 2 male passengers in a"
-                        + " single order.");
+                throw new ETicketException("Exception: Individual users can buy tickets for up to 2 male " +
+                        "passengers in a single order.");
             }
         }
 
         if (instanceOf.equals(RoleNameConstants.CORPORATE_USER_ROLE_NAME)) {
             tripTicketsMap.forEach((trip, ticketList) -> {
                 if (ticketList.size() > 2) {
-                    throw new ETicketException("Company users can buy at most 40 tickets for a trip.", "Log: Error: " +
-                            "Company users can buy at most 40 tickets for a trip.");
+                    throw new ETicketException("Exception: Company users can buy at most 40 tickets for a trip.");
                 }
             });
         }

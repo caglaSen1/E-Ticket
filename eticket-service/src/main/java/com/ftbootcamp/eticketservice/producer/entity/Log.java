@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LogMessage {
+public class Log {
 
     private String message;
     private LocalDateTime createdDateTime;
 
-    public LogMessage(String logMessage) {
-        this.message = logMessage;
+    public Log(String message) {
+        this.message = message;
         this.createdDateTime = LocalDateTime.now();
     }
 }

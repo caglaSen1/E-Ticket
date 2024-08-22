@@ -1,10 +1,7 @@
-package com.ftbootcamp.logservice.entity;
+package com.ftbootcamp.logservice.model.documents;
 
-import com.ftbootcamp.logservice.entity.constants.EntityConstants;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.ftbootcamp.logservice.model.constants.EntityConstants;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -13,10 +10,11 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "log-messages")
-public class LogMessage {
+@Document(collection = "exception-log-messages")
+public class ExceptionLogMessage {
 
     @Id
     private String id;
@@ -27,8 +25,4 @@ public class LogMessage {
     @Field(name = EntityConstants.CREATED_DATE_TIME)
     private LocalDateTime createdDateTime;
 
-    public LogMessage(String logMessage) {
-        this.message = logMessage;
-        this.createdDateTime = LocalDateTime.now();
-    }
 }

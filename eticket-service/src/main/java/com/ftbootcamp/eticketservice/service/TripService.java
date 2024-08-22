@@ -7,16 +7,14 @@ import com.ftbootcamp.eticketservice.dto.response.TripGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.dto.response.TripResponse;
 import com.ftbootcamp.eticketservice.dto.response.TripStatisticsResponse;
 import com.ftbootcamp.eticketservice.entity.Trip;
-import com.ftbootcamp.eticketservice.producer.entity.LogMessage;
+import com.ftbootcamp.eticketservice.producer.entity.Log;
 import com.ftbootcamp.eticketservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketservice.repository.TripRepository;
 import com.ftbootcamp.eticketservice.rules.TripBusinessRules;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -53,7 +51,7 @@ public class TripService {
         kafkaProducer.sendTrip(trip);
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage(new LogMessage("Trip created. Trip id: " + trip.getId()));
+        kafkaProducer.sendLogMessage(new Log("Trip created. Trip id: " + trip.getId()));
 
         return TripConverter.toTripResponse(trip);
     }
@@ -118,7 +116,7 @@ public class TripService {
         kafkaProducer.sendTrip(updatedTrip);
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage(new LogMessage("Trip updated. Trip id: " + updatedTrip.getId()));
+        kafkaProducer.sendLogMessage(new Log("Trip updated. Trip id: " + updatedTrip.getId()));
 
         return TripConverter.toTripResponse(updatedTrip);
     }
@@ -136,6 +134,6 @@ public class TripService {
         kafkaProducer.sendTrip(tripToCancel);
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage(new LogMessage("Trip cancelled. Trip id: " + tripToCancel.getId()));
+        kafkaProducer.sendLogMessage(new Log("Trip cancelled. Trip id: " + tripToCancel.getId()));
     }
 }
