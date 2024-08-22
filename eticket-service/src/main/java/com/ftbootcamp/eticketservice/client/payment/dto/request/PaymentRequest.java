@@ -1,7 +1,10 @@
-package com.ftbootcamp.paymentservice.dto.request;
+package com.ftbootcamp.eticketservice.client.payment.dto.request;
 
-import com.ftbootcamp.paymentservice.model.PaymentType;
-import lombok.*;
+import com.ftbootcamp.eticketservice.client.payment.enums.PaymentType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
@@ -9,7 +12,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class PaymentRequest {
     private PaymentType paymentType;
     private BigDecimal amount;

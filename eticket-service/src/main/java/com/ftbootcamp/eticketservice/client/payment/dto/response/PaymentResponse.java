@@ -1,6 +1,6 @@
-package com.ftbootcamp.paymentservice.dto.response;
+package com.ftbootcamp.eticketservice.client.payment.dto.response;
 
-import com.ftbootcamp.paymentservice.model.PaymentType;
+import com.ftbootcamp.eticketservice.client.payment.enums.PaymentType;
 import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,9 +11,8 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 public class PaymentResponse {
-    private PaymentType paymentType;
     private BigDecimal amount;
-    private String userEmail;
-    private Object paymentObject;
     private LocalDateTime createdDateTime;
+    private PaymentType paymentType;
+    private String userEmail;
 }

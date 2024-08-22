@@ -1,5 +1,6 @@
 package com.ftbootcamp.eticketservice.dto.request;
 
+import com.ftbootcamp.eticketservice.client.payment.enums.PaymentType;
 import lombok.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @ToString
 public class TicketMultipleBuyRequest {
 
+    private PaymentType paymentType;
     private long buyerId;
     private List<PassengerTicketRequest> passengerTicketRequests;
 }

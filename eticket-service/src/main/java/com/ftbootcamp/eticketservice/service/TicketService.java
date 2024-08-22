@@ -1,5 +1,7 @@
 package com.ftbootcamp.eticketservice.service;
 
+import com.ftbootcamp.eticketservice.client.payment.dto.request.PaymentRequest;
+import com.ftbootcamp.eticketservice.client.payment.service.PaymentClientService;
 import com.ftbootcamp.eticketservice.client.user.UserClientService;
 import com.ftbootcamp.eticketservice.client.user.constants.RoleNameConstants;
 import com.ftbootcamp.eticketservice.client.user.dto.UserDetailsResponse;
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,6 +41,7 @@ public class TicketService {
     private final UserClientService userService;
     private final RabbitMqProducer rabbitMqProducer;
     private final KafkaProducer kafkaProducer;
+    private final PaymentClientService paymentClientService;
 
     public TicketResponse buyTicket(TicketBuyRequest request) {
         // Get user with userClient (sencronous):
@@ -66,7 +70,7 @@ public class TicketService {
         return TicketConverter.toTicketResponse(ticket);
     }
 
-    public List<TicketResponse> buyMultipleTicket(TicketMultipleBuyRequest request) {
+    public void getPaymentOfMultipleTicket(TicketMultipleBuyRequest request) {
         // Get user with userClient (sencronous):
         UserDetailsResponse buyer = userService.getUserById(request.getBuyerId());
 
@@ -82,7 +86,15 @@ public class TicketService {
         // Control Project Requirements:
         controlProjectRequirements(buyer, tickets, request.getPassengerTicketRequests());
 
-        // TODO: Get payment
+        // Get Payment of Tickets with Payment Service (Sencronize):
+        double totalPrice = tickets.stream().mapToDouble(Ticket::getPrice).sum();
+        paymentClientService.createPayment(new PaymentRequest(request.getPaymentType(),
+                new BigDecimal(totalPrice), buyer.getEmail(), tickets));
+
+    }
+
+    public List<TicketResponse> createTicketsAfterPayment(List<Ticket> tickets, UserDetailsResponse buyer,
+                                                          TicketMultipleBuyRequest request){
 
         for (Ticket ticket : tickets) {
             ticket.setPassengerEmail(buyer.getEmail());

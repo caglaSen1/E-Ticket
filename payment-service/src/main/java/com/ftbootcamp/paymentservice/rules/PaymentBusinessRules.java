@@ -16,18 +16,9 @@ public class PaymentBusinessRules {
 
     private final PaymentRepository paymentRepository;
 
-    public void checkPaymentAmountIsValid(BigDecimal amount, String request){
+    public void checkPaymentAmountIsValid(BigDecimal amount){
         if (amount.compareTo(BigDecimal.ZERO) < 0) {
-            handleException(ExceptionMessages.VALID_PAYMENT_AMOUNT, request);
+            throw new PaymentException(ExceptionMessages.VALID_PAYMENT_AMOUNT  + "Amount: " + amount);
         }
-    }
-
-    private void handleException(String exceptionMessage, String request) {
-        if (request != null && !request.isEmpty()) {
-            log.error("Request: {}, Error: {}", request, exceptionMessage);
-        } else {
-            log.error("Error: {}", exceptionMessage);
-        }
-        throw new PaymentException(exceptionMessage);
     }
 }
