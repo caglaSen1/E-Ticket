@@ -7,6 +7,7 @@ import com.ftbootcamp.eticketservice.dto.response.TripGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.dto.response.TripResponse;
 import com.ftbootcamp.eticketservice.dto.response.TripStatisticsResponse;
 import com.ftbootcamp.eticketservice.entity.Trip;
+import com.ftbootcamp.eticketservice.entity.constant.TripEntityConstants;
 import com.ftbootcamp.eticketservice.producer.Log;
 import com.ftbootcamp.eticketservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketservice.repository.TripRepository;
@@ -29,8 +30,19 @@ public class TripService {
 
     public TripResponse create(TripCreateRequest request) {
         tripBusinessRules.checkArrivalTimeValid(request.getDepartureTime(), request.getArrivalTime());
-        tripBusinessRules.checkTotalTicketCountValid(request.getTotalTicketCount());
         tripBusinessRules.checkPriceValid(request.getPrice());
+
+        int totalTicketCount = 0;
+        if(request.getVehicleType() != null) {
+            switch (request.getVehicleType()) {
+                case BUS:
+                    totalTicketCount = TripEntityConstants.BUS_CAPACITY;
+                    break;
+                case PLANE:
+                    totalTicketCount = TripEntityConstants.PLANE_CAPACITY;
+                    break;
+            }
+        }
 
         Trip trip = new Trip(
                 request.getDepartureTime(),
@@ -38,7 +50,7 @@ public class TripService {
                 request.getDepartureCity(),
                 request.getArrivalCity(),
                 request.getVehicleType(),
-                request.getTotalTicketCount(),
+                totalTicketCount,
                 request.getPrice()
         );
 

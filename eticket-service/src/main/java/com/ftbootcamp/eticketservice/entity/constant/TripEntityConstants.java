@@ -14,4 +14,6 @@ public class TripEntityConstants {
     public static final String PRICE = "price";
     public static final String CREATED_DATE = "created_date";
 
+    public static final int PLANE_CAPACITY = 189;
+    public static final int BUS_CAPACITY = 45;
 }

@@ -18,6 +18,5 @@ public class TripCreateRequest {
     private String departureCity;
     private String arrivalCity;
     private VehicleType vehicleType;
-    private int totalTicketCount;
     private double price;
 }
