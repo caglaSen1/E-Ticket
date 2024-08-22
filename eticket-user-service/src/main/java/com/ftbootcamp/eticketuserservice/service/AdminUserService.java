@@ -1,7 +1,7 @@
 package com.ftbootcamp.eticketuserservice.service;
 
 import com.ftbootcamp.eticketuserservice.converter.AdminUserConverter;
-import com.ftbootcamp.eticketuserservice.dto.request.AdminUserRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.AdminUserSaveRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.UserPasswordChangeRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.UserRoleRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.AdminUserDetailsResponse;
@@ -9,6 +9,9 @@ import com.ftbootcamp.eticketuserservice.dto.response.AdminUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.AdminUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
+import com.ftbootcamp.eticketuserservice.producer.rabbitmq.RabbitMqProducer;
+import com.ftbootcamp.eticketuserservice.producer.rabbitmq.dto.NotificationSendRequest;
+import com.ftbootcamp.eticketuserservice.producer.rabbitmq.enums.NotificationType;
 import com.ftbootcamp.eticketuserservice.repository.AdminUserRepository;
 import com.ftbootcamp.eticketuserservice.rules.AdminUserBusinessRules;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
@@ -29,8 +32,9 @@ public class AdminUserService {
     private final AdminUserBusinessRules adminUserBusinessRules;
     private final RoleBusinessRules roleBusinessRules;
     private final RoleService roleService;
+    private final RabbitMqProducer rabbitMqProducer;
 
-    public AdminUserDetailsResponse createUser(AdminUserRequest request) {
+    public AdminUserDetailsResponse createUser(AdminUserSaveRequest request) {
         adminUserBusinessRules.checkEmailValid(request.getEmail());
         adminUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
         adminUserBusinessRules.checkPasswordValid(request.getPassword());
@@ -53,6 +57,11 @@ public class AdminUserService {
 
         log.info("Log: User created. request: {}", request);
 
+        // Send message to user with RabbitMQ Service (Asencronize):
+        String infoMessage = "Welcome to our system. Your account created successfully.";
+        rabbitMqProducer.sendMessage(new NotificationSendRequest(NotificationType.EMAIL, createdUser.getEmail(),
+                infoMessage));
+
         return AdminUserConverter.toAdminUserDetailsResponse(createdUser);
     }
 
@@ -72,7 +81,7 @@ public class AdminUserService {
         return (int) adminUserRepository.count();
     }
 
-    public AdminUserDetailsResponse updateUser(AdminUserRequest request){
+    public AdminUserDetailsResponse updateUser(AdminUserSaveRequest request){
 
         AdminUser userToUpdate = adminUserBusinessRules.checkUserExistByEmail(request.getEmail());
 

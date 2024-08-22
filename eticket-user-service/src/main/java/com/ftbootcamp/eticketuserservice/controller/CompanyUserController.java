@@ -24,7 +24,7 @@ public class CompanyUserController {
 
     @PostMapping()
     @Operation(summary = "Create company user", description = "Create company user with given user information")
-    public GenericResponse<CompanyUserDetailsResponse> createUser(@RequestBody CompanyUserRequest request) {
+    public GenericResponse<CompanyUserDetailsResponse> createUser(@RequestBody CompanyUserSaveRequest request) {
         return GenericResponse.success(companyUserService.createUser(request), HttpStatus.CREATED);
     }
 
@@ -81,7 +81,7 @@ public class CompanyUserController {
 
     @PostMapping("/update")
     @Operation(summary = "Update company user", description = "Update company user with given user information")
-    public GenericResponse<CompanyUserDetailsResponse> updateUser(@RequestBody CompanyUserRequest request) {
+    public GenericResponse<CompanyUserDetailsResponse> updateUser(@RequestBody CompanyUserSaveRequest request) {
         return GenericResponse.success(companyUserService.updateUser(request), HttpStatus.OK);
     }
 

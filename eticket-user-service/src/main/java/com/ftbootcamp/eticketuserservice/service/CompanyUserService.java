@@ -9,6 +9,9 @@ import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
 import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
 import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
+import com.ftbootcamp.eticketuserservice.producer.rabbitmq.RabbitMqProducer;
+import com.ftbootcamp.eticketuserservice.producer.rabbitmq.dto.NotificationSendRequest;
+import com.ftbootcamp.eticketuserservice.producer.rabbitmq.enums.NotificationType;
 import com.ftbootcamp.eticketuserservice.repository.CompanyUserRepository;
 import com.ftbootcamp.eticketuserservice.rules.CompanyUserBusinessRules;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
@@ -29,8 +32,9 @@ public class CompanyUserService {
     private final CompanyUserBusinessRules companyUserBusinessRules;
     private final RoleBusinessRules roleBusinessRules;
     private final RoleService roleService;
+    private final RabbitMqProducer rabbitMqProducer;
 
-    public CompanyUserDetailsResponse createUser(CompanyUserRequest request) {
+    public CompanyUserDetailsResponse createUser(CompanyUserSaveRequest request) {
         companyUserBusinessRules.checkEmailValid(request.getEmail());
         companyUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
         companyUserBusinessRules.checkPasswordValid(request.getPassword());
@@ -53,8 +57,14 @@ public class CompanyUserService {
 
         log.info("Log: User created. request: {}", request);
 
+        // Send message to user with RabbitMQ Service (Asencronize):
+        String infoMessage = "Welcome to our system. Your account created successfully.";
+        rabbitMqProducer.sendMessage(new NotificationSendRequest(NotificationType.EMAIL, createdUser.getEmail(),
+                infoMessage));
+
         return CompanyUserConverter.toCompanyUserDetailsResponse(createdUser);
     }
+
 
     public List<CompanyUserSummaryResponse> getAllCompanyUsers() {
         return CompanyUserConverter.toCompanyUserSummaryResponse(companyUserRepository.findAll());
@@ -112,7 +122,7 @@ public class CompanyUserService {
         return CompanyUserConverter.toCompanyUserSummaryResponse(companyUserRepository.findByEmailList(emailList));
     }
 
-    public CompanyUserDetailsResponse updateUser(CompanyUserRequest request) {
+    public CompanyUserDetailsResponse updateUser(CompanyUserSaveRequest request) {
         CompanyUser userToUpdate = companyUserBusinessRules.checkUserExistByEmail(request.getEmail());
 
         CompanyUser updatedUser = CompanyUserConverter.toUpdatedCompanyUser(userToUpdate, request);

@@ -1,7 +1,7 @@
 package com.ftbootcamp.eticketuserservice.service;
 
 import com.ftbootcamp.eticketuserservice.converter.RoleConverter;
-import com.ftbootcamp.eticketuserservice.dto.request.RoleCreateRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.RoleCreateSaveRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.RoleUpdateRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.RoleResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
@@ -19,10 +19,10 @@ public class RoleService {
     private final RoleRepository roleRepository;
     private final RoleBusinessRules roleBusinessRules;
 
-    public RoleResponse create(RoleCreateRequest roleCreateRequest) {
-        roleBusinessRules.checkRoleNameAlreadyExist(roleCreateRequest.getName());
+    public RoleResponse create(RoleCreateSaveRequest roleCreateSaveRequest) {
+        roleBusinessRules.checkRoleNameAlreadyExist(roleCreateSaveRequest.getName());
 
-        Role role = new Role(roleCreateRequest.getName().toUpperCase());
+        Role role = new Role(roleCreateSaveRequest.getName().toUpperCase());
         roleRepository.save(role);
 
         return RoleConverter.roleToRoleResponse(role);

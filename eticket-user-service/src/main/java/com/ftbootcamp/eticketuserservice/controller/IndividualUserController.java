@@ -25,7 +25,7 @@ public class IndividualUserController {
 
     @PostMapping()
     @Operation(summary = "Create individual user", description = "Create individual user with given user information")
-    public GenericResponse<IndividualUserDetailsResponse> createUser(@RequestBody IndividualUserRequest request) {
+    public GenericResponse<IndividualUserDetailsResponse> createUser(@RequestBody IndividualUserSaveRequest request) {
         return GenericResponse.success(individualUserService.createUser(request), HttpStatus.CREATED);
     }
 
@@ -82,7 +82,7 @@ public class IndividualUserController {
 
     @PostMapping("/update")
     @Operation(summary = "Update individual user", description = "Update individual user with given user information")
-    public GenericResponse<IndividualUserDetailsResponse> updateUser(@RequestBody IndividualUserRequest request) {
+    public GenericResponse<IndividualUserDetailsResponse> updateUser(@RequestBody IndividualUserSaveRequest request) {
         return GenericResponse.success(individualUserService.updateUser(request), HttpStatus.OK);
     }
 

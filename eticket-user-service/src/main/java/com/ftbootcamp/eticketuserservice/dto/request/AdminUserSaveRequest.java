@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AdminUserRequest {
+public class AdminUserSaveRequest {
 
     private String email;
     private String phoneNumber;

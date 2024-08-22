@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class IndividualUserRequest {
+public class IndividualUserSaveRequest {
 
     private String email;
     private String phoneNumber;

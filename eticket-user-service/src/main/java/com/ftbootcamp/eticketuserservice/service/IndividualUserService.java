@@ -9,6 +9,9 @@ import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
 import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
 import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
+import com.ftbootcamp.eticketuserservice.producer.rabbitmq.RabbitMqProducer;
+import com.ftbootcamp.eticketuserservice.producer.rabbitmq.dto.NotificationSendRequest;
+import com.ftbootcamp.eticketuserservice.producer.rabbitmq.enums.NotificationType;
 import com.ftbootcamp.eticketuserservice.repository.IndividualUserRepository;
 import com.ftbootcamp.eticketuserservice.rules.IndividualUserBusinessRules;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
@@ -29,8 +32,9 @@ public class IndividualUserService {
     private final IndividualUserBusinessRules individualUserBusinessRules;
     private final RoleBusinessRules roleBusinessRules;
     private final RoleService roleService;
+    private final RabbitMqProducer rabbitMqProducer;
 
-    public IndividualUserDetailsResponse createUser(IndividualUserRequest request) {
+    public IndividualUserDetailsResponse createUser(IndividualUserSaveRequest request) {
         individualUserBusinessRules.checkEmailValid(request.getEmail());
         individualUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
         individualUserBusinessRules.checkPasswordValid(request.getPassword());
@@ -53,6 +57,11 @@ public class IndividualUserService {
         individualUserRepository.save(createdUser);
 
         log.info("Log: User created. request: {}", request);
+
+        // Send message to user with RabbitMQ Service (Asencronize):
+        String infoMessage = "Welcome to our system. Your account created successfully.";
+        rabbitMqProducer.sendMessage(new NotificationSendRequest(NotificationType.EMAIL, createdUser.getEmail(),
+                infoMessage));
 
         return IndividualUserConverter.toIndividualUserDetailsResponse(createdUser);
     }
@@ -116,7 +125,7 @@ public class IndividualUserService {
         return IndividualUserConverter.toIndividualUserSummaryResponse(individualUserRepository.findByEmailList(emailList));
     }
 
-    public IndividualUserDetailsResponse updateUser(IndividualUserRequest request) {
+    public IndividualUserDetailsResponse updateUser(IndividualUserSaveRequest request) {
 
         IndividualUser userToUpdate = individualUserBusinessRules.checkUserExistByEmail(request.getEmail());
 

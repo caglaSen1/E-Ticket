@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class RoleCreateRequest {
+public class RoleCreateSaveRequest {
     private String name;
 }

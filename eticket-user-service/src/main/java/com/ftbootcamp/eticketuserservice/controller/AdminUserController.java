@@ -1,6 +1,6 @@
 package com.ftbootcamp.eticketuserservice.controller;
 
-import com.ftbootcamp.eticketuserservice.dto.request.AdminUserRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.AdminUserSaveRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.UserPasswordChangeRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.UserRoleRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.AdminUserDetailsResponse;
@@ -25,7 +25,7 @@ public class AdminUserController {
 
     @PostMapping()
     @Operation(summary = "Create admin user", description = "Create admin user with given user information")
-    public GenericResponse<AdminUserDetailsResponse> createUser(@RequestBody AdminUserRequest request) {
+    public GenericResponse<AdminUserDetailsResponse> createUser(@RequestBody AdminUserSaveRequest request) {
         return GenericResponse.success(adminUserService.createUser(request), HttpStatus.CREATED);
     }
 
@@ -55,7 +55,7 @@ public class AdminUserController {
 
     @PostMapping("/update")
     @Operation(summary = "Update admin user", description = "Update admin user with given user information")
-    public GenericResponse<AdminUserDetailsResponse> updateUser(@RequestBody AdminUserRequest request) {
+    public GenericResponse<AdminUserDetailsResponse> updateUser(@RequestBody AdminUserSaveRequest request) {
         return GenericResponse.success(adminUserService.updateUser(request), HttpStatus.OK);
     }
 

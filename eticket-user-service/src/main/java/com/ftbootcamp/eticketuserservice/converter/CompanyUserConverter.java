@@ -1,6 +1,6 @@
 package com.ftbootcamp.eticketuserservice.converter;
 
-import com.ftbootcamp.eticketuserservice.dto.request.CompanyUserRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.CompanyUserSaveRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.CompanyUser;
@@ -42,7 +42,7 @@ public class CompanyUserConverter {
                 .build();
     }
 
-    public static CompanyUser toUpdatedCompanyUser(CompanyUser user, CompanyUserRequest request) {
+    public static CompanyUser toUpdatedCompanyUser(CompanyUser user, CompanyUserSaveRequest request) {
         if(request.getEmail() != null) {
             user.setEmail(request.getEmail());
         }
