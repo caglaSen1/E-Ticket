@@ -9,7 +9,7 @@ import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
 import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
 import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
-import com.ftbootcamp.eticketuserservice.producer.Log;
+import com.ftbootcamp.eticketuserservice.producer.kafka.Log;
 import com.ftbootcamp.eticketuserservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketuserservice.producer.rabbitmq.RabbitMqProducer;
 import com.ftbootcamp.eticketuserservice.producer.rabbitmq.dto.NotificationSendRequest;

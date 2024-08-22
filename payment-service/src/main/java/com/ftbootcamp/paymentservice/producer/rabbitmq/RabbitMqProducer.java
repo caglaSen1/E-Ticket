@@ -1,4 +1,4 @@
-package com.ftbootcamp.paymentservice.producer;
+package com.ftbootcamp.paymentservice.producer.rabbitmq;
 
 import com.ftbootcamp.paymentservice.config.RabbitMQProducerConfig;
 import com.ftbootcamp.paymentservice.dto.request.PaymentGenericRequest;

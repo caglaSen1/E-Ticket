@@ -5,7 +5,7 @@ import com.ftbootcamp.eticketuserservice.dto.request.RoleCreateSaveRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.RoleUpdateRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.RoleResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
-import com.ftbootcamp.eticketuserservice.producer.Log;
+import com.ftbootcamp.eticketuserservice.producer.kafka.Log;
 import com.ftbootcamp.eticketuserservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketuserservice.repository.RoleRepository;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;

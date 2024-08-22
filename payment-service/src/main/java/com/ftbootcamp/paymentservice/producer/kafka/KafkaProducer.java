@@ -1,6 +1,6 @@
-package com.ftbootcamp.eticketuserservice.producer.kafka;
+package com.ftbootcamp.paymentservice.producer.kafka;
 
-import com.ftbootcamp.eticketuserservice.producer.kafka.constants.KafkaTopicConstants;
+import com.ftbootcamp.paymentservice.producer.kafka.constants.KafkaTopicConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;

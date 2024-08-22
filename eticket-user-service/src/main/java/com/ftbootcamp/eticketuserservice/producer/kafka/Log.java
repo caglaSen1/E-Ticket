@@ -1,4 +1,4 @@
-package com.ftbootcamp.eticketuserservice.producer;
+package com.ftbootcamp.eticketuserservice.producer.kafka;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
