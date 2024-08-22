@@ -32,4 +32,12 @@ public class GenericResponse <T>{
                 .message(message)
                 .build();
     }
+
+    public static <T> GenericResponse<T> failed(String message, HttpStatus httpStatus){
+        return GenericResponse.<T>builder()
+                .httpStatus(httpStatus)
+                .status(GenericResponseConstants.FAILED)
+                .message(message)
+                .build();
+    }
 }

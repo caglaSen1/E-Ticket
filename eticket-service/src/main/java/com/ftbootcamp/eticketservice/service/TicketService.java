@@ -2,7 +2,7 @@ package com.ftbootcamp.eticketservice.service;
 
 import com.ftbootcamp.eticketservice.client.payment.dto.request.PaymentGenericRequest;
 import com.ftbootcamp.eticketservice.client.payment.service.PaymentClientService;
-import com.ftbootcamp.eticketservice.client.user.UserClientService;
+import com.ftbootcamp.eticketservice.client.user.service.UserClientService;
 import com.ftbootcamp.eticketservice.client.user.constants.RoleNameConstants;
 import com.ftbootcamp.eticketservice.client.user.dto.UserDetailsResponse;
 import com.ftbootcamp.eticketservice.client.user.enums.Gender;
