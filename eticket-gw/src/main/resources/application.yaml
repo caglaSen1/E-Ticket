@@ -44,6 +44,11 @@ spring:
           uri: lb://ETICKET-INDEX-SERVICE
           predicates:
             - Path=/api/v1/documents/**
+        - id: eticket-search-service
+          uri: lb://ETICKET-SEARCH-SERVICE
+          predicates:
+            - Path=/api/v1/search/**
+
 
 server:
   port: 9090
