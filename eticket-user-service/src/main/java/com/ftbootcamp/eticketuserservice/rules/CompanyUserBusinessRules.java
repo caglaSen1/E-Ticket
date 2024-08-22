@@ -20,7 +20,7 @@ public class CompanyUserBusinessRules {
 
     public CompanyUser checkUserExistById(long id) {
         if (companyUserRepository.findById(id).isEmpty()) {
-            handleException(ExceptionMessages.USER_NOT_FOUND, "Id: " + id);
+            throw new ETicketException(ExceptionMessages.USER_NOT_FOUND + " Id: " + id);
         }
 
         return companyUserRepository.findById(id).get();
@@ -28,19 +28,19 @@ public class CompanyUserBusinessRules {
 
     public void checkEmailValid(String email) {
         if (!email.contains("@")) {
-            handleException(ExceptionMessages.USER_EMAIL_NOT_VALID, "Email: " + email);
+            throw new ETicketException(ExceptionMessages.USER_EMAIL_NOT_VALID + " Email: " + email);
         }
     }
 
     public void checkEmailAlreadyExist(String email) {
         if (userRepository.findByEmail(email).isPresent()) {
-            handleException(ExceptionMessages.USER_ALREADY_EXIST_BY_EMAIL, "Email: " + email);
+            throw new ETicketException(ExceptionMessages.USER_ALREADY_EXIST_BY_EMAIL + " Email: " + email);
         }
     }
 
     public CompanyUser checkUserExistByEmail(String email) {
         if (companyUserRepository.findByEmail(email).isEmpty()) {
-            handleException(ExceptionMessages.USER_NOT_FOUND, "Email: " + email);
+            throw new ETicketException(ExceptionMessages.USER_NOT_FOUND + " Email: " + email);
         }
 
         return companyUserRepository.findByEmail(email).get();
@@ -51,20 +51,8 @@ public class CompanyUserBusinessRules {
         int maxPasswordLength = UserEntityConstants.PASSWORD_MAX_LENGTH;
 
         if (!(minPasswordLength <= password.length() && maxPasswordLength >= password.length())) {
-            handleException(ExceptionMessages.USER_PASSWORD_NOT_VALID, "Password: " + password);
+            throw new ETicketException(ExceptionMessages.USER_PASSWORD_NOT_VALID + " Password: " + password);
         }
-    }
-
-    private void handleException(String exceptionMessage, String request) {
-        String logMessage;
-
-        if (request != null && !request.isEmpty()) {
-            logMessage = String.format("Log: Error: %s, Request: %s", exceptionMessage, request);
-        } else {
-            logMessage = String.format("Log: Error: %s", exceptionMessage);
-        }
-
-        throw new ETicketException(exceptionMessage, logMessage);
     }
 
 }

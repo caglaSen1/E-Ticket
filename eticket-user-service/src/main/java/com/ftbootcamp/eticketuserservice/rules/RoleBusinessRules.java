@@ -18,7 +18,7 @@ public class RoleBusinessRules {
 
     public Role checkRoleExistById(Long id) {
         if (roleRepository.findById(id).isEmpty()) {
-            handleException(ExceptionMessages.ROLE_NOT_FOUND, "Id: " + id);
+            throw new ETicketException(ExceptionMessages.ROLE_NOT_FOUND + " Id: " + id);
         }
 
         return roleRepository.findById(id).get();
@@ -26,7 +26,7 @@ public class RoleBusinessRules {
 
     public Role checkRoleExistByName(String name) {
         if (roleRepository.findByName(name.toUpperCase()).isEmpty()) {
-            handleException(ExceptionMessages.ROLE_NOT_FOUND, "Name: " + name);
+            throw new ETicketException(ExceptionMessages.ROLE_NOT_FOUND + " Name: " + name);
         }
 
         return roleRepository.findByName(name.toUpperCase()).get();
@@ -34,7 +34,7 @@ public class RoleBusinessRules {
 
     public void checkRoleNameAlreadyExist(String name) {
         if (roleRepository.findByName(name.toUpperCase()).isPresent()) {
-            handleException(ExceptionMessages.ROLE_ALREADY_EXIST, "Name: " + name);
+            throw new ETicketException(ExceptionMessages.ROLE_ALREADY_EXIST + " Name: " + name);
         }
     }
 
@@ -44,19 +44,8 @@ public class RoleBusinessRules {
                 roleToRemove.equals(RoleEntityConstants.ADMIN_USER_ROLE_NAME) ||
                 roleToRemove.equals(RoleEntityConstants.INDIVIDUAL_USER_ROLE_NAME) ||
                 roleToRemove.equals(RoleEntityConstants.CORPORATE_USER_ROLE_NAME)){
-            handleException(ExceptionMessages.DEFAULT_ROLE_CANNOT_BE_ADDED_REMOVED, "Role: " + roleToRemove);
+            throw new ETicketException(ExceptionMessages.DEFAULT_ROLE_CANNOT_BE_ADDED_REMOVED +
+                    " Role: " + roleToRemove);
         }
-    }
-
-    private void handleException(String exceptionMessage, String request) {
-        String logMessage;
-
-        if (request != null && !request.isEmpty()) {
-            logMessage = String.format("Log: Error: %s, Request: %s", exceptionMessage, request);
-        } else {
-            logMessage = String.format("Log: Error: %s", exceptionMessage);
-        }
-
-        throw new ETicketException(exceptionMessage, logMessage);
     }
 }

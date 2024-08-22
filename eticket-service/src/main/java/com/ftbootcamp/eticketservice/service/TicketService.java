@@ -13,7 +13,7 @@ import com.ftbootcamp.eticketservice.dto.response.TicketResponse;
 import com.ftbootcamp.eticketservice.entity.Ticket;
 import com.ftbootcamp.eticketservice.entity.Trip;
 import com.ftbootcamp.eticketservice.exception.ETicketException;
-import com.ftbootcamp.eticketservice.producer.entity.Log;
+import com.ftbootcamp.eticketservice.producer.Log;
 import com.ftbootcamp.eticketservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketservice.producer.rabbitmq.RabbitMqProducer;
 import com.ftbootcamp.eticketservice.producer.rabbitmq.dto.NotificationSendRequest;

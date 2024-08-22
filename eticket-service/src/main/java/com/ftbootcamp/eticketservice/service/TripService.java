@@ -7,7 +7,7 @@ import com.ftbootcamp.eticketservice.dto.response.TripGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.dto.response.TripResponse;
 import com.ftbootcamp.eticketservice.dto.response.TripStatisticsResponse;
 import com.ftbootcamp.eticketservice.entity.Trip;
-import com.ftbootcamp.eticketservice.producer.entity.Log;
+import com.ftbootcamp.eticketservice.producer.Log;
 import com.ftbootcamp.eticketservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketservice.repository.TripRepository;
 import com.ftbootcamp.eticketservice.rules.TripBusinessRules;

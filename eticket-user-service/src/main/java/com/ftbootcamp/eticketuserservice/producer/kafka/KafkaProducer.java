@@ -1,8 +1,7 @@
-package com.ftbootcamp.eticketservice.producer.kafka;
+package com.ftbootcamp.eticketuserservice.producer.kafka;
 
-import com.ftbootcamp.eticketservice.entity.Trip;
-import com.ftbootcamp.eticketservice.producer.Log;
-import com.ftbootcamp.eticketservice.producer.kafka.constants.KafkaTopicConstants;
+import com.ftbootcamp.eticketuserservice.producer.Log;
+import com.ftbootcamp.eticketuserservice.producer.kafka.constants.KafkaTopicConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -14,11 +13,6 @@ import org.springframework.stereotype.Component;
 public class KafkaProducer {
 
     private final KafkaTemplate<String, Object> indexKafkaTemplate;
-
-    public void sendTrip(Trip trip) {
-        log.info("trip sent to kafka: {}", trip.getId());
-        indexKafkaTemplate.send(KafkaTopicConstants.TRIP_INDEX_TOPIC, trip);
-    }
 
     public void sendLogMessage(Log message) {
         log.info("log message sent: {}", message);

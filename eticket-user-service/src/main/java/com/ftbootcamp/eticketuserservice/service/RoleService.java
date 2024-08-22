@@ -5,6 +5,8 @@ import com.ftbootcamp.eticketuserservice.dto.request.RoleCreateSaveRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.RoleUpdateRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.RoleResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
+import com.ftbootcamp.eticketuserservice.producer.Log;
+import com.ftbootcamp.eticketuserservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketuserservice.repository.RoleRepository;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +20,15 @@ public class RoleService {
 
     private final RoleRepository roleRepository;
     private final RoleBusinessRules roleBusinessRules;
+    private final KafkaProducer kafkaProducer;
 
     public RoleResponse create(RoleCreateSaveRequest roleCreateSaveRequest) {
         roleBusinessRules.checkRoleNameAlreadyExist(roleCreateSaveRequest.getName());
 
         Role role = new Role(roleCreateSaveRequest.getName().toUpperCase());
         roleRepository.save(role);
+
+        kafkaProducer.sendLogMessage(new Log("Role created. Role id: " + role.getId()));
 
         return RoleConverter.roleToRoleResponse(role);
     }
@@ -44,12 +49,16 @@ public class RoleService {
 
         roleRepository.save(updatedRole);
 
+        kafkaProducer.sendLogMessage(new Log("Role updated. Role id: " + updatedRole.getId()));
+
         return RoleConverter.roleToRoleResponse(updatedRole);
     }
 
     public void deleteRole(Long id) {
         roleBusinessRules.checkRoleExistById(id);
         roleRepository.deleteById(id);
+
+        kafkaProducer.sendLogMessage(new Log("Role soft deleted. Role id: " + id));
     }
 
     public Role createRoleIfNotExist(String name) {
@@ -57,10 +66,14 @@ public class RoleService {
             roleRepository.save(new Role(name));
         }
 
+        kafkaProducer.sendLogMessage(new Log("Role added. Role name: " + name));
+
         return roleRepository.findByName(name).get();
     }
 
     public void add(Role role) {
         roleRepository.save(role);
+
+        kafkaProducer.sendLogMessage(new Log("Role added. Role id: " + role.getId() + " Role name: " + role.getName()));
     }
 }

@@ -9,6 +9,8 @@ import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
 import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
 import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
+import com.ftbootcamp.eticketuserservice.producer.Log;
+import com.ftbootcamp.eticketuserservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketuserservice.producer.rabbitmq.RabbitMqProducer;
 import com.ftbootcamp.eticketuserservice.producer.rabbitmq.dto.NotificationSendRequest;
 import com.ftbootcamp.eticketuserservice.producer.rabbitmq.enums.NotificationType;
@@ -33,6 +35,7 @@ public class CompanyUserService {
     private final RoleBusinessRules roleBusinessRules;
     private final RoleService roleService;
     private final RabbitMqProducer rabbitMqProducer;
+    private final KafkaProducer kafkaProducer;
 
     public CompanyUserDetailsResponse createUser(CompanyUserSaveRequest request) {
         companyUserBusinessRules.checkEmailValid(request.getEmail());
@@ -55,12 +58,13 @@ public class CompanyUserService {
 
         companyUserRepository.save(createdUser);
 
-        log.info("Log: User created. request: {}", request);
-
         // Send message to user with RabbitMQ Service (Asencronize):
         String infoMessage = "Welcome to our system. Your account created successfully.";
         rabbitMqProducer.sendMessage(new NotificationSendRequest(NotificationType.EMAIL, createdUser.getEmail(),
                 infoMessage));
+
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage(new Log("Company User created. Company User id: " + createdUser.getId()));
 
         return CompanyUserConverter.toCompanyUserDetailsResponse(createdUser);
     }
@@ -104,7 +108,9 @@ public class CompanyUserService {
         user.setStatusType(statusType);
         companyUserRepository.save(user);
 
-        log.info("Log: Company User status changed. email: {}, statusType: {}", email, statusType);
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage(new Log("Company User status changed. Company User email: " + email +
+                ", status: " + statusType));
 
         return CompanyUserConverter.toCompanyUserSummaryResponse(user);
     }
@@ -117,7 +123,9 @@ public class CompanyUserService {
             changeStatus(email, statusType);
         });
 
-        log.info("Log: User status changed in bulk. emailList: {}, statusType: {}", emailList, statusType);
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage(new Log("Company Users status changed. Email list: " + emailList +
+                ", status: " + statusType));
 
         return CompanyUserConverter.toCompanyUserSummaryResponse(companyUserRepository.findByEmailList(emailList));
     }
@@ -128,7 +136,8 @@ public class CompanyUserService {
         CompanyUser updatedUser = CompanyUserConverter.toUpdatedCompanyUser(userToUpdate, request);
         companyUserRepository.save(updatedUser);
 
-        log.info("Log: User updated. email: {}, request: {}", request.getEmail(), request);
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage(new Log("Company User updated. Company User id: " + updatedUser.getId()));
 
         return CompanyUserConverter.toCompanyUserDetailsResponse(updatedUser);
     }
@@ -144,7 +153,8 @@ public class CompanyUserService {
         user.setPassword(password);
         companyUserRepository.save(user);
 
-        log.info("Log: User password changed. email: {}", email);
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage(new Log("Company user changed password. User id: " + user.getId()));
     }
 
     public void addRoleToUser(UserRoleRequest request) {
@@ -156,6 +166,10 @@ public class CompanyUserService {
         user.getRoles().add(role);
 
         companyUserRepository.save(user);
+
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage(new Log("Role added to company user. User id: " +
+                user.getId() + " Role name: " + role.getName()));
     }
 
     public void removeRoleFromUser(UserRoleRequest request) {
@@ -167,6 +181,10 @@ public class CompanyUserService {
         user.getRoles().remove(role);
 
         companyUserRepository.save(user);
+
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage(new Log("Role removed from company user. User id: " +
+                user.getId() + " Role name: " + role.getName()));
     }
 
     public List<String> getUserRoles(String email) {

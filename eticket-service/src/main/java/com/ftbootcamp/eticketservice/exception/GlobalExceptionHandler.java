@@ -1,7 +1,7 @@
 package com.ftbootcamp.eticketservice.exception;
 
 import com.ftbootcamp.eticketservice.dto.response.GenericResponse;
-import com.ftbootcamp.eticketservice.producer.entity.Log;
+import com.ftbootcamp.eticketservice.producer.Log;
 import com.ftbootcamp.eticketservice.producer.kafka.KafkaProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.ExceptionHandler;

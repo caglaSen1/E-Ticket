@@ -9,6 +9,8 @@ import com.ftbootcamp.eticketuserservice.dto.response.AdminUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.AdminUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
+import com.ftbootcamp.eticketuserservice.producer.Log;
+import com.ftbootcamp.eticketuserservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketuserservice.producer.rabbitmq.RabbitMqProducer;
 import com.ftbootcamp.eticketuserservice.producer.rabbitmq.dto.NotificationSendRequest;
 import com.ftbootcamp.eticketuserservice.producer.rabbitmq.enums.NotificationType;
@@ -33,6 +35,7 @@ public class AdminUserService {
     private final RoleBusinessRules roleBusinessRules;
     private final RoleService roleService;
     private final RabbitMqProducer rabbitMqProducer;
+    private final KafkaProducer kafkaProducer;
 
     public AdminUserDetailsResponse createUser(AdminUserSaveRequest request) {
         adminUserBusinessRules.checkEmailValid(request.getEmail());
@@ -55,12 +58,13 @@ public class AdminUserService {
 
         adminUserRepository.save(createdUser);
 
-        log.info("Log: User created. request: {}", request);
-
         // Send message to user with RabbitMQ Service (Asencronize):
         String infoMessage = "Welcome to our system. Your account created successfully.";
         rabbitMqProducer.sendMessage(new NotificationSendRequest(NotificationType.EMAIL, createdUser.getEmail(),
                 infoMessage));
+
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage(new Log("Admin user created. User id: " + createdUser.getId()));
 
         return AdminUserConverter.toAdminUserDetailsResponse(createdUser);
     }
@@ -105,7 +109,8 @@ public class AdminUserService {
         user.setPassword(password);
         adminUserRepository.save(user);
 
-        log.info("Log: User password changed. email: {}", email);
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage(new Log("Admin user changed password. User id: " + user.getId()));
     }
 
     public void addRoleToUser(UserRoleRequest request) {
@@ -117,6 +122,10 @@ public class AdminUserService {
         user.getRoles().add(role);
 
         adminUserRepository.save(user);
+
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage(new Log("Role added to admin user. User id: " +
+                user.getId() + " Role name: " + role.getName()));
     }
 
     public void removeRoleFromUser(UserRoleRequest request) {
@@ -128,6 +137,10 @@ public class AdminUserService {
         user.getRoles().remove(role);
 
         adminUserRepository.save(user);
+
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage(new Log("Role removed from admin user. User id: " +
+                user.getId() + " Role name: " + role.getName()));
     }
 
     public List<String> getUserRoles(String email) {
