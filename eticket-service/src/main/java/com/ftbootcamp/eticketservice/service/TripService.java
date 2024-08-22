@@ -7,6 +7,7 @@ import com.ftbootcamp.eticketservice.dto.response.TripGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.dto.response.TripResponse;
 import com.ftbootcamp.eticketservice.dto.response.TripStatisticsResponse;
 import com.ftbootcamp.eticketservice.entity.Trip;
+import com.ftbootcamp.eticketservice.producer.entity.LogMessage;
 import com.ftbootcamp.eticketservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketservice.repository.TripRepository;
 import com.ftbootcamp.eticketservice.rules.TripBusinessRules;
@@ -52,7 +53,7 @@ public class TripService {
         kafkaProducer.sendTrip(trip);
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage("Trip created: " + trip.getId());
+        kafkaProducer.sendLogMessage(new LogMessage("Trip created. Trip id: " + trip.getId()));
 
         return TripConverter.toTripResponse(trip);
     }
@@ -117,7 +118,7 @@ public class TripService {
         kafkaProducer.sendTrip(updatedTrip);
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage("Trip updated: " + updatedTrip.getId());
+        kafkaProducer.sendLogMessage(new LogMessage("Trip updated. Trip id: " + updatedTrip.getId()));
 
         return TripConverter.toTripResponse(updatedTrip);
     }
@@ -135,6 +136,6 @@ public class TripService {
         kafkaProducer.sendTrip(tripToCancel);
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage("Trip cancelled: " + tripToCancel.getId());
+        kafkaProducer.sendLogMessage(new LogMessage("Trip cancelled. Trip id: " + tripToCancel.getId()));
     }
 }

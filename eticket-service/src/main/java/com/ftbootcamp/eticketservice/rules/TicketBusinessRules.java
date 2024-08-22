@@ -21,7 +21,7 @@ public class TicketBusinessRules {
 
     public Ticket checkTicketExistById(Long id) {
         if (ticketRepository.findById(id).isEmpty()) {
-            handleException(ExceptionMessages.TICKET_NOT_FOUND, "Id: " + id);
+            throw new ETicketException(ExceptionMessages.TICKET_NOT_FOUND + " Id: " + id);
         }
 
         return ticketRepository.findById(id).get();
@@ -33,8 +33,7 @@ public class TicketBusinessRules {
 
         for (long id : ids) {
             if (ticketRepository.findById(id).isEmpty()) {
-                handleException(ExceptionMessages.TICKET_NOT_FOUND, "Id: " + id);
-                return null;
+                throw new ETicketException(ExceptionMessages.TICKET_NOT_FOUND + " Id: " + id);
             }
 
             foundedTickets.add(ticketRepository.findById(id).get());
@@ -45,11 +44,11 @@ public class TicketBusinessRules {
 
     public void checkTicketIsAvailable(Ticket ticket) {
         if (ticket.isSold()) {
-            handleException(ExceptionMessages.TICKET_ALREADY_SOLD, "Ticket: " + ticket.getId());
+            throw new ETicketException(ExceptionMessages.TICKET_ALREADY_SOLD + " Ticket: " + ticket.getId());
         }
         if(ticket.getTrip().getArrivalTime().atZone(ZoneId.systemDefault())
                 .toInstant().toEpochMilli() < System.currentTimeMillis()){
-            handleException(ExceptionMessages.TICKET_EXPIRED, "Ticket: " + ticket.getId());
+            throw new ETicketException(ExceptionMessages.TICKET_EXPIRED + "Ticket: " + ticket.getId());
         }
     }
 
@@ -57,17 +56,5 @@ public class TicketBusinessRules {
         for (Ticket ticket : tickets) {
             checkTicketIsAvailable(ticket);
         }
-    }
-
-    private void handleException(String exceptionMessage, String request) {
-        String logMessage;
-
-        if (request != null && !request.isEmpty()) {
-            logMessage = String.format("Log: Error: %s, Request: %s", exceptionMessage, request);
-        } else {
-            logMessage = String.format("Log: Error: %s", exceptionMessage);
-        }
-
-        throw new ETicketException(exceptionMessage, logMessage);
     }
 }

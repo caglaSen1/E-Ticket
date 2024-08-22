@@ -24,7 +24,7 @@ public class KafkaConsumerConfig {
     @Value("${kafka.log-message.group-id}")
     private String groupId;
 
-    // Consumer configuration for logging
+    // Consumer configuration for log messages
     @Bean
     public ConsumerFactory<String, String> loggingConsumerFactory() {
         Map<String, Object> configProps = new HashMap<>();
