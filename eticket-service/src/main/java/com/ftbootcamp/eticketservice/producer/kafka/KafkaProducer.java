@@ -18,4 +18,9 @@ public class KafkaProducer {
         log.info("trip sent to kafka: {}", trip.getId());
         indexKafkaTemplate.send(KafkaTopicConstants.TRIP_INDEX_TOPIC, trip);
     }
+
+    public void sendLogMessage(String message) {
+        log.info("log message sent: {}", message);
+        indexKafkaTemplate.send(KafkaTopicConstants.LOG_MESSAGE_TOPIC, message);
+    }
 }

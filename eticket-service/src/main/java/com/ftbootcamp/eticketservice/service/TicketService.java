@@ -13,6 +13,7 @@ import com.ftbootcamp.eticketservice.dto.response.TicketResponse;
 import com.ftbootcamp.eticketservice.entity.Ticket;
 import com.ftbootcamp.eticketservice.entity.Trip;
 import com.ftbootcamp.eticketservice.exception.ETicketException;
+import com.ftbootcamp.eticketservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketservice.producer.rabbitmq.RabbitMqProducer;
 import com.ftbootcamp.eticketservice.producer.rabbitmq.dto.NotificationSendRequest;
 import com.ftbootcamp.eticketservice.producer.rabbitmq.enums.NotificationType;
@@ -35,6 +36,7 @@ public class TicketService {
     private final TicketBusinessRules ticketBusinessRules;
     private final UserClientService userService;
     private final RabbitMqProducer rabbitMqProducer;
+    private final KafkaProducer kafkaProducer;
 
     public TicketResponse buyTicket(TicketBuyRequest request) {
         // Get user with userClient (sencronous):
@@ -53,10 +55,13 @@ public class TicketService {
 
         log.info("Ticket bought. ticket id: {}, user: {}", ticket.getId(), user.getEmail());
 
-        // Send ticket info message with RabbitMQ Service (Asencronize):
+        // Send ticket info message with RabbitMQ (Asencronize):
         String infoMessage = generateTicketInfoMessage(user, ticket);
         rabbitMqProducer.sendTicketInfoMessage(new NotificationSendRequest(NotificationType.EMAIL, user.getEmail(),
                 infoMessage));
+
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage("Ticket bought. ticket id: " + ticket.getId() + ", user: " + user.getEmail());
 
         return TicketConverter.toTicketResponse(ticket);
     }
@@ -87,12 +92,17 @@ public class TicketService {
             ticketRepository.save(ticket);
 
             log.info("Ticket bought. ticket id: {}, user: {}", ticket.getId(), buyer.getEmail());
+
         }
 
         // Send ticket info message with RabbitMQ Service (Asencronize):
         String infoMessage = generateMultipleTicketInfoMessage(buyer, tickets, request.getPassengerTicketRequests());
         rabbitMqProducer.sendTicketInfoMessage(new NotificationSendRequest(NotificationType.EMAIL, buyer.getEmail(),
                 infoMessage));
+
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage("Ticket bought. Buyer: " + buyer.getEmail() +
+                "ticket ids: " + tickets.stream().map(Ticket::getId).toList());
 
         return TicketConverter.toTicketResponseList(tickets);
     }
@@ -145,6 +155,9 @@ public class TicketService {
         ticketRepository.findAllByTripId(tripId).forEach(ticket -> {
             ticket.setDeleted(true);
             ticketRepository.save(ticket);
+
+            // Send log message with Kafka for saving in MongoDB (Asencronize):
+            kafkaProducer.sendLogMessage("Ticket soft deleted. ticket id: " + ticket.getId());
         });
     }
 
@@ -156,6 +169,9 @@ public class TicketService {
             Ticket ticket = new Ticket(trip, seatNo);
 
             ticketRepository.save(ticket);
+
+            // Send log message with Kafka for saving in MongoDB (Asencronize):
+            kafkaProducer.sendLogMessage("Ticket generated. ticket id: " + ticket.getId());
         }
     }
 

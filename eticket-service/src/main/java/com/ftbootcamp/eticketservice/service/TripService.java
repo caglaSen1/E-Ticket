@@ -28,8 +28,6 @@ public class TripService {
     private final TicketService ticketService;
     private final KafkaProducer kafkaProducer;
 
-    // TODO: +cancelTrip()
-
     public TripResponse create(TripCreateRequest request) {
         tripBusinessRules.checkArrivalTimeValid(request.getDepartureTime(), request.getArrivalTime());
         tripBusinessRules.checkTotalTicketCountValid(request.getTotalTicketCount());
@@ -52,6 +50,9 @@ public class TripService {
 
         // Trip send to kafka (It will be consumed by index-service and saved to elasticsearch)
         kafkaProducer.sendTrip(trip);
+
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage("Trip created: " + trip.getId());
 
         return TripConverter.toTripResponse(trip);
     }
@@ -115,6 +116,9 @@ public class TripService {
         // Trip send to kafka (It will be consumed by index-service and saved to elasticsearch)
         kafkaProducer.sendTrip(updatedTrip);
 
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage("Trip updated: " + updatedTrip.getId());
+
         return TripConverter.toTripResponse(updatedTrip);
     }
 
@@ -129,5 +133,8 @@ public class TripService {
 
         // Trip send to kafka (It will be consumed by index-service and saved to elasticsearch)
         kafkaProducer.sendTrip(tripToCancel);
+
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
+        kafkaProducer.sendLogMessage("Trip cancelled: " + tripToCancel.getId());
     }
 }

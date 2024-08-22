@@ -33,4 +33,19 @@ public class KafkaProducerConfig {
         return new KafkaTemplate<>(elasticsearchProducerFactory());
     }
 
+    // Producer configuration for logging
+    @Bean
+    public ProducerFactory<String, String> loggingProducerFactory() {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+
+    @Bean
+    public KafkaTemplate<String, String> loggingKafkaTemplate() {
+        return new KafkaTemplate<>(loggingProducerFactory());
+    }
+
 }
