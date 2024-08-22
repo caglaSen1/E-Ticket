@@ -6,6 +6,8 @@ import com.ftbootcamp.notificationservice.dto.request.EmailSendWithTemplateReque
 import com.ftbootcamp.notificationservice.dto.response.EmailResponse;
 import com.ftbootcamp.notificationservice.entity.Email;
 import com.ftbootcamp.notificationservice.entity.EmailTemplate;
+import com.ftbootcamp.notificationservice.producer.kafka.KafkaProducer;
+import com.ftbootcamp.notificationservice.producer.kafka.Log;
 import com.ftbootcamp.notificationservice.repository.EmailRepository;
 import com.ftbootcamp.notificationservice.rules.EmailBusinessRules;
 import com.ftbootcamp.notificationservice.rules.EmailTemplateBusinessRules;
@@ -22,12 +24,13 @@ public class EmailService {
     private final EmailRepository emailRepository;
     private final EmailBusinessRules emailBusinessRules;
     private final EmailTemplateBusinessRules emailTemplateBusinessRules;
+    private final KafkaProducer kafkaProducer;
 
     public EmailResponse sendEmail(EmailSendRequest request){
         Email email = new Email(request.getTo(), request.getText());
         emailRepository.save(email);
 
-        log.info("Email sent. request: {}", request);
+        kafkaProducer.sendLogMessage(new Log("Email sent. request: " + request));
 
         return EmailConverter.toResponse(email);
     }
@@ -39,7 +42,7 @@ public class EmailService {
         Email email = new Email(request.getTo(), template.getText());
         emailRepository.save(email);
 
-        log.info("Email sent. request: {}", request);
+        kafkaProducer.sendLogMessage(new Log("Email sent with template. request: " + request));
 
         return EmailConverter.toResponse(email);
     }
