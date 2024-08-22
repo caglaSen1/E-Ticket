@@ -38,13 +38,13 @@ public class RoleBusinessRules {
         }
     }
 
-    public void checkRoleToRemoveIsDefault(String roleToRemove) {
+    public void checkRoleToAddOrRemoveIsDefault(String roleToRemove) {
 
         if(roleToRemove.equals(RoleEntityConstants.USER_ROLE_NAME) ||
                 roleToRemove.equals(RoleEntityConstants.ADMIN_USER_ROLE_NAME) ||
                 roleToRemove.equals(RoleEntityConstants.INDIVIDUAL_USER_ROLE_NAME) ||
                 roleToRemove.equals(RoleEntityConstants.CORPORATE_USER_ROLE_NAME)){
-            handleException(ExceptionMessages.DEFAULT_ROLE_CANNOT_BE_REMOVED, "Role: " + roleToRemove);
+            handleException(ExceptionMessages.DEFAULT_ROLE_CANNOT_BE_ADDED_REMOVED, "Role: " + roleToRemove);
         }
     }
 

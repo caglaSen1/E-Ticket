@@ -1,13 +1,9 @@
 package com.ftbootcamp.eticketuserservice.service;
 
 import com.ftbootcamp.eticketuserservice.converter.IndividualUserConverter;
-import com.ftbootcamp.eticketuserservice.dto.request.IndividualUserCreateRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserBulkStatusChangeRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserPasswordChangeRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserRoleRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.*;
 import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserSummaryResponse;
-import com.ftbootcamp.eticketuserservice.entity.abstracts.User;
 import com.ftbootcamp.eticketuserservice.entity.concrete.IndividualUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
@@ -34,7 +30,7 @@ public class IndividualUserService {
     private final RoleBusinessRules roleBusinessRules;
     private final RoleService roleService;
 
-    public IndividualUserDetailsResponse createUser(IndividualUserCreateRequest request) {
+    public IndividualUserDetailsResponse createUser(IndividualUserRequest request) {
         individualUserBusinessRules.checkEmailValid(request.getEmail());
         individualUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
         individualUserBusinessRules.checkPasswordValid(request.getPassword());
@@ -120,6 +116,21 @@ public class IndividualUserService {
         return IndividualUserConverter.toIndividualUserSummaryResponse(individualUserRepository.findByEmailList(emailList));
     }
 
+    public IndividualUserDetailsResponse updateUser(IndividualUserRequest request) {
+
+        IndividualUser userToUpdate = individualUserBusinessRules.checkUserExistByEmail(request.getEmail());
+
+        individualUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
+        // TODO: Other validations
+
+        IndividualUser individualUserToUpdate = IndividualUserConverter
+                .toUpdatedIndividualUser(userToUpdate, request);
+        individualUserRepository.save(individualUserToUpdate);
+
+        return IndividualUserConverter.toIndividualUserDetailsResponse(individualUserToUpdate);
+
+    }
+
     public void changePassword(UserPasswordChangeRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();
@@ -138,6 +149,8 @@ public class IndividualUserService {
         IndividualUser user = individualUserBusinessRules.checkUserExistByEmail(request.getEmail());
         Role role = roleBusinessRules.checkRoleExistByName(request.getRoleName());
 
+        roleBusinessRules.checkRoleToAddOrRemoveIsDefault(role.getName());
+
         user.getRoles().add(role);
 
         individualUserRepository.save(user);
@@ -147,7 +160,7 @@ public class IndividualUserService {
         IndividualUser user = individualUserBusinessRules.checkUserExistByEmail(request.getEmail());
         Role role = roleBusinessRules.checkRoleExistByName(request.getRoleName());
 
-        roleBusinessRules.checkRoleToRemoveIsDefault(role.getName());
+        roleBusinessRules.checkRoleToAddOrRemoveIsDefault(role.getName());
 
         user.getRoles().remove(role);
 

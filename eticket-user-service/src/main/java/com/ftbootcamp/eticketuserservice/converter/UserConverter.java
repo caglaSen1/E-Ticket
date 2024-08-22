@@ -31,17 +31,6 @@ public class UserConverter {
                 .toList();
     }
 
-    /*
-    public static UserDetailsResponse toUserDetailsResponse(User user) {
-
-        return UserDetailsResponse.builder()
-                .email(user.getEmail())
-                .phoneNumber(user.getPhoneNumber())
-                .createdDate(user.getCreatedDate())
-                .roles(RoleConverter.roleToRoleResponse(user.getRoles()))
-                .build();
-    }*/
-
     public static UserDetailsResponse toUserDetailsReaponse(User user) {
 
         UserDetailsResponse userDetailsResponse = new UserDetailsResponse();
@@ -50,21 +39,18 @@ public class UserConverter {
         userDetailsResponse.setCreatedDate(user.getCreatedDate());
         userDetailsResponse.setRoles(RoleConverter.roleToRoleResponse(user.getRoles()));
 
-        if (user instanceof IndividualUser) {
-            IndividualUser individual = (IndividualUser) user;
+        if (user instanceof IndividualUser individual) {
             userDetailsResponse.setFirstName(individual.getFirstName());
             userDetailsResponse.setLastName(individual.getLastName());
             userDetailsResponse.setBirthDate(individual.getBirthDate());
             userDetailsResponse.setGender(individual.getGender());
             userDetailsResponse.setInstanceOf(RoleEntityConstants.INDIVIDUAL_USER_ROLE_NAME);
-        } else if (user instanceof AdminUser) {
-            AdminUser admin = (AdminUser) user;
+        } else if (user instanceof AdminUser admin) {
             userDetailsResponse.setFirstName(admin.getFirstName());
             userDetailsResponse.setLastName(admin.getLastName());
             userDetailsResponse.setGender(admin.getGender());
             userDetailsResponse.setInstanceOf(RoleEntityConstants.ADMIN_USER_ROLE_NAME);
-        } else if (user instanceof CompanyUser) {
-            CompanyUser company = (CompanyUser) user;
+        } else if (user instanceof CompanyUser company) {
             userDetailsResponse.setCompanyName(company.getCompanyName());
             userDetailsResponse.setTaxNumber(company.getTaxNumber());
             userDetailsResponse.setInstanceOf(RoleEntityConstants.CORPORATE_USER_ROLE_NAME);

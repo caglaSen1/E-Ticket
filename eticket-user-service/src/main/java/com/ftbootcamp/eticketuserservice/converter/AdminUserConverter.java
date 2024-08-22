@@ -1,5 +1,6 @@
 package com.ftbootcamp.eticketuserservice.converter;
 
+import com.ftbootcamp.eticketuserservice.dto.request.AdminUserRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.AdminUserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.AdminUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.AdminUser;
@@ -38,5 +39,31 @@ public class AdminUserConverter {
                 .createdDate(user.getCreatedDate())
                 .roles(RoleConverter.roleToRoleResponse(user.getRoles()))
                 .build();
+    }
+
+    public static AdminUser toUpdatedAdminUser(AdminUser user, AdminUserRequest request) {
+        if(request.getEmail() != null) {
+            user.setEmail(request.getEmail());
+        }
+        if(request.getPhoneNumber() != null) {
+            user.setPhoneNumber(request.getPhoneNumber());
+        }
+        if(request.getPassword() != null) {
+            user.setPassword(request.getPassword());
+        }
+        if(request.getFirstName() != null) {
+            user.setFirstName(request.getFirstName());
+        }
+        if(request.getLastName() != null) {
+            user.setLastName(request.getLastName());
+        }
+        if(request.getNationalId() != 0) {
+            user.setNationalId(request.getNationalId());
+        }
+        if(request.getGender() != null) {
+            user.setGender(request.getGender());
+        }
+
+        return user;
     }
 }

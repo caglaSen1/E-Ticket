@@ -1,9 +1,6 @@
 package com.ftbootcamp.eticketuserservice.controller;
 
-import com.ftbootcamp.eticketuserservice.dto.request.IndividualUserCreateRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserBulkStatusChangeRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserPasswordChangeRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserRoleRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.*;
 import com.ftbootcamp.eticketuserservice.dto.response.GenericResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserSummaryResponse;
@@ -28,7 +25,7 @@ public class IndividualUserController {
 
     @PostMapping()
     @Operation(summary = "Create individual user", description = "Create individual user with given user information")
-    public GenericResponse<IndividualUserDetailsResponse> createUser(@RequestBody IndividualUserCreateRequest request) {
+    public GenericResponse<IndividualUserDetailsResponse> createUser(@RequestBody IndividualUserRequest request) {
         return GenericResponse.success(individualUserService.createUser(request), HttpStatus.CREATED);
     }
 
@@ -81,6 +78,12 @@ public class IndividualUserController {
     @Operation(summary = "Change individual user status bulk", description = "Change status of users with given email list")
     public GenericResponse<List<IndividualUserSummaryResponse>> changeStatusBulk(@RequestBody UserBulkStatusChangeRequest request) {
         return GenericResponse.success(individualUserService.changeIndividualUserStatusBulk(request), HttpStatus.OK);
+    }
+
+    @PostMapping("/update")
+    @Operation(summary = "Update individual user", description = "Update individual user with given user information")
+    public GenericResponse<IndividualUserDetailsResponse> updateUser(@RequestBody IndividualUserRequest request) {
+        return GenericResponse.success(individualUserService.updateUser(request), HttpStatus.OK);
     }
 
     @PutMapping("/change-password")

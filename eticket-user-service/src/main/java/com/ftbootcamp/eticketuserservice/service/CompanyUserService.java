@@ -1,13 +1,9 @@
 package com.ftbootcamp.eticketuserservice.service;
 
 import com.ftbootcamp.eticketuserservice.converter.CompanyUserConverter;
-import com.ftbootcamp.eticketuserservice.dto.request.CompanyUserCreateRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserBulkStatusChangeRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserPasswordChangeRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserRoleRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.*;
 import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserSummaryResponse;
-import com.ftbootcamp.eticketuserservice.entity.abstracts.User;
 import com.ftbootcamp.eticketuserservice.entity.concrete.CompanyUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
@@ -16,7 +12,6 @@ import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
 import com.ftbootcamp.eticketuserservice.repository.CompanyUserRepository;
 import com.ftbootcamp.eticketuserservice.rules.CompanyUserBusinessRules;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
-import com.ftbootcamp.eticketuserservice.rules.UserBusinessRules;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -35,7 +30,7 @@ public class CompanyUserService {
     private final RoleBusinessRules roleBusinessRules;
     private final RoleService roleService;
 
-    public CompanyUserDetailsResponse createUser(CompanyUserCreateRequest request) {
+    public CompanyUserDetailsResponse createUser(CompanyUserRequest request) {
         companyUserBusinessRules.checkEmailValid(request.getEmail());
         companyUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
         companyUserBusinessRules.checkPasswordValid(request.getPassword());
@@ -117,6 +112,17 @@ public class CompanyUserService {
         return CompanyUserConverter.toCompanyUserSummaryResponse(companyUserRepository.findByEmailList(emailList));
     }
 
+    public CompanyUserDetailsResponse updateUser(CompanyUserRequest request) {
+        CompanyUser userToUpdate = companyUserBusinessRules.checkUserExistByEmail(request.getEmail());
+
+        CompanyUser updatedUser = CompanyUserConverter.toUpdatedCompanyUser(userToUpdate, request);
+        companyUserRepository.save(updatedUser);
+
+        log.info("Log: User updated. email: {}, request: {}", request.getEmail(), request);
+
+        return CompanyUserConverter.toCompanyUserDetailsResponse(updatedUser);
+    }
+
     public void changePassword(UserPasswordChangeRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();
@@ -135,6 +141,8 @@ public class CompanyUserService {
         CompanyUser user = companyUserBusinessRules.checkUserExistByEmail(request.getEmail());
         Role role = roleBusinessRules.checkRoleExistByName(request.getRoleName());
 
+        roleBusinessRules.checkRoleToAddOrRemoveIsDefault(role.getName());
+
         user.getRoles().add(role);
 
         companyUserRepository.save(user);
@@ -144,7 +152,7 @@ public class CompanyUserService {
         CompanyUser user = companyUserBusinessRules.checkUserExistByEmail(request.getEmail());
         Role role = roleBusinessRules.checkRoleExistByName(request.getRoleName());
 
-        roleBusinessRules.checkRoleToRemoveIsDefault(role.getName());
+        roleBusinessRules.checkRoleToAddOrRemoveIsDefault(role.getName());
 
         user.getRoles().remove(role);
 

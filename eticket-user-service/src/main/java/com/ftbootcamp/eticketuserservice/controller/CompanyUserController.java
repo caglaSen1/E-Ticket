@@ -1,9 +1,6 @@
 package com.ftbootcamp.eticketuserservice.controller;
 
-import com.ftbootcamp.eticketuserservice.dto.request.CompanyUserCreateRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserBulkStatusChangeRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserPasswordChangeRequest;
-import com.ftbootcamp.eticketuserservice.dto.request.UserRoleRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.*;
 import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.GenericResponse;
@@ -27,7 +24,7 @@ public class CompanyUserController {
 
     @PostMapping()
     @Operation(summary = "Create company user", description = "Create company user with given user information")
-    public GenericResponse<CompanyUserDetailsResponse> createUser(@RequestBody CompanyUserCreateRequest request) {
+    public GenericResponse<CompanyUserDetailsResponse> createUser(@RequestBody CompanyUserRequest request) {
         return GenericResponse.success(companyUserService.createUser(request), HttpStatus.CREATED);
     }
 
@@ -80,6 +77,12 @@ public class CompanyUserController {
     @Operation(summary = "Change company user status bulk", description = "Change status of users with given email list")
     public GenericResponse<List<CompanyUserSummaryResponse>> changeStatusBulk(@RequestBody UserBulkStatusChangeRequest request) {
         return GenericResponse.success(companyUserService.changeCompanyUserStatusBulk(request), HttpStatus.OK);
+    }
+
+    @PostMapping("/update")
+    @Operation(summary = "Update company user", description = "Update company user with given user information")
+    public GenericResponse<CompanyUserDetailsResponse> updateUser(@RequestBody CompanyUserRequest request) {
+        return GenericResponse.success(companyUserService.updateUser(request), HttpStatus.OK);
     }
 
     @PutMapping("/change-password")

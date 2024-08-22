@@ -1,12 +1,11 @@
 package com.ftbootcamp.eticketuserservice.service;
 
 import com.ftbootcamp.eticketuserservice.converter.AdminUserConverter;
-import com.ftbootcamp.eticketuserservice.dto.request.AdminUserCreateRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.AdminUserRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.UserPasswordChangeRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.UserRoleRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.AdminUserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.AdminUserSummaryResponse;
-import com.ftbootcamp.eticketuserservice.entity.abstracts.User;
 import com.ftbootcamp.eticketuserservice.entity.concrete.AdminUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
@@ -31,7 +30,7 @@ public class AdminUserService {
     private final RoleBusinessRules roleBusinessRules;
     private final RoleService roleService;
 
-    public AdminUserDetailsResponse createUser(AdminUserCreateRequest request) {
+    public AdminUserDetailsResponse createUser(AdminUserRequest request) {
         adminUserBusinessRules.checkEmailValid(request.getEmail());
         adminUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
         adminUserBusinessRules.checkPasswordValid(request.getPassword());
@@ -73,6 +72,19 @@ public class AdminUserService {
         return (int) adminUserRepository.count();
     }
 
+    public AdminUserDetailsResponse updateUser(AdminUserRequest request){
+
+        AdminUser userToUpdate = adminUserBusinessRules.checkUserExistByEmail(request.getEmail());
+
+        adminUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
+        // TODO: Other validations
+
+        AdminUser adminUserToUpdate = AdminUserConverter.toUpdatedAdminUser(userToUpdate, request);
+        adminUserRepository.save(adminUserToUpdate);
+
+        return AdminUserConverter.toAdminUserDetailsResponse(adminUserToUpdate);
+    }
+
     public void changePassword(UserPasswordChangeRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();
@@ -91,6 +103,8 @@ public class AdminUserService {
         AdminUser user = adminUserBusinessRules.checkUserExistByEmail(request.getEmail());
         Role role = roleBusinessRules.checkRoleExistByName(request.getRoleName());
 
+        roleBusinessRules.checkRoleToAddOrRemoveIsDefault(role.getName());
+
         user.getRoles().add(role);
 
         adminUserRepository.save(user);
@@ -100,7 +114,7 @@ public class AdminUserService {
         AdminUser user = adminUserBusinessRules.checkUserExistByEmail(request.getEmail());
         Role role = roleBusinessRules.checkRoleExistByName(request.getRoleName());
 
-        roleBusinessRules.checkRoleToRemoveIsDefault(role.getName());
+        roleBusinessRules.checkRoleToAddOrRemoveIsDefault(role.getName());
 
         user.getRoles().remove(role);
 

@@ -1,5 +1,6 @@
 package com.ftbootcamp.eticketuserservice.converter;
 
+import com.ftbootcamp.eticketuserservice.dto.request.IndividualUserRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.IndividualUser;
@@ -37,6 +38,31 @@ public class IndividualUserConverter {
                 .createdDate(user.getCreatedDate())
                 .roles(RoleConverter.roleToRoleResponse(user.getRoles()))
                 .build();
+    }
+
+    public static IndividualUser toUpdatedIndividualUser(IndividualUser user, IndividualUserRequest request) {
+        if(request.getEmail() != null) {
+            user.setEmail(request.getEmail());
+        }
+        if(request.getPhoneNumber() != null) {
+            user.setPhoneNumber(request.getPhoneNumber());
+        }
+        if(request.getPassword() != null) {
+            user.setPassword(request.getPassword());
+        }
+        if(request.getFirstName() != null) {
+            user.setFirstName(request.getFirstName());
+        }
+        if(request.getLastName() != null) {
+            user.setLastName(request.getLastName());
+        }
+        if(request.getNationalId() != 0) {
+            user.setNationalId(request.getNationalId());
+        }
+        if(request.getGender() != null) {
+            user.setGender(request.getGender());
+        }
+        return user;
     }
 }
 
