@@ -16,7 +16,6 @@ import java.time.Instant;
 public class TripDocumentSearchRequest extends BaseSearchRequest{
 
     private TripDocumentSortBy sortBy;
-    private SortDirection sortDirection;
     private Instant date;
     private String departureCity;
     private String arrivalCity;

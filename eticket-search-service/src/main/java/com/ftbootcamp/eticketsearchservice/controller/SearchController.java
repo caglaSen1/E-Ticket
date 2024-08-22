@@ -3,6 +3,7 @@ package com.ftbootcamp.eticketsearchservice.controller;
 import com.ftbootcamp.eticketsearchservice.dto.request.TripDocumentSearchRequest;
 import com.ftbootcamp.eticketsearchservice.dto.response.GenericResponse;
 import com.ftbootcamp.eticketsearchservice.dto.response.TripDocumentResponse;
+import com.ftbootcamp.eticketsearchservice.dto.response.TripSearchResponse;
 import com.ftbootcamp.eticketsearchservice.enums.SortDirection;
 import com.ftbootcamp.eticketsearchservice.enums.TripDocumentSortBy;
 import com.ftbootcamp.eticketsearchservice.service.SearchService;
@@ -24,7 +25,7 @@ public class SearchController {
     private final SearchService searchService;
 
     @GetMapping("/trips")
-    public GenericResponse<List<TripDocumentResponse>> searchTrips(
+    public GenericResponse<List<TripSearchResponse>> searchTrips(
             @RequestParam(required = false) LocalDate date,
             @RequestParam(required = false) String departureCity,
             @RequestParam(required = false) String arrivalCity,
@@ -32,7 +33,7 @@ public class SearchController {
             @RequestParam(required = false) TripDocumentSortBy sortBy,
             @RequestParam(required = false, defaultValue = "ASC") SortDirection sortDirection,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "2") int size) {
+            @RequestParam(defaultValue = "10") int size) {
 
         TripDocumentSearchRequest request = new TripDocumentSearchRequest();
         request.setDate(date != null ? date.atStartOfDay().toInstant(ZoneOffset.UTC) : null);
@@ -45,5 +46,29 @@ public class SearchController {
         request.setSize(size);
 
         return GenericResponse.success(searchService.searchTrips(request), HttpStatus.OK);
+    }
+
+    @GetMapping("/trips-for-admin")
+    public GenericResponse<List<TripSearchResponse>> searchTripsForAdmin(
+            @RequestParam(required = false) LocalDate date,
+            @RequestParam(required = false) String departureCity,
+            @RequestParam(required = false) String arrivalCity,
+            @RequestParam(required = false) String vehicleType,
+            @RequestParam(required = false) TripDocumentSortBy sortBy,
+            @RequestParam(required = false, defaultValue = "ASC") SortDirection sortDirection,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        TripDocumentSearchRequest request = new TripDocumentSearchRequest();
+        request.setDate(date != null ? date.atStartOfDay().toInstant(ZoneOffset.UTC) : null);
+        request.setDepartureCity(departureCity);
+        request.setArrivalCity(arrivalCity);
+        request.setVehicleType(vehicleType);
+        request.setSortBy(sortBy);
+        request.setSortDirection(sortDirection);
+        request.setPage(page);
+        request.setSize(size);
+
+        return GenericResponse.success(searchService.searchTripsForAdmin(request), HttpStatus.OK);
     }
 }

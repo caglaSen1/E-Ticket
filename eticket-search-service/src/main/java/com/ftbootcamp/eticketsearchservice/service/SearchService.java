@@ -1,15 +1,18 @@
 package com.ftbootcamp.eticketsearchservice.service;
 
 import com.ftbootcamp.eticketsearchservice.converter.TripConverter;
-import com.ftbootcamp.eticketsearchservice.dto.request.TripDocumentSearchRequest;
+import com.ftbootcamp.eticketsearchservice.dto.request.BaseSearchRequest;
 import com.ftbootcamp.eticketsearchservice.dto.response.TripDocumentResponse;
+import com.ftbootcamp.eticketsearchservice.dto.response.TripSearchResponse;
+import com.ftbootcamp.eticketsearchservice.helper.FilterHelper;
+import com.ftbootcamp.eticketsearchservice.helper.SortHelper;
 import com.ftbootcamp.eticketsearchservice.model.constants.TripDocumentConstants;
 import com.ftbootcamp.eticketsearchservice.model.document.TripDocument;
 import lombok.RequiredArgsConstructor;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.sort.SortBuilders;
-import org.elasticsearch.search.sort.SortOrder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
@@ -18,11 +21,11 @@ import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
+import org.elasticsearch.script.Script;
+import org.elasticsearch.script.ScriptType;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,79 +35,83 @@ public class SearchService {
 
     private final ElasticsearchOperations elasticsearchOperations;
 
-    public List<TripDocumentResponse> searchTrips(TripDocumentSearchRequest request) {
+    public List<TripSearchResponse> searchTrips(BaseSearchRequest request) {
 
-        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        // Filtering
+        BoolQueryBuilder queryBuilder = FilterHelper.buildSearchQuery(request);
 
-        // Filter by date
-        if (request.getDate() != null) {
-            LocalDate date = LocalDate.ofInstant(request.getDate(), ZoneOffset.UTC);
-            Instant startOfDay = date.atStartOfDay().toInstant(ZoneOffset.UTC);
-            Instant endOfDay = startOfDay
-                    .plus(Duration.ofHours(23))
-                    .plus(Duration.ofMinutes(59))
-                    .plus(Duration.ofSeconds(59));
-            queryBuilder.must(QueryBuilders
-                    .rangeQuery(TripDocumentConstants.DEPARTURE_TIME).gte(startOfDay).lte(endOfDay));
-        }
+        // Available trips for all users
+        queryBuilder.must(QueryBuilders.termQuery(TripDocumentConstants.IS_CANCELLED, false));
+        queryBuilder.must(QueryBuilders.scriptQuery(new Script(
+                ScriptType.INLINE,
+                "painless",
+                "doc['" + TripDocumentConstants.SOLD_TICKET_COUNT + "'].value < doc['" +
+                        TripDocumentConstants.TOTAL_TICKET_COUNT + "'].value",
+                Collections.emptyMap()
+        )));
+        queryBuilder.must(QueryBuilders.rangeQuery(TripDocumentConstants.ARRIVAL_TIME)
+                .gt("now"));
 
-        // Filter by departure city
-        if (request.getDepartureCity() != null && !request.getDepartureCity().isEmpty()) {
-            queryBuilder.must(QueryBuilders
-                    .wildcardQuery(TripDocumentConstants.DEPARTURE_CITY,
-                            "*" + request.getDepartureCity().toLowerCase() + "*"));
-        }
-
-        // Filter by arrival city
-        if (request.getArrivalCity() != null && !request.getArrivalCity().isEmpty()) {
-            queryBuilder.must(QueryBuilders
-                    .wildcardQuery(TripDocumentConstants.ARRIVAL_CITY,
-                            "*" + request.getArrivalCity().toLowerCase() + "*"));
-        }
-
-        // Filter by vehicle type
-        if (request.getVehicleType() != null && !request.getVehicleType().isEmpty()) {
-            queryBuilder.must(QueryBuilders
-                    .wildcardQuery(TripDocumentConstants.VEHICLE_TYPE,
-                            "*" + request.getVehicleType().toLowerCase() + "*"));
-        }
-
-        // Pagination information
+        // Pagination
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
 
         NativeSearchQueryBuilder searchQueryBuilder = new NativeSearchQueryBuilder()
                 .withQuery(queryBuilder)
                 .withPageable(pageable);
 
-
         // Sorting
-        if (request.getSortBy() != null) {
-            switch (request.getSortBy()) {
-                case DEPARTURE_TIME:
-                    searchQueryBuilder.withSort(SortBuilders.fieldSort(TripDocumentConstants.DEPARTURE_TIME)
-                            .order(SortOrder.fromString(request.getSortDirection().name())));
-                    break;
-                case ARRIVAL_TIME:
-                    searchQueryBuilder.withSort(SortBuilders.fieldSort(TripDocumentConstants.ARRIVAL_TIME)
-                            .order(SortOrder.fromString(request.getSortDirection().name())));
-                    break;
-                case PRICE:
-                    searchQueryBuilder.withSort(SortBuilders.fieldSort(TripDocumentConstants.PRICE)
-                            .order(SortOrder.fromString(request.getSortDirection().name())));
-                    break;
-            }
-        }
+        SortHelper.applySorting(searchQueryBuilder, request);
 
         // Creating NativeSearchQuery
         NativeSearchQuery searchQuery = searchQueryBuilder.build();
 
+        List<SearchHit<TripDocument>> searchHits = elasticsearchOperations.search(searchQuery, TripDocument.class,
+                IndexCoordinates.of("trip")).getSearchHits();
+
+        List<TripDocument> tripDocuments = searchHits.stream().map(SearchHit::getContent)
+                .collect(Collectors.toList());
+
+        // Convert List to Page
+        Page<TripDocument> tripDocumentsPage = new PageImpl<>(tripDocuments, pageable, tripDocuments.size());
+
+        // Wrap the TripSearchResponse in a List
+        List<TripSearchResponse> tripSearchResponses = new ArrayList<>();
+        tripSearchResponses.add(TripConverter.toTripSearchResponse(tripDocumentsPage));
+
+        return tripSearchResponses;
+    }
+
+    public List<TripSearchResponse> searchTripsForAdmin(BaseSearchRequest request) {
+
+        // Filtering
+        BoolQueryBuilder queryBuilder = FilterHelper.buildSearchQuery(request);
+
+        // Pagination
+        Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
+
+        NativeSearchQueryBuilder searchQueryBuilder = new NativeSearchQueryBuilder()
+                .withQuery(queryBuilder)
+                .withPageable(pageable);
+
+        // Sorting
+        SortHelper.applySorting(searchQueryBuilder, request);
+
+        // Creating NativeSearchQuery
+        NativeSearchQuery searchQuery = searchQueryBuilder.build();
 
         List<SearchHit<TripDocument>> searchHits = elasticsearchOperations.search(searchQuery, TripDocument.class,
                 IndexCoordinates.of("trip")).getSearchHits();
 
-        return TripConverter.toTripDocumentResponseList(searchHits.stream().map(SearchHit::getContent)
-                .collect(Collectors.toList()));
+        List<TripDocument> tripDocuments = searchHits.stream().map(SearchHit::getContent)
+                .collect(Collectors.toList());
 
+        // Convert List to Page
+        Page<TripDocument> tripDocumentsPage = new PageImpl<>(tripDocuments, pageable, tripDocuments.size());
 
+        // Wrap the TripSearchResponse in a List
+        List<TripSearchResponse> tripSearchResponses = new ArrayList<>();
+        tripSearchResponses.add(TripConverter.toTripSearchResponse(tripDocumentsPage));
+
+        return tripSearchResponses;
     }
 }
