@@ -11,6 +11,8 @@ import java.util.List;
 @ToString
 public class UserBulkStatusChangeRequest {
 
+    private int page;
+    private int size;
     private List<String> emailList;
     private StatusType statusType;
 }

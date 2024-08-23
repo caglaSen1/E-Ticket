@@ -20,8 +20,7 @@ services:
       KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_CREATE_TOPICS: "log_message_topic:1:1, exception_log_message_topic:1:1, 
-      trip_index_topic:1:1, user_index_topic"
+      KAFKA_CREATE_TOPICS: "log_message_topic:1:1, exception_log_message_topic:1:1, trip_index_topic:1:1"
     depends_on:
       - zookeeper
 

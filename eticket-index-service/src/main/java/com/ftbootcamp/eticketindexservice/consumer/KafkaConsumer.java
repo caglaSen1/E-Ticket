@@ -3,7 +3,7 @@ package com.ftbootcamp.eticketindexservice.consumer;
 import com.ftbootcamp.eticketindexservice.consumer.constants.KafkaTopicConstants;
 import com.ftbootcamp.eticketindexservice.converter.TripConverter;
 import com.ftbootcamp.eticketindexservice.model.Trip;
-import com.ftbootcamp.eticketindexservice.repository.TripRepository;
+import com.ftbootcamp.eticketindexservice.repository.TripDocumentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -14,14 +14,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KafkaConsumer {
 
-    private final TripRepository tripRepository;
+    private final TripDocumentRepository tripDocumentRepository;
 
     @KafkaListener(topics = KafkaTopicConstants.TRIP_INDEX_TOPIC, groupId = "${kafka.trip.group-id}")
-    public void listen(Trip trip) {
+    public void listenTrip(Trip trip) {
 
         log.info("Trip recieved from Kafka: {}", trip);
 
-        tripRepository.save(TripConverter.toTripDocument(trip));
+        tripDocumentRepository.save(TripConverter.toTripDocument(trip));
 
     }
 

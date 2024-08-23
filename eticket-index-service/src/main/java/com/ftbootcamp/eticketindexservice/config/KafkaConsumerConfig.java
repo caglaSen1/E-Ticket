@@ -24,8 +24,11 @@ public class KafkaConsumerConfig {
     @Value("${kafka.trip.group-id}")
     private String tripGroupId;
 
+    @Value("${kafka.user.group-id}")
+    private String userGroupId;
+
     @Bean
-    public ConsumerFactory<String, Trip> consumerFactory() {
+    public ConsumerFactory<String, Trip> tripConsumerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG, tripGroupId);
@@ -40,9 +43,9 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Trip> kafkaListenerContainerFactory() {
+    public ConcurrentKafkaListenerContainerFactory<String, Trip> tripKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, Trip> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
+        factory.setConsumerFactory(tripConsumerFactory());
         factory.setCommonErrorHandler(new DefaultErrorHandler());
         return factory;
     }

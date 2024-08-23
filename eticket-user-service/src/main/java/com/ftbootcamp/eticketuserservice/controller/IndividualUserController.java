@@ -3,6 +3,7 @@ package com.ftbootcamp.eticketuserservice.controller;
 import com.ftbootcamp.eticketuserservice.dto.request.*;
 import com.ftbootcamp.eticketuserservice.dto.response.GenericResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserPaginatedResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
 import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
@@ -31,8 +32,9 @@ public class IndividualUserController {
 
     @GetMapping()
     @Operation(summary = "Get all individual users", description = "Get all individual users")
-    public GenericResponse<List<IndividualUserSummaryResponse>> getAllUsers() {
-        return GenericResponse.success(individualUserService.getAllIndividualUsers(), HttpStatus.OK);
+    public GenericResponse<IndividualUserPaginatedResponse> getAllUsers(@RequestParam(defaultValue = "0") int page,
+                                                                        @RequestParam(defaultValue = "10") int size) {
+        return GenericResponse.success(individualUserService.getAllIndividualUsers(page, size), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -49,16 +51,22 @@ public class IndividualUserController {
 
     @GetMapping("/by-status")
     @Operation(summary = "Get individual users by status list", description = "Get individual users by status list")
-    public GenericResponse<List<IndividualUserSummaryResponse>> getUsersByStatusList(
-            @RequestParam(required = false) List<StatusType> statusList) {
-        return GenericResponse.success(individualUserService.getIndividualUsersByStatusList(statusList), HttpStatus.OK);
+    public GenericResponse<IndividualUserPaginatedResponse> getUsersByStatusList(
+                                                        @RequestParam(defaultValue = "0") int page,
+                                                        @RequestParam(defaultValue = "10") int size,
+                                                        @RequestParam(required = false) List<StatusType> statusList) {
+        return GenericResponse.success(individualUserService.getIndividualUsersByStatusList(page, size, statusList),
+                HttpStatus.OK);
     }
 
     @GetMapping("/by-type")
     @Operation(summary = "Get individual users by type list", description = "Get individual users by type list")
-    public GenericResponse<List<IndividualUserSummaryResponse>> getUsersByTypeList(
-            @RequestParam(required = false) List<UserType> typeList) {
-        return GenericResponse.success(individualUserService.getIndividualUsersByTypeList(typeList), HttpStatus.OK);
+    public GenericResponse<IndividualUserPaginatedResponse> getUsersByTypeList(
+                                                        @RequestParam(defaultValue = "0") int page,
+                                                        @RequestParam(defaultValue = "10") int size,
+                                                        @RequestParam(required = false) List<UserType> typeList) {
+        return GenericResponse.success(individualUserService.getIndividualUsersByTypeList(page, size, typeList),
+                HttpStatus.OK);
     }
 
     @GetMapping("/count")
@@ -76,8 +84,10 @@ public class IndividualUserController {
 
     @PutMapping("/status-bulk")
     @Operation(summary = "Change individual user status bulk", description = "Change status of users with given email list")
-    public GenericResponse<List<IndividualUserSummaryResponse>> changeStatusBulk(@RequestBody UserBulkStatusChangeRequest request) {
-        return GenericResponse.success(individualUserService.changeIndividualUserStatusBulk(request), HttpStatus.OK);
+    public GenericResponse<IndividualUserPaginatedResponse> changeStatusBulk(
+                                                            @RequestBody UserBulkStatusChangeRequest request) {
+        return GenericResponse.success(individualUserService.changeIndividualUserStatusBulk(request),
+                HttpStatus.OK);
     }
 
     @PostMapping("/update")

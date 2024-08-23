@@ -2,9 +2,13 @@ package com.ftbootcamp.eticketuserservice.converter;
 
 import com.ftbootcamp.eticketuserservice.dto.request.AdminUserSaveRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.AdminUserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.AdminUserPaginatedResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.AdminUserSummaryResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserPaginatedResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.AdminUser;
+import com.ftbootcamp.eticketuserservice.entity.concrete.CompanyUser;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -38,6 +42,16 @@ public class AdminUserConverter {
                 .gender(user.getGender())
                 .createdDate(user.getCreatedDate())
                 .roles(RoleConverter.roleToRoleResponse(user.getRoles()))
+                .build();
+    }
+
+    public static AdminUserPaginatedResponse toAdminUserPaginatedResponse(Page<AdminUser> users) {
+        return AdminUserPaginatedResponse.builder()
+                .userSummaryResponses(toAdminUserSummaryResponse(users.getContent()))
+                .currentPage(users.getNumber())
+                .numberOfElementsInCurrentPage(users.getNumberOfElements())
+                .totalPages(users.getTotalPages())
+                .totalElements(users.getTotalElements())
                 .build();
     }
 

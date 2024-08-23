@@ -5,6 +5,7 @@ import com.ftbootcamp.eticketuserservice.dto.request.AdminUserSaveRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.UserPasswordChangeRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.UserRoleRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.AdminUserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.AdminUserPaginatedResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.AdminUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.AdminUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
@@ -19,6 +20,7 @@ import com.ftbootcamp.eticketuserservice.rules.AdminUserBusinessRules;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -49,7 +51,6 @@ public class AdminUserService {
         // Create User
         AdminUser createdUser = new AdminUser(request.getEmail(), request.getPhoneNumber(), hashedPassword,
                 request.getFirstName(), request.getLastName(), request.getNationalId(), request.getGender());
-        adminUserRepository.save(createdUser);
 
         // Add default role to admin user (USER, ADMIN_USER)
         Role userRole = roleService.createRoleIfNotExist(RoleEntityConstants.USER_ROLE_NAME);
@@ -75,8 +76,9 @@ public class AdminUserService {
         return AdminUserConverter.toAdminUserDetailsResponse(createdUser);
     }
 
-    public List<AdminUserSummaryResponse> getAllUsers() {
-        return AdminUserConverter.toAdminUserSummaryResponse(adminUserRepository.findAll());
+    public AdminUserPaginatedResponse getAllUsers(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        return AdminUserConverter.toAdminUserPaginatedResponse(adminUserRepository.findAll(pageRequest));
     }
 
     public AdminUserDetailsResponse getUserById(Long id) {

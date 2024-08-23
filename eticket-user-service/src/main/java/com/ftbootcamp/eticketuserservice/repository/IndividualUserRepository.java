@@ -3,6 +3,8 @@ package com.ftbootcamp.eticketuserservice.repository;
 import com.ftbootcamp.eticketuserservice.entity.concrete.IndividualUser;
 import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
 import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,12 +16,12 @@ public interface IndividualUserRepository extends JpaRepository<IndividualUser, 
     Optional<IndividualUser> findByEmail(String email);
 
     @Query("SELECT u FROM IndividualUser u WHERE u.statusType IN :statusList")
-    List<IndividualUser> findByStatusList(List<StatusType> statusList);
+    Page<IndividualUser> findByStatusList(List<StatusType> statusList, Pageable pageable);
 
     @Query("SELECT u FROM IndividualUser u WHERE u.userType IN :userTypeList")
-    List<IndividualUser> findByTypeList(List<UserType> userTypeList);
+    Page<IndividualUser> findByTypeList(List<UserType> userTypeList, Pageable pageable);
 
     @Query("SELECT u FROM IndividualUser u WHERE u.email IN :emailList")
-    List<IndividualUser> findByEmailList(List<String> emailList);
+    Page<IndividualUser> findByEmailList(List<String> emailList, Pageable pageable);
 }
 

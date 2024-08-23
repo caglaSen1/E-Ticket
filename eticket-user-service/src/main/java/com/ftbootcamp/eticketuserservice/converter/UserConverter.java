@@ -1,5 +1,6 @@
 package com.ftbootcamp.eticketuserservice.converter;
 
+import com.ftbootcamp.eticketuserservice.dto.response.UserSummaryPaginatedResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.UserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.UserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.abstracts.User;
@@ -8,6 +9,7 @@ import com.ftbootcamp.eticketuserservice.entity.concrete.CompanyUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.IndividualUser;
 import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -31,7 +33,18 @@ public class UserConverter {
                 .toList();
     }
 
-    public static UserDetailsResponse toUserDetailsReaponse(User user) {
+    public static UserSummaryPaginatedResponse toPaginatedUserSummaryResponse(Page<User> users) {
+
+        return UserSummaryPaginatedResponse.builder()
+                .userSummaryResponses(toUserSummaryResponse(users.getContent()))
+                .currentPage(users.getNumber())
+                .numberOfElementsInCurrentPage(users.getNumberOfElements())
+                .totalPages(users.getTotalPages())
+                .totalElements(users.getTotalElements())
+                .build();
+    }
+
+    public static UserDetailsResponse toUserDetailsResponse(User user) {
 
         UserDetailsResponse userDetailsResponse = new UserDetailsResponse();
         userDetailsResponse.setEmail(user.getEmail());

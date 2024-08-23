@@ -21,5 +21,4 @@ public class IndexController {
     public GenericResponse<List<TripDocumentResponse>> getAllPayments() {
         return GenericResponse.success(indexService.getAllTripDocumentResponses(), HttpStatus.OK);
     }
-
 }

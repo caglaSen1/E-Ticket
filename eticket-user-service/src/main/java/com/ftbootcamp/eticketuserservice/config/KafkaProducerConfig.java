@@ -32,4 +32,5 @@ public class KafkaProducerConfig {
     public KafkaTemplate<String, Object> elasticsearchKafkaTemplate() {
         return new KafkaTemplate<>(elasticsearchProducerFactory());
     }
+
 }

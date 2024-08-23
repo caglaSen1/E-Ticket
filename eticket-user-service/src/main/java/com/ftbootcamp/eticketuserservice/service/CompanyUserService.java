@@ -3,6 +3,7 @@ package com.ftbootcamp.eticketuserservice.service;
 import com.ftbootcamp.eticketuserservice.converter.CompanyUserConverter;
 import com.ftbootcamp.eticketuserservice.dto.request.*;
 import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserPaginatedResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.CompanyUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
@@ -19,6 +20,7 @@ import com.ftbootcamp.eticketuserservice.rules.CompanyUserBusinessRules;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -88,20 +90,26 @@ public class CompanyUserService {
         return CompanyUserConverter.toCompanyUserDetailsResponse(companyUserBusinessRules.checkUserExistByEmail(email));
     }
 
-    public List<CompanyUserSummaryResponse> getCompanyUsersByStatusList(List<StatusType> statusList) {
+    public CompanyUserPaginatedResponse getCompanyUsersByStatusList(int page, int size, List<StatusType> statusList) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+
         if (statusList == null || statusList.isEmpty()) {
-            return CompanyUserConverter.toCompanyUserSummaryResponse(companyUserRepository.findAll());
+            return CompanyUserConverter.toCompanyUserPaginatedResponse(companyUserRepository.findAll(pageRequest));
         }
 
-        return CompanyUserConverter.toCompanyUserSummaryResponse(companyUserRepository.findByStatusList(statusList));
+        return CompanyUserConverter.toCompanyUserPaginatedResponse(companyUserRepository
+                .findByStatusList(statusList, pageRequest));
     }
 
-    public List<CompanyUserSummaryResponse> getCompanyUsersByTypeList(List<UserType> userTypeList) {
+    public CompanyUserPaginatedResponse getCompanyUsersByTypeList(int page, int size, List<UserType> userTypeList) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+
         if (userTypeList == null || userTypeList.isEmpty()) {
-            return CompanyUserConverter.toCompanyUserSummaryResponse(companyUserRepository.findAll());
+            return CompanyUserConverter.toCompanyUserPaginatedResponse(companyUserRepository.findAll(pageRequest));
         }
 
-        return CompanyUserConverter.toCompanyUserSummaryResponse(companyUserRepository.findByTypeList(userTypeList));
+        return CompanyUserConverter.toCompanyUserPaginatedResponse(companyUserRepository
+                .findByTypeList(userTypeList, pageRequest));
     }
 
     public int getHowManyCompanyUsers() {
@@ -121,7 +129,10 @@ public class CompanyUserService {
         return CompanyUserConverter.toCompanyUserSummaryResponse(user);
     }
 
-    public List<CompanyUserSummaryResponse> changeCompanyUserStatusBulk(UserBulkStatusChangeRequest request) {
+    public CompanyUserPaginatedResponse changeCompanyUserStatusBulk(UserBulkStatusChangeRequest request) {
+
+        PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
+
         List<String> emailList = request.getEmailList();
         StatusType statusType = request.getStatusType();
 
@@ -133,7 +144,8 @@ public class CompanyUserService {
         kafkaProducer.sendLogMessage(new Log("Company Users status changed. Email list: " + emailList +
                 ", status: " + statusType));
 
-        return CompanyUserConverter.toCompanyUserSummaryResponse(companyUserRepository.findByEmailList(emailList));
+        return CompanyUserConverter.toCompanyUserPaginatedResponse(companyUserRepository
+                .findByEmailList(emailList, pageRequest));
     }
 
     public CompanyUserDetailsResponse updateUser(CompanyUserSaveRequest request) {

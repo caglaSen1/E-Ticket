@@ -2,6 +2,7 @@ package com.ftbootcamp.eticketuserservice.controller;
 
 import com.ftbootcamp.eticketuserservice.dto.request.*;
 import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserPaginatedResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.GenericResponse;
 import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
@@ -10,6 +11,7 @@ import com.ftbootcamp.eticketuserservice.service.CompanyUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -48,16 +50,22 @@ public class CompanyUserController {
 
     @GetMapping("/by-status")
     @Operation(summary = "Get company users by status list", description = "Get company users by status list")
-    public GenericResponse<List<CompanyUserSummaryResponse>> getUsersByStatusList(
-            @RequestParam(required = false) List<StatusType> statusList) {
-        return GenericResponse.success(companyUserService.getCompanyUsersByStatusList(statusList), HttpStatus.OK);
+    public GenericResponse<CompanyUserPaginatedResponse> getUsersByStatusList(
+                                                        @RequestParam(defaultValue = "0") int page,
+                                                        @RequestParam(defaultValue = "10") int size,
+                                                        @RequestParam(required = false) List<StatusType> statusList) {
+        return GenericResponse.success(companyUserService.getCompanyUsersByStatusList(page, size, statusList),
+                HttpStatus.OK);
     }
 
     @GetMapping("/by-type")
     @Operation(summary = "Get company users by type list", description = "Get company users by type list")
-    public GenericResponse<List<CompanyUserSummaryResponse>> getUsersByTypeList(
-            @RequestParam(required = false) List<UserType> typeList) {
-        return GenericResponse.success(companyUserService.getCompanyUsersByTypeList(typeList), HttpStatus.OK);
+    public GenericResponse<CompanyUserPaginatedResponse> getUsersByTypeList(
+                                                        @RequestParam(defaultValue = "0") int page,
+                                                        @RequestParam(defaultValue = "10") int size,
+                                                        @RequestParam(required = false) List<UserType> typeList) {
+        return GenericResponse.success(companyUserService.getCompanyUsersByTypeList(page, size, typeList),
+                HttpStatus.OK);
     }
 
     @GetMapping("/count")
@@ -75,8 +83,10 @@ public class CompanyUserController {
 
     @PutMapping("/status-bulk")
     @Operation(summary = "Change company user status bulk", description = "Change status of users with given email list")
-    public GenericResponse<List<CompanyUserSummaryResponse>> changeStatusBulk(@RequestBody UserBulkStatusChangeRequest request) {
-        return GenericResponse.success(companyUserService.changeCompanyUserStatusBulk(request), HttpStatus.OK);
+    public GenericResponse<CompanyUserPaginatedResponse> changeStatusBulk(
+                                                              @RequestBody UserBulkStatusChangeRequest request) {
+        return GenericResponse.success(companyUserService.changeCompanyUserStatusBulk(request),
+                HttpStatus.OK);
     }
 
     @PostMapping("/update")

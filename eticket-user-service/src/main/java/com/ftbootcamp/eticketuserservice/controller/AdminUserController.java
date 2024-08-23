@@ -4,6 +4,7 @@ import com.ftbootcamp.eticketuserservice.dto.request.AdminUserSaveRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.UserPasswordChangeRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.UserRoleRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.AdminUserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.AdminUserPaginatedResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.AdminUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.GenericResponse;
 import com.ftbootcamp.eticketuserservice.service.AdminUserService;
@@ -31,8 +32,9 @@ public class AdminUserController {
 
     @GetMapping()
     @Operation(summary = "Get all admin users", description = "Get all admin users")
-    public GenericResponse<List<AdminUserSummaryResponse>> getAllUsers() {
-        return GenericResponse.success(adminUserService.getAllUsers(), HttpStatus.OK);
+    public GenericResponse<AdminUserPaginatedResponse> getAllUsers(@RequestParam(defaultValue = "0") int page,
+                                                                   @RequestParam(defaultValue = "10") int size) {
+        return GenericResponse.success(adminUserService.getAllUsers(page, size), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

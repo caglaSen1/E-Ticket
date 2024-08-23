@@ -18,15 +18,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
-    @Query("SELECT u FROM User u WHERE u.email IN :emailList")
-    List<User> findByEmailList(List<String> emailList);
-
     @Query("SELECT u FROM User u LEFT JOIN FETCH IndividualUser i ON u.id = i.id "
             + "LEFT JOIN FETCH AdminUser a ON u.id = a.id "
             + "LEFT JOIN FETCH CompanyUser c ON u.id = c.id "
             + "WHERE u.id = :id")
     Optional<User> findUserWithDetailsById(@Param("id") Long id);
-
 
     @Query("SELECT u FROM User u LEFT JOIN FETCH IndividualUser i ON u.id = i.id "
             + "LEFT JOIN FETCH AdminUser a ON u.id = a.id "

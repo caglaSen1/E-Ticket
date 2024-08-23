@@ -2,9 +2,11 @@ package com.ftbootcamp.eticketuserservice.converter;
 
 import com.ftbootcamp.eticketuserservice.dto.request.CompanyUserSaveRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserPaginatedResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.CompanyUser;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -29,6 +31,16 @@ public class CompanyUserConverter {
                 .toList();
     }
 
+    public static CompanyUserPaginatedResponse toCompanyUserPaginatedResponse(Page<CompanyUser> users) {
+        return CompanyUserPaginatedResponse.builder()
+                .userSummaryResponses(toCompanyUserSummaryResponse(users.getContent()))
+                .currentPage(users.getNumber())
+                .numberOfElementsInCurrentPage(users.getNumberOfElements())
+                .totalPages(users.getTotalPages())
+                .totalElements(users.getTotalElements())
+                .build();
+    }
+
     public static CompanyUserDetailsResponse toCompanyUserDetailsResponse(CompanyUser user) {
         return CompanyUserDetailsResponse.builder()
                 .email(user.getEmail())
@@ -43,19 +55,19 @@ public class CompanyUserConverter {
     }
 
     public static CompanyUser toUpdatedCompanyUser(CompanyUser user, CompanyUserSaveRequest request) {
-        if(request.getEmail() != null) {
+        if (request.getEmail() != null) {
             user.setEmail(request.getEmail());
         }
-        if(request.getPhoneNumber() != null) {
+        if (request.getPhoneNumber() != null) {
             user.setPhoneNumber(request.getPhoneNumber());
         }
-        if(request.getPassword() != null) {
+        if (request.getPassword() != null) {
             user.setPassword(request.getPassword());
         }
-        if(request.getCompanyName() != null) {
+        if (request.getCompanyName() != null) {
             user.setCompanyName(request.getCompanyName());
         }
-        if(request.getTaxNumber() != null) {
+        if (request.getTaxNumber() != null) {
             user.setTaxNumber(request.getTaxNumber());
         }
 

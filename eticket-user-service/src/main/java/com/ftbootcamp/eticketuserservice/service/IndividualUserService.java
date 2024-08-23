@@ -3,6 +3,7 @@ package com.ftbootcamp.eticketuserservice.service;
 import com.ftbootcamp.eticketuserservice.converter.IndividualUserConverter;
 import com.ftbootcamp.eticketuserservice.dto.request.*;
 import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserPaginatedResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.IndividualUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
@@ -19,6 +20,8 @@ import com.ftbootcamp.eticketuserservice.rules.IndividualUserBusinessRules;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -76,8 +79,11 @@ public class IndividualUserService {
         return IndividualUserConverter.toIndividualUserDetailsResponse(createdUser);
     }
 
-    public List<IndividualUserSummaryResponse> getAllIndividualUsers() {
-        return IndividualUserConverter.toIndividualUserSummaryResponse(individualUserRepository.findAll());
+    public IndividualUserPaginatedResponse getAllIndividualUsers(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<IndividualUser> individualUserPage = individualUserRepository.findAll(pageRequest);
+
+        return IndividualUserConverter.toIndividualUserPaginatedResponse(individualUserPage);
     }
 
     public IndividualUserDetailsResponse getIndividualUserById(Long id) {
@@ -90,21 +96,31 @@ public class IndividualUserService {
                 individualUserBusinessRules.checkUserExistByEmail(email));
     }
 
-    public List<IndividualUserSummaryResponse> getIndividualUsersByStatusList(List<StatusType> statusList) {
+    public IndividualUserPaginatedResponse getIndividualUsersByStatusList(int page, int size,
+                                                                              List<StatusType> statusList) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+
         if (statusList == null || statusList.isEmpty()) {
-            return IndividualUserConverter.toIndividualUserSummaryResponse(individualUserRepository.findAll());
+
+            return IndividualUserConverter.toIndividualUserPaginatedResponse(individualUserRepository
+                    .findAll(pageRequest));
         }
 
-        return IndividualUserConverter.toIndividualUserSummaryResponse(
-                individualUserRepository.findByStatusList(statusList));
+        return IndividualUserConverter.toIndividualUserPaginatedResponse(
+                individualUserRepository.findByStatusList(statusList, pageRequest));
     }
 
-    public List<IndividualUserSummaryResponse> getIndividualUsersByTypeList(List<UserType> userTypeList) {
+    public IndividualUserPaginatedResponse getIndividualUsersByTypeList(int page, int size,
+                                                                            List<UserType> userTypeList) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+
         if (userTypeList == null || userTypeList.isEmpty()) {
-            return IndividualUserConverter.toIndividualUserSummaryResponse(individualUserRepository.findAll());
+            return IndividualUserConverter.toIndividualUserPaginatedResponse(individualUserRepository
+                    .findAll(pageRequest));
         }
 
-        return IndividualUserConverter.toIndividualUserSummaryResponse(individualUserRepository.findByTypeList(userTypeList));
+        return IndividualUserConverter.toIndividualUserPaginatedResponse(individualUserRepository
+                .findByTypeList(userTypeList, pageRequest));
     }
 
     public int getHowManyIndividualUsers() {
@@ -124,7 +140,10 @@ public class IndividualUserService {
         return IndividualUserConverter.toIndividualUserSummaryResponse(user);
     }
 
-    public List<IndividualUserSummaryResponse> changeIndividualUserStatusBulk(UserBulkStatusChangeRequest request) {
+    public IndividualUserPaginatedResponse changeIndividualUserStatusBulk(UserBulkStatusChangeRequest request) {
+
+        PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize());
+
         List<String> emailList = request.getEmailList();
         StatusType statusType = request.getStatusType();
 
@@ -135,8 +154,9 @@ public class IndividualUserService {
         // Send log message with Kafka for saving in MongoDB (Asencronize):
         kafkaProducer.sendLogMessage(new Log("Individual User status changed in bulk. Status: " + statusType));
 
-        return IndividualUserConverter.toIndividualUserSummaryResponse(individualUserRepository
-                .findByEmailList(emailList));
+        Page<IndividualUser> individualUserPage = individualUserRepository.findByEmailList(emailList, pageRequest);
+
+        return IndividualUserConverter.toIndividualUserPaginatedResponse(individualUserPage);
     }
 
     public IndividualUserDetailsResponse updateUser(IndividualUserSaveRequest request) {
