@@ -52,5 +52,4 @@ public class TripBusinessRules {
             throw new ETicketException(ExceptionMessages.PRICE_LESS_THAN_ZERO + " Price: " + price);
         }
     }
-
 }

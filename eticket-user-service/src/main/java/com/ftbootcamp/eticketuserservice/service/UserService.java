@@ -1,8 +1,8 @@
 package com.ftbootcamp.eticketuserservice.service;
 
 import com.ftbootcamp.eticketuserservice.converter.UserConverter;
-import com.ftbootcamp.eticketuserservice.dto.response.UserSummaryPaginatedResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.UserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.user.UserSummaryPaginatedResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.user.UserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.entity.abstracts.User;
 import com.ftbootcamp.eticketuserservice.repository.UserRepository;
 import com.ftbootcamp.eticketuserservice.rules.UserBusinessRules;

@@ -18,7 +18,5 @@ public class SmsNotificationStrategy implements NotificationStrategy {
         // SMS sending codes...
 
         smsRepository.save(new Sms(request.getPhoneNumber(), request.getText()));
-
-        // TODO: kafka log
     }
 }

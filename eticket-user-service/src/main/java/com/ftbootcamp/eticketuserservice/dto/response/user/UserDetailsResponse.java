@@ -1,6 +1,9 @@
-package com.ftbootcamp.eticketuserservice.dto.response;
+package com.ftbootcamp.eticketuserservice.dto.response.user;
 
+import com.ftbootcamp.eticketuserservice.dto.response.RoleResponse;
 import com.ftbootcamp.eticketuserservice.entity.enums.Gender;
+import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
+import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -11,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class IndividualUserDetailsResponse {
+public class UserDetailsResponse {
 
     private String email;
     private String phoneNumber;
@@ -21,4 +24,9 @@ public class IndividualUserDetailsResponse {
     private Gender gender;
     private LocalDateTime createdDate;
     private List<RoleResponse> roles;
+    private String companyName;
+    private Long taxNumber;
+    private UserType userType;
+    private StatusType statusType;
+    private String instanceOf;
 }

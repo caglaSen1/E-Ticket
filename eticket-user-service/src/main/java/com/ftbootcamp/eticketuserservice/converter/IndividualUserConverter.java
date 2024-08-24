@@ -1,11 +1,9 @@
 package com.ftbootcamp.eticketuserservice.converter;
 
 import com.ftbootcamp.eticketuserservice.dto.request.IndividualUserSaveRequest;
-import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserDetailsResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserPaginatedResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserSummaryResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.UserSummaryPaginatedResponse;
-import com.ftbootcamp.eticketuserservice.entity.abstracts.User;
+import com.ftbootcamp.eticketuserservice.dto.response.individual.IndividualUserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.individual.IndividualUserPaginatedResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.individual.IndividualUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.IndividualUser;
 import org.springframework.data.domain.Page;
 

@@ -20,9 +20,5 @@ public class RabbitMqProducer {
 
         rabbitTemplate.convertAndSend(rabbitMQProducerConfig.getExchange(), rabbitMQProducerConfig.getRoutingKey(),
                 notificationSendRequest);
-
-        log.info("Message sent to queue. Queue: {}, Message: {}",
-                rabbitMQProducerConfig.getQueueName(), notificationSendRequest.toString());
-
     }
 }

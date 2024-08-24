@@ -17,7 +17,5 @@ public class PushNotificationStrategy implements NotificationStrategy {
         // Push notification sending codes...
 
         pushNotificationRepository.save(new PushNotification(request.getText()));
-
-        // TODO: kafka log
     }
 }

@@ -26,5 +26,4 @@ public class RabbitMQConsumerConfig implements RabbitListenerConfigurer {
     public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
         registrar.setMessageHandlerMethodFactory(myHandlerMethodFactory());
     }
-
 }

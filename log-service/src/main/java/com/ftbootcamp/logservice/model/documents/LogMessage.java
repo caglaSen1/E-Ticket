@@ -24,5 +24,4 @@ public class LogMessage {
 
     @Field(name = EntityConstants.CREATED_DATE_TIME)
     private LocalDateTime createdDateTime;
-
 }

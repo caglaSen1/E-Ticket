@@ -37,8 +37,4 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     @Query("SELECT t FROM Ticket t WHERE t.isDeleted = false AND " +
             "t.isSold = true")
     List<Ticket> findAllSoldTickets();
-
-    @Query("SELECT t FROM Ticket t WHERE t.trip.id = :tripId AND t.isSold = false AND t.isDeleted = false")
-    List<Ticket> findNotSoldByTripId(Long tripId);
-
 }

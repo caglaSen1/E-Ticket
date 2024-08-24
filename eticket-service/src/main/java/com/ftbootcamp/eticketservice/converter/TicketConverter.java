@@ -2,7 +2,6 @@ package com.ftbootcamp.eticketservice.converter;
 
 import com.ftbootcamp.eticketservice.dto.response.TicketGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.dto.response.TicketResponse;
-import com.ftbootcamp.eticketservice.dto.response.TripGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.entity.Ticket;
 import lombok.NoArgsConstructor;
 import java.util.List;

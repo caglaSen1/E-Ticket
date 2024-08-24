@@ -1,8 +1,8 @@
 package com.ftbootcamp.eticketuserservice.converter;
 
-import com.ftbootcamp.eticketuserservice.dto.response.UserSummaryPaginatedResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.UserDetailsResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.UserSummaryResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.user.UserSummaryPaginatedResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.user.UserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.user.UserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.abstracts.User;
 import com.ftbootcamp.eticketuserservice.entity.concrete.AdminUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.CompanyUser;
@@ -71,5 +71,4 @@ public class UserConverter {
 
         return userDetailsResponse;
     }
-
 }

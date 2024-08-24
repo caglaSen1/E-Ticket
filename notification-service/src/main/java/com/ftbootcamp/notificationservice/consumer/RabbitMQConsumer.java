@@ -41,5 +41,4 @@ public class RabbitMQConsumer {
             case PUSH -> new PushNotificationStrategy(pushNotificationRepository);
         };
     }
-
 }

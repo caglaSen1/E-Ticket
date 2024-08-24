@@ -59,11 +59,11 @@ public class TripService {
         // Generate tickets for the trip
         ticketService.generateTicketsForTrip(trip);
 
-        // Trip send to kafka (It will be consumed by index-service and saved to elasticsearch)
+        // Send trip to kafka (It will be consumed by index-service and saved to elasticsearch)
         kafkaProducer.sendTrip(trip);
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage(new Log("Trip created. Trip id: " + trip.getId()));
+        kafkaProducer.sendLogMessage(new Log("Trip created: " + trip));
 
         return TripConverter.toTripResponse(trip);
     }
@@ -124,11 +124,11 @@ public class TripService {
 
         tripRepository.save(updatedTrip);
 
-        // Trip send to kafka (It will be consumed by index-service and saved to elasticsearch)
+        // Send trip to kafka (It will be consumed by index-service and saved to elasticsearch)
         kafkaProducer.sendTrip(updatedTrip);
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage(new Log("Trip updated. Trip id: " + updatedTrip.getId()));
+        kafkaProducer.sendLogMessage(new Log("Trip updated: " + updatedTrip));
 
         return TripConverter.toTripResponse(updatedTrip);
     }
@@ -146,6 +146,6 @@ public class TripService {
         kafkaProducer.sendTrip(tripToCancel);
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage(new Log("Trip cancelled. Trip id: " + tripToCancel.getId()));
+        kafkaProducer.sendLogMessage(new Log("Trip cancelled: " + tripToCancel));
     }
 }

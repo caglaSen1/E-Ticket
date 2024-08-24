@@ -7,6 +7,8 @@ import com.ftbootcamp.eticketsearchservice.dto.response.TripSearchResponse;
 import com.ftbootcamp.eticketsearchservice.enums.SortDirection;
 import com.ftbootcamp.eticketsearchservice.enums.TripDocumentSortBy;
 import com.ftbootcamp.eticketsearchservice.service.SearchService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,13 +20,15 @@ import java.time.ZoneOffset;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/search")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/search")
+@Tag(name = "Search API V1", description = "Search API for trips")
 public class SearchController {
 
     private final SearchService searchService;
 
     @GetMapping("/trips")
+    @Operation(summary = "Search trips", description = "Search trips with given search criteria, for all users")
     public GenericResponse<List<TripSearchResponse>> searchTrips(
             @RequestParam(required = false) LocalDate date,
             @RequestParam(required = false) String departureCity,
@@ -49,6 +53,8 @@ public class SearchController {
     }
 
     @GetMapping("/trips-for-admin")
+    @Operation(summary = "Search trips for admin", description = "Search trips with given search criteria, " +
+            "authorized for admin users only")
     public GenericResponse<List<TripSearchResponse>> searchTripsForAdmin(
             @RequestParam(required = false) LocalDate date,
             @RequestParam(required = false) String departureCity,

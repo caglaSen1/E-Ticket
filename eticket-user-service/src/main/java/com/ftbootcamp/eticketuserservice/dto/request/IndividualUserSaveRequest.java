@@ -20,5 +20,4 @@ public class IndividualUserSaveRequest {
     private long nationalId;
     private LocalDateTime birthDate;
     private Gender gender;
-
 }

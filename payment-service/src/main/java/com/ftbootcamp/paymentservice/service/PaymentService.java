@@ -33,11 +33,11 @@ public class PaymentService {
         Payment payment = new Payment(request.getPaymentType(), request.getAmount(), request.getUserEmail());
         paymentRepository.save(payment);
 
-        // Send payment to queue
-        rabbitMqProducer.sendPaymentToEticketQueue(request);
-
         // Send log message
-        kafkaProducer.sendLogMessage(new Log("Payment created. request: " + request));
+        kafkaProducer.sendLogMessage(new Log("Payment created" + payment));
+
+        // Send payment to queue
+        rabbitMqProducer.sendPaymentToPaymentInfoQueue(request);
     }
 
     public List<PaymentResponse> getAllPayments() {

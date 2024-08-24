@@ -15,5 +15,4 @@ public class BaseSearchRequest {
     private int page;
     private int size;
     private SortDirection sortDirection;
-
 }

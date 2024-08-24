@@ -27,19 +27,19 @@ public class EmailController {
     }
 
     @PostMapping("/by-template")
-    @Operation(summary = "Send email by template", description = "Send email with given template")
+    @Operation(summary = "Send email by template", description = "Send email with given template, without text")
     public GenericResponse<EmailResponse> sendEmailWithTemplate(@RequestBody EmailSendWithTemplateRequest request){
         return GenericResponse.success(emailService.sendEmailWithTemplate(request), HttpStatus.CREATED);
     }
 
     @GetMapping()
-    @Operation(summary = "Get all emails", description = "Get all emails")
+    @Operation(summary = "Get all emails")
     public GenericResponse<List<EmailResponse>> getAll(){
         return GenericResponse.success(emailService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get email by id", description = "Get email by id")
+    @Operation(summary = "Get email by id")
     public GenericResponse<EmailResponse> getById(@PathVariable String id){
         return GenericResponse.success(emailService.getById(id), HttpStatus.OK);
     }

@@ -1,4 +1,4 @@
-package com.ftbootcamp.eticketuserservice.dto.request;
+package com.ftbootcamp.eticketuserservice.dto.request.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

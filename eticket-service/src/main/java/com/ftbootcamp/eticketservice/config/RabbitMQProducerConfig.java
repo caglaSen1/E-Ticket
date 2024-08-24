@@ -23,7 +23,6 @@ public class RabbitMQProducerConfig {
     @Value("${rabbitmq.send.email.routingKey}")
     private String routingKey;
 
-
     @Bean
     public Queue queue() {
         return new Queue(queueName, true);

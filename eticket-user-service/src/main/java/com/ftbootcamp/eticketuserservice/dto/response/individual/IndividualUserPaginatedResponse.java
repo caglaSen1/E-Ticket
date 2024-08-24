@@ -1,4 +1,4 @@
-package com.ftbootcamp.eticketuserservice.dto.response;
+package com.ftbootcamp.eticketuserservice.dto.response.individual;
 
 import lombok.*;
 
@@ -9,9 +9,9 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class CompanyUserPaginatedResponse {
+public class IndividualUserPaginatedResponse {
 
-    private List<CompanyUserSummaryResponse> userSummaryResponses;
+    private List<IndividualUserSummaryResponse> userSummaryResponses;
     private int currentPage;
     private int numberOfElementsInCurrentPage;
     private int totalPages;

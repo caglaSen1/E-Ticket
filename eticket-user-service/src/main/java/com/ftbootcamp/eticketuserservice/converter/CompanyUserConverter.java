@@ -1,9 +1,9 @@
 package com.ftbootcamp.eticketuserservice.converter;
 
 import com.ftbootcamp.eticketuserservice.dto.request.CompanyUserSaveRequest;
-import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserDetailsResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserPaginatedResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserSummaryResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.company.CompanyUserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.company.CompanyUserPaginatedResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.company.CompanyUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.CompanyUser;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -73,5 +73,4 @@ public class CompanyUserConverter {
 
         return user;
     }
-
 }

@@ -24,6 +24,5 @@ public interface CompanyUserRepository extends JpaRepository<CompanyUser, Long> 
 
     @Query("SELECT u FROM CompanyUser u WHERE u.email IN :emailList")
     Page<CompanyUser> findByEmailList(List<String> emailList, Pageable pageable);
-
 }
 

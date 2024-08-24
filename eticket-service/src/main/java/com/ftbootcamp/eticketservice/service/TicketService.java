@@ -31,6 +31,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.ftbootcamp.eticketservice.utils.MessageUtils.generateMultipleTicketInfoMessage;
+import static com.ftbootcamp.eticketservice.utils.MessageUtils.generateTicketInfoMessage;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -50,7 +53,7 @@ public class TicketService {
         Ticket ticket = ticketBusinessRules.checkTicketExistById(request.getTicketId());
         ticketBusinessRules.checkTicketIsAvailable(ticket);
 
-        // Get Payment of Ticket with Payment Service (Sencronize):
+        // Get Payment of Ticket with Payment Service (sencronous):
         PaymentGenericRequest<TicketBuyRequest> paymentGenericRequest =
                 new PaymentGenericRequest<>(request.getPaymentType(),
                         new BigDecimal(ticket.getPrice()), user.getEmail(), request,
@@ -58,11 +61,12 @@ public class TicketService {
 
         paymentClientService.takePayment(paymentGenericRequest);
 
+        // Send log message with Kafka for saving in MongoDB (Asencronize):
         kafkaProducer.sendLogMessage(new Log("Payment transaction send to payment-service for ticket. " +
-                "Buyer: " + user.getEmail() + " ticket id: " + ticket.getId()));
+                "Request: " + request));
     }
 
-    public void createTicketAfterPayment(TicketBuyRequest request) {
+    public void saveTicketAfterPayment(TicketBuyRequest request) {
         // Get user with userClient (sencronous):
         UserDetailsResponse user = userService.getUserById(request.getUserId());
 
@@ -75,16 +79,11 @@ public class TicketService {
 
         ticketRepository.save(ticket);
 
-        // Send ticket info message with RabbitMQ (Asencronize):
+        // Generate ticket info message:
         String infoMessage = generateTicketInfoMessage(user, ticket);
 
-        List<NotificationType> notificationTypes = new ArrayList<>();
-        notificationTypes.add(NotificationType.EMAIL);
-        if (user.getPhoneNumber() != null) {
-            notificationTypes.add(NotificationType.SMS);
-        }
-        rabbitMqProducer.sendTicketInfoMessage(new NotificationSendRequest(notificationTypes, user.getEmail(),
-                user.getPhoneNumber(), infoMessage));
+        // Send ticket info message to buyer with RabbitMQ (Asencronize):
+        sendTicketInfoMessage(user, infoMessage, List.of(NotificationType.EMAIL, NotificationType.SMS));
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
         kafkaProducer.sendLogMessage(new Log("Ticket buying process completed. Buyer: " + user.getEmail() +
@@ -92,7 +91,7 @@ public class TicketService {
 
     }
 
-    public void takePaymentOfMultipleTicket(TicketMultipleBuyRequest request) {
+    public void takePaymentOfMultipleTickets(TicketMultipleBuyRequest request) {
         // Get user with userClient (sencronous):
         UserDetailsResponse buyer = userService.getUserById(request.getBuyerId());
 
@@ -122,7 +121,7 @@ public class TicketService {
                 "Buyer: " + buyer.getEmail() + " ticket ids: " + tickets.stream().map(Ticket::getId).toList()));
     }
 
-    public void createTicketsAfterPayment(TicketMultipleBuyRequest request) {
+    public void saveTicketsAfterPayment(TicketMultipleBuyRequest request) {
 
         UserDetailsResponse buyer = userService.getUserById(request.getBuyerId());
 
@@ -140,22 +139,19 @@ public class TicketService {
             ticketRepository.save(ticket);
         }
 
-        // Send ticket info message with RabbitMQ Service (Asencronize):
+        // Generate ticket info message:
         String infoMessage = generateMultipleTicketInfoMessage(buyer, tickets,
                 request.getPassengerTicketRequests());
 
-        List<NotificationType> notificationTypes = new ArrayList<>();
-        notificationTypes.add(NotificationType.EMAIL);
-        if (buyer.getPhoneNumber() != null) {
-            notificationTypes.add(NotificationType.SMS);
-        }
-        rabbitMqProducer.sendTicketInfoMessage(new NotificationSendRequest(notificationTypes, buyer.getEmail(),
-                buyer.getPhoneNumber(), infoMessage));
+        // Send ticket info message to buyer with RabbitMQ (Asencronize):
+        sendTicketInfoMessage(buyer, infoMessage, List.of(NotificationType.EMAIL, NotificationType.SMS));
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
         kafkaProducer.sendLogMessage(new Log("Ticket buying process completed. Buyer: " + buyer.getEmail() +
                 " ticket ids: " + tickets.stream().map(Ticket::getId).toList()));
     }
+
+    // TODO: Get tickets of user
 
     public TicketResponse getTicketById(Long id) {;
         return TicketConverter.toTicketResponse(ticketBusinessRules.checkTicketExistById(id));
@@ -225,94 +221,19 @@ public class TicketService {
         }
     }
 
-    private String generateTicketInfoMessage(UserDetailsResponse user, Ticket ticket) {
-        StringBuilder infoMessage = new StringBuilder();
-        String instanceOf = user.getInstanceOf();
-
-        infoMessage.append("************ Your ticket has been created successfully. ************\n");
-
-        infoMessage.append("Buyer information:\n");
-
-        infoMessage.append("Email: ").append(user.getEmail()).append("\n");
-        if (user.getPhoneNumber() != null) {
-            infoMessage.append("Phone number: ").append(user.getPhoneNumber()).append("\n");
-        }
-        if (instanceOf.equals(RoleNameConstants.CORPORATE_USER_ROLE_NAME)) {
-            infoMessage.append("Company Name: ").append(user.getCompanyName()).append("\n");
-        }
-        if (instanceOf.equals(RoleNameConstants.INDIVIDUAL_USER_ROLE_NAME)) {
-            infoMessage.append("Name: ").append(user.getFirstName()).append(" ")
-                    .append(user.getLastName()).append("\n");
+    private void sendTicketInfoMessage(UserDetailsResponse user, String infoMessage,
+                                       List<NotificationType> notificationTypes) {
+        List<NotificationType> types = new ArrayList<>();
+        if(notificationTypes.contains(NotificationType.EMAIL) && user.getEmail() != null){
+            types.add(NotificationType.EMAIL);
+        }else if (notificationTypes.contains(NotificationType.SMS) && user.getPhoneNumber() != null){
+            types.add(NotificationType.SMS);
+        } else if (notificationTypes.contains(NotificationType.PUSH)) {
+            types.add(NotificationType.PUSH);
         }
 
-        infoMessage.append("************************************\n");
-
-        infoMessage.append("Your ticket information:\n");
-
-        infoMessage.append(ticket.getTrip().getDepartureTime()).append(" - ")
-                .append(ticket.getTrip().getArrivalTime()).append("\n");
-        infoMessage.append(ticket.getTrip().getDepartureCity()).append(" -> ")
-                .append(ticket.getTrip().getArrivalCity()).append("\n");
-        infoMessage.append("Ticket No: ").append(ticket.getId()).append("\n");
-        infoMessage.append("Seat No: ").append(ticket.getSeatNo()).append("\n");
-        infoMessage.append("Price: ").append(ticket.getPrice()).append("\n");
-
-        infoMessage.append("************************************\n");
-
-        return infoMessage.toString();
-    }
-
-    private String generateMultipleTicketInfoMessage(UserDetailsResponse buyer, List<Ticket> tickets,
-                                                     List<PassengerTicketRequest> passengerTicketRequests) {
-
-        StringBuilder infoMessage = new StringBuilder();
-        String instanceOf = buyer.getInstanceOf();
-        double totalPrice = 0;
-
-        infoMessage.append("Your tickets have been created successfully.\n");
-        infoMessage.append("Buyer information:\n");
-        infoMessage.append("Email: ").append(buyer.getEmail()).append("\n");
-
-        if (buyer.getPhoneNumber() != null) {
-            infoMessage.append("Phone number: ").append(buyer.getPhoneNumber()).append("\n");
-        }
-
-        if(instanceOf.equals(RoleNameConstants.CORPORATE_USER_ROLE_NAME)){
-            infoMessage.append("Company Name: ").append(buyer.getCompanyName()).append("\n");
-        }
-
-        if(instanceOf.equals(RoleNameConstants.INDIVIDUAL_USER_ROLE_NAME)){
-            infoMessage.append("Name: ").append(buyer.getFirstName()).append(" ")
-                    .append(buyer.getLastName()).append("\n");
-        }
-
-        infoMessage.append("Your tickets information:\n");
-
-        for (int i = 0; i < passengerTicketRequests.size(); i++) {
-            Ticket ticket = ticketRepository.findById(passengerTicketRequests.get(i).getTicketId()).get();
-            totalPrice += ticket.getPrice();
-
-            infoMessage.append("************ Ticket ").append(i + 1).append(" ************\n");
-            infoMessage.append(ticket.getTrip().getDepartureTime()).append(" - ")
-                    .append(ticket.getTrip().getArrivalTime()).append("\n");
-            infoMessage.append(ticket.getTrip().getDepartureCity()).append(" -> ")
-                    .append(ticket.getTrip().getArrivalCity()).append("\n");
-            infoMessage.append("Ticket No: ").append(ticket.getId()).append("\n");
-            infoMessage.append("Seat No: ").append(ticket.getSeatNo()).append("\n");
-            infoMessage.append("Price: ").append(ticket.getPrice()).append("\n");
-
-            infoMessage.append("Passenger information:\n");
-            infoMessage.append("Name: ").append(passengerTicketRequests.get(i).getPassengerFirstName()).append(" ")
-                    .append(passengerTicketRequests.get(i).getPassengerLastName()).append("\n");
-            infoMessage.append("Gender: ").append(passengerTicketRequests.get(i).getGender()).append("\n");
-
-            infoMessage.append("************************************\n");
-        }
-
-        infoMessage.append("Total Price: ").append(totalPrice).append("\n");
-
-        return infoMessage.toString();
-
+        rabbitMqProducer.sendTicketInfoMessage(new NotificationSendRequest(notificationTypes, user.getEmail(),
+                user.getPhoneNumber(), infoMessage));
     }
 
     private void controlProjectRequirements(UserDetailsResponse buyer, List<Ticket> tickets,

@@ -29,5 +29,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
             + "LEFT JOIN FETCH CompanyUser c ON u.id = c.id "
             + "WHERE u.email = :email")
     Optional<User> findUserWithDetailsByEmail(@Param("email") String email);
-
 }

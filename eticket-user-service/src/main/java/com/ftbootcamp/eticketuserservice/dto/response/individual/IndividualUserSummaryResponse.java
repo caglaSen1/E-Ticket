@@ -1,4 +1,4 @@
-package com.ftbootcamp.eticketuserservice.dto.response;
+package com.ftbootcamp.eticketuserservice.dto.response.individual;
 
 import com.ftbootcamp.eticketuserservice.entity.enums.Gender;
 import lombok.*;
@@ -19,5 +19,4 @@ public class IndividualUserSummaryResponse {
     private LocalDateTime birthDate;
     private Gender gender;
     private LocalDateTime createdDate;
-
 }

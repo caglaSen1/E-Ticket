@@ -49,7 +49,6 @@ public class FilterHelper {
                         .wildcardQuery(TripDocumentConstants.VEHICLE_TYPE,
                                 "*" + tripRequest.getVehicleType().toLowerCase() + "*"));
             }
-
         }
 
         return queryBuilder;

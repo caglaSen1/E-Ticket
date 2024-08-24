@@ -31,7 +31,6 @@ public class KafkaConsumer {
 
             logRepository.save(logMessage);
         }
-
     }
 
     @KafkaListener(topics = KafkaTopicConstants.EXCEPTION_LOG_MESSAGE_TOPIC, groupId = "${kafka.log-message.group-id}")
@@ -46,7 +45,5 @@ public class KafkaConsumer {
 
             exceptionLogRepository.save(exceptionLogMessage);
         }
-
     }
-
 }

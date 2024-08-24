@@ -16,17 +16,14 @@ public class KafkaProducer {
     private final KafkaTemplate<String, Object> indexKafkaTemplate;
 
     public void sendTrip(Trip trip) {
-        log.info("trip sent to kafka: {}", trip.getId());
         indexKafkaTemplate.send(KafkaTopicConstants.TRIP_INDEX_TOPIC, trip);
     }
 
     public void sendLogMessage(Log message) {
-        log.info("log message sent: {}", message);
         indexKafkaTemplate.send(KafkaTopicConstants.LOG_MESSAGE_TOPIC, message);
     }
 
     public void sendExceptionLogMessage(Log exceptionMessage) {
-        log.info("log message sent: {}", exceptionMessage);
         indexKafkaTemplate.send(KafkaTopicConstants.EXCEPTION_LOG_MESSAGE_TOPIC, exceptionMessage);
     }
 }

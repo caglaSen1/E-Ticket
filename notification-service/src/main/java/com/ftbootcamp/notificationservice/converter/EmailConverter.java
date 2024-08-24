@@ -24,5 +24,4 @@ public class EmailConverter {
                 .map(EmailConverter::toResponse)
                 .toList();
     }
-
 }

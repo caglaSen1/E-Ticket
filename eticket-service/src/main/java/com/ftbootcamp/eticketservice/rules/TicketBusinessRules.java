@@ -7,8 +7,6 @@ import com.ftbootcamp.eticketservice.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,13 +41,11 @@ public class TicketBusinessRules {
     }
 
     public void checkTicketIsAvailable(Ticket ticket) {
-        if (ticket.isSold()) {
-            throw new ETicketException(ExceptionMessages.TICKET_ALREADY_SOLD + " Ticket: " + ticket.getId());
-        }
-        if(ticket.getTrip().getArrivalTime().atZone(ZoneId.systemDefault())
-                .toInstant().toEpochMilli() < System.currentTimeMillis()){
-            throw new ETicketException(ExceptionMessages.TICKET_EXPIRED + " Ticket: " + ticket.getId());
-        }
+        ticketRepository.findAllAvailableTickets().stream()
+                .filter(t -> t.getId().equals(ticket.getId()))
+                .findFirst()
+                .orElseThrow(() -> new ETicketException(ExceptionMessages.TICKET_NOT_AVAILABLE +
+                        " Id: " + ticket.getId()));
     }
 
     public void checkTicketListIsAvailable(List<Ticket> tickets) {

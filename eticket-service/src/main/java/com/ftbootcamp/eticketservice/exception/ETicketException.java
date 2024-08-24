@@ -9,5 +9,4 @@ public class ETicketException extends RuntimeException {
     public ETicketException(String message, Throwable cause) {
         super(message, cause);
     }
-
 }

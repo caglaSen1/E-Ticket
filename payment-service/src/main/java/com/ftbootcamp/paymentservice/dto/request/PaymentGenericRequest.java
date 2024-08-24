@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @ToString
 public class PaymentGenericRequest<T> {
+
     private PaymentType paymentType;
     private BigDecimal amount;
     private String userEmail;

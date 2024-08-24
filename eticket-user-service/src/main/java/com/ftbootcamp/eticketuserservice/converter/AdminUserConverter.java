@@ -1,12 +1,10 @@
 package com.ftbootcamp.eticketuserservice.converter;
 
 import com.ftbootcamp.eticketuserservice.dto.request.AdminUserSaveRequest;
-import com.ftbootcamp.eticketuserservice.dto.response.AdminUserDetailsResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.AdminUserPaginatedResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.AdminUserSummaryResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.CompanyUserPaginatedResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.admin.AdminUserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.admin.AdminUserPaginatedResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.admin.AdminUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.AdminUser;
-import com.ftbootcamp.eticketuserservice.entity.concrete.CompanyUser;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 
@@ -24,7 +22,6 @@ public class AdminUserConverter {
                 .gender(user.getGender())
                 .createdDate(user.getCreatedDate())
                 .build();
-
     }
 
     public static List<AdminUserSummaryResponse> toAdminUserSummaryResponse(List<AdminUser> users) {

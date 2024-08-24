@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 public class PaymentResponse{
+
     private PaymentType paymentType;
     private BigDecimal amount;
     private String userEmail;

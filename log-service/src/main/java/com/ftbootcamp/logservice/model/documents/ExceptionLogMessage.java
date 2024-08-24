@@ -24,5 +24,4 @@ public class ExceptionLogMessage {
 
     @Field(name = EntityConstants.CREATED_DATE_TIME)
     private LocalDateTime createdDateTime;
-
 }

@@ -2,9 +2,12 @@ package com.ftbootcamp.eticketuserservice.service;
 
 import com.ftbootcamp.eticketuserservice.converter.IndividualUserConverter;
 import com.ftbootcamp.eticketuserservice.dto.request.*;
-import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserDetailsResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserPaginatedResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.IndividualUserSummaryResponse;
+import com.ftbootcamp.eticketuserservice.dto.request.user.UserBulkStatusChangeRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.user.UserPasswordChangeRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.user.UserRoleRequest;
+import com.ftbootcamp.eticketuserservice.dto.response.individual.IndividualUserDetailsResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.individual.IndividualUserPaginatedResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.individual.IndividualUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.IndividualUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;

@@ -56,7 +56,7 @@ public class RoleService {
 
     public void deleteRole(Long id) {
         roleBusinessRules.checkRoleExistById(id);
-        roleRepository.deleteById(id);
+        roleRepository.deleteById(id);  // TODO: Soft delete
 
         kafkaProducer.sendLogMessage(new Log("Role soft deleted. Role id: " + id));
     }

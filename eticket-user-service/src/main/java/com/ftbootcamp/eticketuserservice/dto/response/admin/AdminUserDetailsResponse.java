@@ -1,5 +1,6 @@
-package com.ftbootcamp.eticketuserservice.dto.response;
+package com.ftbootcamp.eticketuserservice.dto.response.admin;
 
+import com.ftbootcamp.eticketuserservice.dto.response.RoleResponse;
 import com.ftbootcamp.eticketuserservice.entity.enums.Gender;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class AdminUserSummaryResponse {
+public class AdminUserDetailsResponse {
 
     private String email;
     private String phoneNumber;
@@ -19,4 +20,5 @@ public class AdminUserSummaryResponse {
     private String lastName;
     private Gender gender;
     private LocalDateTime createdDate;
+    private List<RoleResponse> roles;
 }

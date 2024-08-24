@@ -7,5 +7,4 @@ public class EntityConstants {
 
     public static final String MESSAGE = "message";
     public static final String CREATED_DATE_TIME = "created_date_time";
-
 }

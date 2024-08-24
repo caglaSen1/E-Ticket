@@ -2,7 +2,6 @@ package com.ftbootcamp.eticketservice.producer.rabbitmq.dto;
 
 import com.ftbootcamp.eticketservice.producer.rabbitmq.enums.NotificationType;
 import lombok.*;
-
 import java.util.List;
 
 @AllArgsConstructor

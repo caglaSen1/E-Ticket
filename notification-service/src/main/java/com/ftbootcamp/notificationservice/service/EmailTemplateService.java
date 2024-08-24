@@ -5,10 +5,13 @@ import com.ftbootcamp.notificationservice.dto.request.EmailTemplateCreateRequest
 import com.ftbootcamp.notificationservice.dto.request.EmailTemplateUpdateRequest;
 import com.ftbootcamp.notificationservice.dto.response.EmailTemplateResponse;
 import com.ftbootcamp.notificationservice.entity.EmailTemplate;
+import com.ftbootcamp.notificationservice.producer.kafka.KafkaProducer;
+import com.ftbootcamp.notificationservice.producer.kafka.Log;
 import com.ftbootcamp.notificationservice.repository.EmailTemplateRepository;
 import com.ftbootcamp.notificationservice.rules.EmailTemplateBusinessRules;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +24,7 @@ public class EmailTemplateService {
 
     private final EmailTemplateRepository emailTemplateRepository;
     private final EmailTemplateBusinessRules emailTemplateBusinessRules;
+    private final KafkaProducer kafkaProducer;
 
     public EmailTemplateResponse create(EmailTemplateCreateRequest request) {
         emailTemplateBusinessRules.checkNameAlreadyExist(request.getName());
@@ -31,6 +35,8 @@ public class EmailTemplateService {
 
         EmailTemplate emailTemplate = new EmailTemplate(request.getName(), request.getText());
         emailTemplateRepository.save(emailTemplate);
+
+        kafkaProducer.sendLogMessage(new Log("Email template created. request: " + request));
 
         return EmailTemplateConverter.toResponse(emailTemplate);
     }
@@ -61,19 +67,25 @@ public class EmailTemplateService {
 
         EmailTemplate updatedTemplate = EmailTemplateConverter.toUpdatedTemplateEntity(emailTemplateToUpdate, request);
 
+        kafkaProducer.sendLogMessage(new Log("Email template updated. request: " + request));
+
         return EmailTemplateConverter.toResponse(emailTemplateRepository.save(updatedTemplate));
     }
 
     public EmailTemplateResponse deleteById(String id){
         EmailTemplate emailTemplate = emailTemplateBusinessRules.checkTemplateExistById(id);
-        emailTemplateRepository.deleteById(id);
+        emailTemplateRepository.deleteById(id);  // TODO: soft delete
+
+        kafkaProducer.sendLogMessage(new Log("Email template deleted. Id: " + id));
 
         return EmailTemplateConverter.toResponse(emailTemplate);
     }
 
     public EmailTemplateResponse deleteByName(String name){
         EmailTemplate emailTemplate = emailTemplateBusinessRules.checkTemplateExistByName(name);
-        emailTemplateRepository.delete(emailTemplate);
+        emailTemplateRepository.delete(emailTemplate);  // TODO: soft delete
+
+        kafkaProducer.sendLogMessage(new Log("Email template deleted. Name: " + name));
 
         return EmailTemplateConverter.toResponse(emailTemplate);
     }
