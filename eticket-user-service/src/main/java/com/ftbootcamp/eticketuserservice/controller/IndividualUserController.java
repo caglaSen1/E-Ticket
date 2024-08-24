@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/individual-users")
+@RequestMapping("/api/v1/users/individual-users")
 @RequiredArgsConstructor
 @Tag(name = "Individual User API V1", description = "Individual User API for user operations")
 public class IndividualUserController {

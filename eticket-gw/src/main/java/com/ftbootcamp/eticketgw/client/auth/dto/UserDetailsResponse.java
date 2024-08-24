@@ -1,11 +1,9 @@
-package com.ftbootcamp.eticketuserservice.dto.response.user;
+package com.ftbootcamp.eticketgw.client.auth.dto;
 
-import com.ftbootcamp.eticketuserservice.dto.response.RoleResponse;
-import com.ftbootcamp.eticketuserservice.entity.enums.Gender;
-import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
-import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
+import com.ftbootcamp.eticketgw.client.auth.enums.Gender;
+import com.ftbootcamp.eticketgw.client.auth.enums.StatusType;
+import com.ftbootcamp.eticketgw.client.auth.enums.UserType;
 import lombok.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 

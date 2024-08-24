@@ -52,7 +52,16 @@ spring:
           uri: lb://PAYMENT-SERVICE
           predicates:
             - Path=/api/v1/payments/**
+        - id: eticket-auth-service
+          uri: lb://ETICKET-AUTH-SERVICE
+          predicates:
+            - Path=/api/v1/auth/**
 
+
+  main:
+    web-application-type: reactive
+
+    allow-bean-definition-overriding: true
 
 server:
   port: 9090

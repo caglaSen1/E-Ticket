@@ -1,4 +1,4 @@
-package com.ftbootcamp.eticketuserservice.dto.request;
+package com.ftbootcamp.eticketgw.client.auth.dto;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class RoleCreateSaveRequest {
+public class RoleResponse {
 
     private String name;
 }

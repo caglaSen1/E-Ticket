@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/company-users")
+@RequestMapping("/api/v1/users/company-users")
 @RequiredArgsConstructor
 @Tag(name = "Company User API V1", description = "Company User API for user operations")
 public class CompanyUserController {

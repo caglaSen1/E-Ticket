@@ -23,7 +23,6 @@ public class UserConverter {
                 .phoneNumber(user.getPhoneNumber())
                 .createdDate(user.getCreatedDate())
                 .build();
-
     }
 
     public static List<UserSummaryResponse> toUserSummaryResponse(List<User> users) {
@@ -47,6 +46,7 @@ public class UserConverter {
     public static UserDetailsResponse toUserDetailsResponse(User user) {
 
         UserDetailsResponse userDetailsResponse = new UserDetailsResponse();
+        userDetailsResponse.setId(user.getId());
         userDetailsResponse.setEmail(user.getEmail());
         userDetailsResponse.setPhoneNumber(user.getPhoneNumber());
         userDetailsResponse.setCreatedDate(user.getCreatedDate());

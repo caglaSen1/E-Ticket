@@ -11,8 +11,4 @@ public interface UserClient {
 
     @GetMapping("/{id}")
     GenericResponse<UserDetailsResponse> getUserById(@PathVariable Long id);
-
-    @GetMapping("/by-email/{email}")
-    GenericResponse<UserDetailsResponse> getUserByEmail(@PathVariable String email);
-
 }
