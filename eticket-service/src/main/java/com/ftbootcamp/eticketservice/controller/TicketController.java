@@ -49,6 +49,13 @@ public class TicketController {
         return GenericResponse.success(ticketService.getAllTickets(), HttpStatus.OK);
     }
 
+    @GetMapping("/by-email/{email}")
+    @Operation(summary = "Get all tickets by email", description = "Get all tickets by email. " +
+            "admin and active user can get all tickets by email.")
+    public GenericResponse<List<TicketResponse>> getAllTicketsByEmail(@PathVariable String email) {
+        return GenericResponse.success(ticketService.getAllTicketsByUserEmail(email), HttpStatus.OK);
+    }
+
     @GetMapping("/all-available")
     @Operation(summary = "Get all available tickets",
             description = "Get all available tickets which can bought buy users. All users can get all available tickets.")
