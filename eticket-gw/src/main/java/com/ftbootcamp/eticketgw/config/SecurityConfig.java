@@ -35,44 +35,53 @@ public class SecurityConfig {
 
     private final JwtRequestFilter jwtRequestFilter;
 
-    private static final String[] AUTH_WHITELIST = {
-            "/api/v1/users/login",
-            "/api/v1/users/register"
+    private static final String[] AUTH_WHITELIST_DENY_ALL = {
+            "/api/v1/payments/process-and-send-queue"
     };
 
-    private static final String[] AUTH_WHITELIST2 = {
-            "/api/v1/auth/login","api/v1/auth/register"
+    private static final String[] AUTH_WHITELIST_PERMIT_ALL = {
+            "/api/v1/auth/**",
+            "/api/v1/email-templates", "/api/v1/emails",
+            "/swagger-ui/**", "/v3/api-docs/**"
     };
 
-    private static final String[] AUTH_WHITELIST_USER = {
-            "/api/v1/searches/searchByCityAndDepartureDate",
+    private static final String[] AUTH_WHITELIST_CORPORATE_USER = {
+            "/api/v1/users/company-users/{id}", "/api/v1/users/company-users/update",
+            "/api/v1/users/company-users/change-password"
     };
     private static final String[] AUTH_WHITELIST_ADMIN = {
-
+            "/api/v1/users/{dynamicSegment}/admin-panel/**",
+            "/api/v1/roles/admin-panel/**",
+            "/api/v1/payments/admin-panel/**",
+            "/api/v1/tickets/admin-panel/**",
+            "/api/v1/trips/admin-panel/**"
+    };
+    private static final String[] AUTH_WHITELIST_INDIVIDUAL_USER = {
+            "/api/v1/users/individual-users/{id}", "/api/v1/users/individual-users/update",
+            "/api/v1/users/individual-users/change-password"
+    };
+    private static final String[] AUTH_WHITELIST_INDIVIDUAL_CORPORATE_USERS = {
+            "/api/v1/tickets/buy", "/api/v1/tickets/buy-multiple",
+            "/api/v1/tickets/buyer/all/{email}", "/api/v1/tickets/trips/{tripId}/all-available",
+            "/api/v1/trips/all-available"
     };
 
     @Bean
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
-        http
-                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+        http.csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchangeSpec ->
                         exchangeSpec
 
-                                .pathMatchers("/api/v1/auth/**").permitAll()
-                                .pathMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-
-                                .pathMatchers("/api/v1/users/{dynamicSegment}/admin-panel/**").hasRole("ADMIN")
-                                .pathMatchers("/api/v1/roles/admin-panel/**").hasRole("ADMIN")
-
-                                .pathMatchers("/api/v1/users/company-users/{id}", "/api/v1/users/company-users/update",
-                                        "/api/v1/users/company-users/change-password").hasRole("CORPORATE_USER")
-
-                                .pathMatchers("/api/v1/users/individual-users/{id}", "/api/v1/users/individual-users/update",
-                                        "/api/v1/users/individual-users/change-password").hasRole("INDIVIDUAL_USER")
+                                .pathMatchers(AUTH_WHITELIST_DENY_ALL).denyAll()
+                                .pathMatchers(AUTH_WHITELIST_PERMIT_ALL).permitAll()
+                                .pathMatchers(AUTH_WHITELIST_ADMIN).hasRole("ADMIN")
+                                .pathMatchers(AUTH_WHITELIST_CORPORATE_USER).hasRole("CORPORATE_USER")
+                                .pathMatchers(AUTH_WHITELIST_INDIVIDUAL_USER).hasRole("INDIVIDUAL_USER")
+                                .pathMatchers(AUTH_WHITELIST_INDIVIDUAL_CORPORATE_USERS)
+                                .hasAnyRole("INDIVIDUAL_USER", "CORPORATE_USER")
 
                                 .anyExchange().authenticated()
                 )
-
                 .addFilterBefore(jwtRequestFilter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .securityContextRepository(NoOpServerSecurityContextRepository.getInstance());
         return http.build();

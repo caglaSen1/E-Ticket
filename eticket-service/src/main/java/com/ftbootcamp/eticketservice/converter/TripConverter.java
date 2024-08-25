@@ -20,6 +20,8 @@ public class TripConverter {
                 .totalTicketCount(trip.getTotalTicketCount())
                 .soldTicketCount(trip.getSoldTicketCount())
                 .price(trip.getPrice())
+                .createdDate(trip.getCreatedDate())
+                .isCancelled(trip.isCancelled())
                 .build();
     }
 

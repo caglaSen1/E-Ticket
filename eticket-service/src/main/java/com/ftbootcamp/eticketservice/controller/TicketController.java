@@ -5,6 +5,7 @@ import com.ftbootcamp.eticketservice.dto.request.TicketMultipleBuyRequest;
 import com.ftbootcamp.eticketservice.dto.response.GenericResponse;
 import com.ftbootcamp.eticketservice.dto.response.TicketGeneralStatisticsResponse;
 import com.ftbootcamp.eticketservice.dto.response.TicketResponse;
+import com.ftbootcamp.eticketservice.entity.enums.TicketCondition;
 import com.ftbootcamp.eticketservice.service.TicketService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,45 +38,40 @@ public class TicketController {
         return GenericResponse.success(null, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/admin-panel/{id}")
     @Operation(summary = "Get ticket by id", description = "All users can get ticket by id.")
     public GenericResponse<TicketResponse> getTicketById(@PathVariable Long id) {
         return GenericResponse.success(ticketService.getTicketById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/all")
+
+    @GetMapping("/admin-panel/all")
     @Operation(summary = "Get all tickets", description = "Get all tickets. Only admin can get all tickets.")
     public GenericResponse<List<TicketResponse>> getAllTickets() {
         return GenericResponse.success(ticketService.getAllTickets(), HttpStatus.OK);
     }
 
-    @GetMapping("/by-email/{email}")
-    @Operation(summary = "Get all tickets by email", description = "Get all tickets by email. " +
+    @GetMapping("/admin-panel/buyer/all/{email}")
+    @Operation(summary = "Get all tickets of buyer with email", description = "Get all tickets by email. " +
             "admin and active user can get all tickets by email.")
-    public GenericResponse<List<TicketResponse>> getAllTicketsByEmail(@PathVariable String email) {
-        return GenericResponse.success(ticketService.getAllTicketsByUserEmail(email), HttpStatus.OK);
+    public GenericResponse<List<TicketResponse>> getAllTicketsOfBuyerByEmail(@PathVariable String email) {
+        return GenericResponse.success(ticketService.getAllTicketsOfBuyer(email), HttpStatus.OK);
     }
 
-    @GetMapping("/all-available")
-    @Operation(summary = "Get all available tickets",
-            description = "Get all available tickets which can bought buy users. All users can get all available tickets.")
-    public GenericResponse<List<TicketResponse>> getAllAvailableTickets() {
-        return GenericResponse.success(ticketService.getAllAvailableTickets(), HttpStatus.OK);
+    @GetMapping("/buyer/all/{email}")
+    @Operation(summary = "Get all tickets of buyer with email", description = "Get all tickets by email. " +
+            "admin and active user can get all tickets by email.")
+    public GenericResponse<List<TicketResponse>> getAllTicketsOfBuyer(@PathVariable String email) {
+        return GenericResponse.success(ticketService.getAllTicketsOfBuyer(email), HttpStatus.OK);
     }
 
-    @GetMapping("/all-expired")
+    @GetMapping("/admin-panel/all/by-condition")
     @Operation(summary = "Get all expired tickets", description = "Only admin can get all expired tickets.")
-    public GenericResponse<List<TicketResponse>> getAllExpiredTickets() {
-        return GenericResponse.success(ticketService.getAllExpiredTickets(), HttpStatus.OK);
+    public GenericResponse<List<TicketResponse>> getAllTicketsByCondition(@RequestParam TicketCondition condition) {
+        return GenericResponse.success(ticketService.getAllByCondition(condition), HttpStatus.OK);
     }
 
-    @GetMapping("/all-sold")
-    @Operation(summary = "Get all sold tickets", description = "Only admin can get all sold tickets.")
-    public GenericResponse<List<TicketResponse>> getAllSoldTickets() {
-        return GenericResponse.success(ticketService.getAllSoldTickets(), HttpStatus.OK);
-    }
-
-    @GetMapping("/trips/{tripId}/all")
+    @GetMapping("/admin-panel/trips/{tripId}/all")
     @Operation(summary = "Get all tickets by trip id", description = "Get all tickets by trip id. " +
             "Only admin can get all tickets by trip id.")
     public GenericResponse<List<TicketResponse>> getAllTicketsByTripId(@PathVariable Long tripId) {
@@ -89,7 +85,7 @@ public class TicketController {
         return GenericResponse.success(ticketService.getAllAvailableTicketsByTripId(tripId), HttpStatus.OK);
     }
 
-    @GetMapping("/statistics")
+    @GetMapping("/admin-panel/statistics")
     @Operation(summary = "Get general statistics", description = "Get general statistics. " +
             "Only admin can get general statistics.")
     public GenericResponse<TicketGeneralStatisticsResponse> getGeneralTicketStatistics() {

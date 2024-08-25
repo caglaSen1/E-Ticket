@@ -20,4 +20,6 @@ public class TripResponse {
     private int totalTicketCount;
     private int soldTicketCount;
     private double price;
+    private LocalDateTime createdDate;
+    private boolean isCancelled;
 }

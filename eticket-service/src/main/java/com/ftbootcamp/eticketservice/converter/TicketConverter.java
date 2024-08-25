@@ -15,7 +15,7 @@ public class TicketConverter {
                 .seatNo(ticket.getSeatNo())
                 .price(ticket.getPrice())
                 .passengerEmail(ticket.getPassengerEmail())
-                .isBought(ticket.isSold())
+                .isSold(ticket.isSold())
                 .build();
     }
 

@@ -8,6 +8,7 @@ import com.ftbootcamp.eticketservice.dto.response.TripResponse;
 import com.ftbootcamp.eticketservice.dto.response.TripStatisticsResponse;
 import com.ftbootcamp.eticketservice.entity.Trip;
 import com.ftbootcamp.eticketservice.entity.constant.TripEntityConstants;
+import com.ftbootcamp.eticketservice.entity.enums.TripCondition;
 import com.ftbootcamp.eticketservice.producer.Log;
 import com.ftbootcamp.eticketservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketservice.repository.TripRepository;
@@ -78,16 +79,21 @@ public class TripService {
                 .toList();
     }
 
-    public List<TripResponse> getAllExpiredNotCanceledTrips(){
-        return tripRepository.findExpiredTrips().stream()
-                .map(TripConverter::toTripResponse)
-                .toList();
-    }
-
-    public List<TripResponse> getAllCancelledTrips() {
-        return tripRepository.findCancelledTrips().stream()
-                .map(TripConverter::toTripResponse)
-                .toList();
+    public List<TripResponse> getAllTripsByCondition(TripCondition condition) {
+        switch (condition) {
+            case EXPIRED:
+                return tripRepository.findExpiredTrips().stream()
+                        .map(TripConverter::toTripResponse)
+                        .toList();
+            case CANCELLED:
+                return tripRepository.findCancelledTrips().stream()
+                        .map(TripConverter::toTripResponse)
+                        .toList();
+            default:
+                return tripRepository.findAllAvailableTrips().stream()
+                        .map(TripConverter::toTripResponse)
+                        .toList();
+        }
     }
 
     public TripGeneralStatisticsResponse getGeneralTripStatistics() {

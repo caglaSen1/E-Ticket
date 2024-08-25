@@ -14,6 +14,7 @@ import com.ftbootcamp.eticketservice.dto.response.TicketGeneralStatisticsRespons
 import com.ftbootcamp.eticketservice.dto.response.TicketResponse;
 import com.ftbootcamp.eticketservice.entity.Ticket;
 import com.ftbootcamp.eticketservice.entity.Trip;
+import com.ftbootcamp.eticketservice.entity.enums.TicketCondition;
 import com.ftbootcamp.eticketservice.exception.ETicketException;
 import com.ftbootcamp.eticketservice.producer.Log;
 import com.ftbootcamp.eticketservice.producer.kafka.KafkaProducer;
@@ -161,20 +162,21 @@ public class TicketService {
         return TicketConverter.toTicketResponseList(ticketRepository.findAll());
     }
 
-    public List<TicketResponse> getAllTicketsByUserEmail(String email) {
+    public List<TicketResponse> getAllTicketsOfBuyer(String email) {
         return TicketConverter.toTicketResponseList(ticketRepository.findAllByUserEmail(email));
     }
 
-    public List<TicketResponse> getAllAvailableTickets() {
-        return TicketConverter.toTicketResponseList(ticketRepository.findAllAvailableTickets());
-    }
-
-    public List<TicketResponse> getAllExpiredTickets() {
-        return TicketConverter.toTicketResponseList(ticketRepository.findAllExpiredTickets());
-    }
-
-    public List<TicketResponse> getAllSoldTickets() {
-        return TicketConverter.toTicketResponseList(ticketRepository.findAllSoldTickets());
+    public List<TicketResponse> getAllByCondition(TicketCondition condition) {
+        switch (condition) {
+            case AVAILABLE:
+                return TicketConverter.toTicketResponseList(ticketRepository.findAllAvailableTickets());
+            case EXPIRED:
+                return TicketConverter.toTicketResponseList(ticketRepository.findAllExpiredTickets());
+            case SOLD:
+                return TicketConverter.toTicketResponseList(ticketRepository.findAllSoldTickets());
+            default:
+                return TicketConverter.toTicketResponseList(ticketRepository.findAllAvailableTickets());
+        }
     }
 
     public List<TicketResponse> getAllTicketsByTripId(Long tripId) {

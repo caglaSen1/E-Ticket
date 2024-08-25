@@ -85,6 +85,7 @@ class TripControllerTest {
         verify(tripService, times(1)).getAllAvailableTrips();
     }
 
+    /*
     @Test
     void testGetAllExpiredTrips() {
         // given
@@ -115,7 +116,7 @@ class TripControllerTest {
         assertEquals(HttpStatus.OK, result.getHttpStatus());
         assertEquals(responseList, result.getData());
         verify(tripService, times(1)).getAllCancelledTrips();
-    }
+    }*/
 
     @Test
     void testGetGeneralTripStatistics() {

@@ -62,5 +62,4 @@ public class EmailTemplateController {
     public GenericResponse<EmailTemplateResponse> deleteEmailTemplateByName(@PathVariable String name) {
         return GenericResponse.success(emailTemplateService.deleteByName(name), HttpStatus.OK);
     }
-
 }

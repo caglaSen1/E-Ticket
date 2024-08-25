@@ -28,7 +28,7 @@ public class PaymentController {
         return GenericResponse.success(null, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/admin-panel/all")
     @Operation(summary = "Get all payments", description = "Get all payments")
     public GenericResponse<List<PaymentResponse>> getAllPayments() {
         return GenericResponse.success(paymentService.getAllPayments(), HttpStatus.OK);
