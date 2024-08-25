@@ -30,7 +30,7 @@ public class RegistrationRules {
         int maxPasswordLength = PasswordConstants.PASSWORD_MAX_LENGTH;
 
         if (!(minPasswordLength <= password.length() && maxPasswordLength >= password.length())) {
-            throw new ETicketException(ExceptionMessages.USER_PASSWORD_NOT_VALID + " Password: " + password);
+            throw new ETicketException(ExceptionMessages.USER_PASSWORD_NOT_VALID);
         }
     }
 }

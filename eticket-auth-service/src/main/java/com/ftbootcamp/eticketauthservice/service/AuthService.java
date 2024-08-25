@@ -11,7 +11,9 @@ import com.ftbootcamp.eticketauthservice.entity.concrete.Role;
 import com.ftbootcamp.eticketauthservice.entity.constant.RoleEntityConstants;
 import com.ftbootcamp.eticketauthservice.model.CustomUser;
 import com.ftbootcamp.eticketauthservice.producer.kafka.KafkaProducer;
+import com.ftbootcamp.eticketauthservice.producer.kafka.Log;
 import com.ftbootcamp.eticketauthservice.producer.rabbitmq.RabbitMqProducer;
+import com.ftbootcamp.eticketauthservice.producer.rabbitmq.dto.NotificationSendRequest;
 import com.ftbootcamp.eticketauthservice.producer.rabbitmq.enums.NotificationType;
 import com.ftbootcamp.eticketauthservice.repository.AdminUserRepository;
 import com.ftbootcamp.eticketauthservice.repository.CompanyUserRepository;
@@ -20,6 +22,7 @@ import com.ftbootcamp.eticketauthservice.rules.RegistrationRules;
 import com.ftbootcamp.eticketauthservice.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.common.network.Send;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,7 +37,6 @@ import java.util.List;
 @Service
 public class AuthService {
 
-    //private final UserClientService userClientService;
     private final RoleService roleService;
     private final AdminUserRepository adminUserRepository;
     private final CompanyUserRepository companyUserRepository;
@@ -84,13 +86,11 @@ public class AuthService {
         if (createdUser.getPhoneNumber() != null) {
             notificationTypes.add(NotificationType.SMS);
         }
-        //rabbitMqProducer.sendMessage(new NotificationSendRequest(notificationTypes, createdUser.getEmail(),
-            //    createdUser.getPhoneNumber(), infoMessage));
+        rabbitMqProducer.sendMessage(new NotificationSendRequest(notificationTypes, createdUser.getEmail(),
+                createdUser.getPhoneNumber(), infoMessage));
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-       // kafkaProducer.sendLogMessage(new Log("Admin user created. User id: " + createdUser.getId()));
-
-       // return AdminUserConverter.toAdminUserDetailsResponse(createdUser);
+        kafkaProducer.sendLogMessage(new Log("Admin user created. User id: " + createdUser.getId()));
     }
 
     public void registerCompany(CompanyUserSaveRequest request) {
@@ -120,13 +120,11 @@ public class AuthService {
         if (createdUser.getPhoneNumber() != null) {
             notificationTypes.add(NotificationType.SMS);
         }
-        //rabbitMqProducer.sendMessage(new NotificationSendRequest(notificationTypes, createdUser.getEmail(),
-                //createdUser.getPhoneNumber(), infoMessage));
+        rabbitMqProducer.sendMessage(new NotificationSendRequest(notificationTypes, createdUser.getEmail(),
+                createdUser.getPhoneNumber(), infoMessage));
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        //kafkaProducer.sendLogMessage(new Log("Company User created. Company User id: " + createdUser.getId()));
-
-        //return CompanyUserConverter.toCompanyUserDetailsResponse(createdUser);
+        kafkaProducer.sendLogMessage(new Log("Company User created. Company User id: " + createdUser.getId()));
     }
 
     public void registerIndividual(IndividualUserSaveRequest request) {
@@ -157,10 +155,10 @@ public class AuthService {
         if (createdUser.getPhoneNumber() != null) {
             notificationTypes.add(NotificationType.SMS);
         }
-        //rabbitMqProducer.sendMessage(new NotificationSendRequest(notificationTypes, createdUser.getEmail(),
-            //    createdUser.getPhoneNumber(), infoMessage));
+        rabbitMqProducer.sendMessage(new NotificationSendRequest(notificationTypes, createdUser.getEmail(),
+                createdUser.getPhoneNumber(), infoMessage));
 
         // Send log message with Kafka for saving in MongoDB (Asencronize):
-        //kafkaProducer.sendLogMessage(new Log("Individual User created. User id: " + createdUser.getId()));
+        kafkaProducer.sendLogMessage(new Log("Individual User created. User id: " + createdUser.getId()));
     }
 }
