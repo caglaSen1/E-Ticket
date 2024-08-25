@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/users/admin-panel")
 @RequiredArgsConstructor
 @Tag(name = "User API V1", description = "User API for user operations")
 public class UserController {

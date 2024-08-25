@@ -44,7 +44,7 @@ public class TicketController {
     }
 
     @GetMapping("/all")
-    @Operation(summary = "Get all tickets", description = "Get all tickets. All users can get all tickets.")
+    @Operation(summary = "Get all tickets", description = "Get all tickets. Only admin can get all tickets.")
     public GenericResponse<List<TicketResponse>> getAllTickets() {
         return GenericResponse.success(ticketService.getAllTickets(), HttpStatus.OK);
     }

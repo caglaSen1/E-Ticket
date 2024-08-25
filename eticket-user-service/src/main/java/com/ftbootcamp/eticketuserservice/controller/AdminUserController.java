@@ -16,20 +16,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users/admin-users")
+@RequestMapping("/api/v1/users/admin-users/admin-panel")
 @RequiredArgsConstructor
 @Tag(name = "Admin User API V1", description = "Admin User API for user operations")
 public class AdminUserController {
 
     private final AdminUserService adminUserService;
 
-    @PostMapping()
+    @PostMapping("/create")
     @Operation(summary = "Create admin user", description = "Create admin user with given user information")
     public GenericResponse<AdminUserDetailsResponse> createUser(@RequestBody AdminUserSaveRequest request) {
         return GenericResponse.success(adminUserService.createUser(request), HttpStatus.CREATED);
     }
 
-    @GetMapping()
+    @GetMapping("/all")
     @Operation(summary = "Get all admin users", description = "Get all admin users, only for admin users")
     public GenericResponse<AdminUserPaginatedResponse> getAllUsers(@RequestParam(defaultValue = "0") int page,
                                                                    @RequestParam(defaultValue = "10") int size) {
@@ -37,13 +37,15 @@ public class AdminUserController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get admin user by id", description = "Get admin user by id, only for admin users")
+    @Operation(summary = "Get admin user by id", description = "Get admin user by id, only for admin users, and " +
+            "admin user can get only his/her own information")
     public GenericResponse<AdminUserDetailsResponse> getUserById(@PathVariable Long id) {
         return GenericResponse.success(adminUserService.getUserById(id), HttpStatus.OK);
     }
 
     @GetMapping("/by-email/{email}")
-    @Operation(summary = "Get admin user by email", description = "Get admin user by email, only for admin users")
+    @Operation(summary = "Get admin user by email", description = "Get admin user by email, only for admin users, and " +
+            "admin user can get only his/her own information")
     public GenericResponse<AdminUserDetailsResponse> getUserByEmail(@PathVariable String email) {
         return GenericResponse.success(adminUserService.getUserByEmail(email), HttpStatus.OK);
     }

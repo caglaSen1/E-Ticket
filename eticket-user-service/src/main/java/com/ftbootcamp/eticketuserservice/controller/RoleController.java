@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/roles")
+@RequestMapping("/api/v1/roles/admin-panel")
 @RequiredArgsConstructor
 @Tag(name = "Role API V1", description = "Role API for role operations")
 public class RoleController {

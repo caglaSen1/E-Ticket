@@ -57,15 +57,27 @@ public class SecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchangeSpec ->
                         exchangeSpec
-                                .pathMatchers("/api/v1/auth/register-admin", "/api/v1/auth/register-company",
-                                        "/api/v1/auth/register-individual", "/api/v1/auth/login",
-                                        "/api/v1/tickets/all-cancelled")
-                                .permitAll()
-                                .pathMatchers("/api/v1/tickets/all-expired").hasRole("ADMIN")
-                                .pathMatchers("/api/v1/tickets/all-available").hasRole("USER")
+
+                                .pathMatchers("/api/v1/users/{dynamicSegment}/create").denyAll()
+                                .pathMatchers("/api/v1/users/{dynamicSegment}/admin-panel/create").denyAll()
+
+                                .pathMatchers("/api/v1/auth/**").permitAll()
+                                .pathMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
+                                .pathMatchers("/api/v1/users/{dynamicSegment}/admin-panel/**").hasRole("ADMIN")
+                                .pathMatchers("/api/v1/roles/admin-panel/**").hasRole("ADMIN")
+
+                                .pathMatchers("/api/v1/users/company-users/{id}", "/api/v1/users/company-users/update",
+                                        "/api/v1/users/company-users/change-password").hasRole("CORPORATE_USER")
+
+                                .pathMatchers("/api/v1/users/admin-users/{id}", "/api/v1/users/admin-users/update",
+                                        "/api/v1/users/admin-users/change-password").hasRole("INDIVIDUAL_USER")
+
                                 .anyExchange().authenticated()
                 )
-                .addFilterBefore(jwtRequestFilter, SecurityWebFiltersOrder.AUTHENTICATION);
+
+                .addFilterBefore(jwtRequestFilter, SecurityWebFiltersOrder.AUTHENTICATION)
+                .securityContextRepository(NoOpServerSecurityContextRepository.getInstance());
         return http.build();
     }
 }

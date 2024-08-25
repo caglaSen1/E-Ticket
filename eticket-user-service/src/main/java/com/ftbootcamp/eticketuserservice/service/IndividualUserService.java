@@ -164,6 +164,7 @@ public class IndividualUserService {
 
     public IndividualUserDetailsResponse updateUser(IndividualUserSaveRequest request) {
 
+        // TODO: access user with userId in token
         IndividualUser userToUpdate = individualUserBusinessRules.checkUserExistByEmail(request.getEmail());
 
         individualUserBusinessRules.checkEmailAlreadyExist(request.getEmail());

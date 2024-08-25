@@ -8,8 +8,6 @@ import com.ftbootcamp.eticketauthservice.dto.response.CompanyUserDetailsResponse
 import com.ftbootcamp.eticketauthservice.dto.response.GenericResponse;
 import com.ftbootcamp.eticketauthservice.dto.response.IndividualUserDetailsResponse;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 

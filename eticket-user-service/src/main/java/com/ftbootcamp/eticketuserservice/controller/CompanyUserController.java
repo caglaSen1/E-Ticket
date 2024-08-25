@@ -26,13 +26,13 @@ public class CompanyUserController {
 
     private final CompanyUserService companyUserService;
 
-    @PostMapping()
+    @PostMapping("/create")
     @Operation(summary = "Create company user", description = "Create company user with given user information")
     public GenericResponse<CompanyUserDetailsResponse> createUser(@RequestBody CompanyUserSaveRequest request) {
         return GenericResponse.success(companyUserService.createUser(request), HttpStatus.CREATED);
     }
 
-    @GetMapping()
+    @GetMapping("/admin-panel/all")
     @Operation(summary = "Get all company users", description = "Get all company users, only for admin users")
     public GenericResponse<List<CompanyUserSummaryResponse>> getAllUsers() {
         return GenericResponse.success(companyUserService.getAllCompanyUsers(), HttpStatus.OK);
@@ -45,14 +45,14 @@ public class CompanyUserController {
         return GenericResponse.success(companyUserService.getCompanyUserById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/by-email/{email}")
+    @GetMapping("/admin-panel/{email}")
     @Operation(summary = "Get company user by email", description = "Get company user by email, for admin users and " +
             "company users for their own email")
     public GenericResponse<CompanyUserDetailsResponse> getUserByEmail(@PathVariable String email) {
         return GenericResponse.success(companyUserService.getCompanyUserByEmail(email), HttpStatus.OK);
     }
 
-    @GetMapping("/by-status")
+    @GetMapping("/admin-panel/by-status")
     @Operation(summary = "Get company users by status list", description = "Get company users by status list, only for " +
             "admin users")
     public GenericResponse<CompanyUserPaginatedResponse> getUsersByStatusList(
@@ -63,7 +63,7 @@ public class CompanyUserController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("/by-type")
+    @GetMapping("/admin-panel/by-type")
     @Operation(summary = "Get company users by type list", description = "Get company users by type list, only for " +
             "admin users")
     public GenericResponse<CompanyUserPaginatedResponse> getUsersByTypeList(
@@ -74,13 +74,13 @@ public class CompanyUserController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("/count")
+    @GetMapping("/admin-panel/count")
     @Operation(summary = "Get how many company users", description = "Get how many company users, only for admin users")
     public GenericResponse<Integer> getHowManyUsers() {
         return GenericResponse.success(companyUserService.getHowManyCompanyUsers(), HttpStatus.OK);
     }
 
-    @PutMapping("/{email}/{status}")
+    @PutMapping("/admin-panel/{email}/{status}")
     @Operation(summary = "Change company user status", description = "Change status of user with given email, only for " +
             "admin users")
     public GenericResponse<CompanyUserSummaryResponse> changeStatus(@PathVariable String email,
@@ -88,7 +88,7 @@ public class CompanyUserController {
         return GenericResponse.success(companyUserService.changeStatus(email, status), HttpStatus.OK);
     }
 
-    @PutMapping("/status-bulk")
+    @PutMapping("/admin-panel/status-bulk")
     @Operation(summary = "Change company user status bulk", description = "Change status of users with given email list, " +
              "only for admin users")
     public GenericResponse<CompanyUserPaginatedResponse> changeStatusBulk(
@@ -112,7 +112,7 @@ public class CompanyUserController {
         return GenericResponse.success(null, HttpStatus.OK);
     }
 
-    @PutMapping("/add-role")
+    @PutMapping("/admin-panel/add-role")
     @Operation(summary = "Add role to company user", description = "Add not default role to user with given email, only for " +
             "admin users")
     public GenericResponse<Void> addRole(@RequestBody UserRoleRequest request) {
@@ -120,7 +120,7 @@ public class CompanyUserController {
         return GenericResponse.success(null, HttpStatus.OK);
     }
 
-    @PutMapping("/remove-role")
+    @PutMapping("/admin-panel/remove-role")
     @Operation(summary = "Remove role from company user", description = "Remove not default role from user with given " +
             "email, only for admin users")
     public GenericResponse<Void> removeRole(@RequestBody UserRoleRequest request) {
@@ -128,7 +128,7 @@ public class CompanyUserController {
         return GenericResponse.success(null, HttpStatus.OK);
     }
 
-    @GetMapping("/roles/{email}")
+    @GetMapping("/admin-panel/roles/{email}")
     @Operation(summary = "Get company user roles", description = "Get user roles with given email, only for admin users")
     public GenericResponse<List<String>> getUserRoles(@PathVariable String email) {
         return GenericResponse.success(companyUserService.getUserRoles(email), HttpStatus.OK);

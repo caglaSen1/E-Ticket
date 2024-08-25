@@ -46,10 +46,8 @@ public class UserConverter {
     public static UserDetailsResponse toUserDetailsResponse(User user) {
 
         UserDetailsResponse userDetailsResponse = new UserDetailsResponse();
-        userDetailsResponse.setId(user.getId());
         userDetailsResponse.setEmail(user.getEmail());
         userDetailsResponse.setPhoneNumber(user.getPhoneNumber());
-        userDetailsResponse.setPassword(user.getPassword());
         userDetailsResponse.setCreatedDate(user.getCreatedDate());
         userDetailsResponse.setRoles(RoleConverter.roleToRoleResponse(user.getRoles()));
 
