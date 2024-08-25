@@ -40,47 +40,7 @@ public class IndividualUserService {
     private final IndividualUserRepository individualUserRepository;
     private final IndividualUserBusinessRules individualUserBusinessRules;
     private final RoleBusinessRules roleBusinessRules;
-    private final RoleService roleService;
-    private final RabbitMqProducer rabbitMqProducer;
     private final KafkaProducer kafkaProducer;
-
-    public IndividualUserDetailsResponse createUser(IndividualUserSaveRequest request) {
-        //individualUserBusinessRules.checkEmailValid(request.getEmail());
-        individualUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
-        //individualUserBusinessRules.checkPasswordValid(request.getPassword());
-
-        // Hash password
-        //String hashedPassword = hashPassword(request.getPassword());
-
-        // Create User
-        IndividualUser createdUser = new IndividualUser(request.getEmail(), request.getPhoneNumber(), request.getPassword(),
-                request.getFirstName(), request.getLastName(), request.getNationalId(), request.getBirthDate(),
-                request.getGender());
-        individualUserRepository.save(createdUser);
-
-        // Add default role to individual user (USER, INDIVIDUAL_USER)
-        Role defaultRole = roleService.createRoleIfNotExist(RoleEntityConstants.USER_ROLE_NAME);
-        Role individualUserRole = roleService.createRoleIfNotExist(RoleEntityConstants.INDIVIDUAL_USER_ROLE_NAME);
-        createdUser.getRoles().add(defaultRole);
-        createdUser.getRoles().add(individualUserRole);
-
-        individualUserRepository.save(createdUser);
-
-        // Send message to user with RabbitMQ Service (Asencronize):
-        String infoMessage = "Welcome to our system. Your account created successfully.";
-        List<NotificationType> notificationTypes = new ArrayList<>();
-        notificationTypes.add(NotificationType.EMAIL);
-        if (createdUser.getPhoneNumber() != null) {
-            notificationTypes.add(NotificationType.SMS);
-        }
-        rabbitMqProducer.sendMessage(new NotificationSendRequest(notificationTypes, createdUser.getEmail(),
-                createdUser.getPhoneNumber(), infoMessage));
-
-        // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage(new Log("Individual User created. User id: " + createdUser.getId()));
-
-        return IndividualUserConverter.toIndividualUserDetailsResponse(createdUser);
-    }
 
     public IndividualUserPaginatedResponse getAllIndividualUsers(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);

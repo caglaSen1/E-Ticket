@@ -1,6 +1,6 @@
 package com.ftbootcamp.eticketauthservice.dto.request;
 
-import com.ftbootcamp.eticketauthservice.client.user.enums.Gender;
+import com.ftbootcamp.eticketauthservice.entity.enums.Gender;
 import lombok.*;
 import java.time.LocalDateTime;
 

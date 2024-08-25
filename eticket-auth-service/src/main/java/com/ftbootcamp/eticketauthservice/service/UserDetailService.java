@@ -1,5 +1,7 @@
 package com.ftbootcamp.eticketauthservice.service;
 
+import com.ftbootcamp.eticketauthservice.converter.UserConverter;
+import com.ftbootcamp.eticketauthservice.entity.abstracts.User;
 import com.ftbootcamp.eticketauthservice.exception.ETicketException;
 import com.ftbootcamp.eticketauthservice.exception.ExceptionMessages;
 import com.ftbootcamp.eticketauthservice.repository.UserRepository;
@@ -17,7 +19,9 @@ public class UserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ETicketException(ExceptionMessages.USER_NOT_FOUND));
+
+        return UserConverter.toCustomUser(user);
     }
 }

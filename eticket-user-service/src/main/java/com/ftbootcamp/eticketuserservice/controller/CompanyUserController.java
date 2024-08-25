@@ -26,12 +26,6 @@ public class CompanyUserController {
 
     private final CompanyUserService companyUserService;
 
-    @PostMapping("/create")
-    @Operation(summary = "Create company user", description = "Create company user with given user information")
-    public GenericResponse<CompanyUserDetailsResponse> createUser(@RequestBody CompanyUserSaveRequest request) {
-        return GenericResponse.success(companyUserService.createUser(request), HttpStatus.CREATED);
-    }
-
     @GetMapping("/admin-panel/all")
     @Operation(summary = "Get all company users", description = "Get all company users, only for admin users")
     public GenericResponse<List<CompanyUserSummaryResponse>> getAllUsers() {

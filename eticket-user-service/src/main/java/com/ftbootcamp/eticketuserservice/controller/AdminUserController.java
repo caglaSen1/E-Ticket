@@ -23,12 +23,6 @@ public class AdminUserController {
 
     private final AdminUserService adminUserService;
 
-    @PostMapping("/create")
-    @Operation(summary = "Create admin user", description = "Create admin user with given user information")
-    public GenericResponse<AdminUserDetailsResponse> createUser(@RequestBody AdminUserSaveRequest request) {
-        return GenericResponse.success(adminUserService.createUser(request), HttpStatus.CREATED);
-    }
-
     @GetMapping("/all")
     @Operation(summary = "Get all admin users", description = "Get all admin users, only for admin users")
     public GenericResponse<AdminUserPaginatedResponse> getAllUsers(@RequestParam(defaultValue = "0") int page,

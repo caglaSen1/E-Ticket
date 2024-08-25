@@ -58,9 +58,6 @@ public class SecurityConfig {
                 .authorizeExchange(exchangeSpec ->
                         exchangeSpec
 
-                                .pathMatchers("/api/v1/users/{dynamicSegment}/create").denyAll()
-                                .pathMatchers("/api/v1/users/{dynamicSegment}/admin-panel/create").denyAll()
-
                                 .pathMatchers("/api/v1/auth/**").permitAll()
                                 .pathMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
 
@@ -70,8 +67,8 @@ public class SecurityConfig {
                                 .pathMatchers("/api/v1/users/company-users/{id}", "/api/v1/users/company-users/update",
                                         "/api/v1/users/company-users/change-password").hasRole("CORPORATE_USER")
 
-                                .pathMatchers("/api/v1/users/admin-users/{id}", "/api/v1/users/admin-users/update",
-                                        "/api/v1/users/admin-users/change-password").hasRole("INDIVIDUAL_USER")
+                                .pathMatchers("/api/v1/users/individual-users/{id}", "/api/v1/users/individual-users/update",
+                                        "/api/v1/users/individual-users/change-password").hasRole("INDIVIDUAL_USER")
 
                                 .anyExchange().authenticated()
                 )

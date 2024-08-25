@@ -27,12 +27,6 @@ public class IndividualUserController {
 
     private final IndividualUserService individualUserService;
 
-    @PostMapping("/create")
-    @Operation(summary = "Create individual user", description = "Create individual user with given user information")
-    public GenericResponse<IndividualUserDetailsResponse> createUser(@RequestBody IndividualUserSaveRequest request) {
-        return GenericResponse.success(individualUserService.createUser(request), HttpStatus.CREATED);
-    }
-
     @GetMapping("/admin-panel/all")
     @Operation(summary = "Get all individual users", description = "Get all individual users, " +
             "authorized for admin users only")

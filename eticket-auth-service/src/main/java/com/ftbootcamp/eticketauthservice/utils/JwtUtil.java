@@ -1,12 +1,11 @@
 package com.ftbootcamp.eticketauthservice.utils;
 
-import com.ftbootcamp.eticketauthservice.model.User;
+import com.ftbootcamp.eticketauthservice.model.CustomUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
-
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,7 +17,7 @@ public class JwtUtil {
 
     public String SECRET_KEY = "357638792F423F4428472B4B6250655368566D597133743677397A2443264629";
 
-    public String generateToken(User user) {
+    public String generateToken(CustomUser user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", user.getId());
         claims.put("email", user.getEmail());

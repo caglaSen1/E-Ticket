@@ -1,4 +1,4 @@
-package com.ftbootcamp.eticketauthservice.client.user.enums;
+package com.ftbootcamp.eticketauthservice.entity.enums;
 
 public enum StatusType {
 

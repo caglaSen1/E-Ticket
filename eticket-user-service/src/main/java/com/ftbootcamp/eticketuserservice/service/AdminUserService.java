@@ -35,45 +35,7 @@ public class AdminUserService {
     private final AdminUserRepository adminUserRepository;
     private final AdminUserBusinessRules adminUserBusinessRules;
     private final RoleBusinessRules roleBusinessRules;
-    private final RoleService roleService;
-    private final RabbitMqProducer rabbitMqProducer;
     private final KafkaProducer kafkaProducer;
-
-    public AdminUserDetailsResponse createUser(AdminUserSaveRequest request) {
-        //adminUserBusinessRules.checkEmailValid(request.getEmail());
-        adminUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
-        //adminUserBusinessRules.checkPasswordValid(request.getPassword());
-
-        // Hash password
-        //String hashedPassword = hashPassword(request.getPassword());
-
-        // Create User
-        AdminUser createdUser = new AdminUser(request.getEmail(), request.getPhoneNumber(), request.getPassword(),
-                request.getFirstName(), request.getLastName(), request.getNationalId(), request.getGender());
-
-        // Add default role to admin user (USER, ADMIN_USER)
-        Role userRole = roleService.createRoleIfNotExist(RoleEntityConstants.USER_ROLE_NAME);
-        Role adminUserRole = roleService.createRoleIfNotExist(RoleEntityConstants.ADMIN_USER_ROLE_NAME);
-        createdUser.getRoles().add(userRole);
-        createdUser.getRoles().add(adminUserRole);
-
-        adminUserRepository.save(createdUser);
-
-        // Send message to user with RabbitMQ Service (Asencronize):
-        String infoMessage = "Welcome to our system. Your account created successfully.";
-        List<NotificationType> notificationTypes = new ArrayList<>();
-        notificationTypes.add(NotificationType.EMAIL);
-        if (createdUser.getPhoneNumber() != null) {
-            notificationTypes.add(NotificationType.SMS);
-        }
-        rabbitMqProducer.sendMessage(new NotificationSendRequest(notificationTypes, createdUser.getEmail(),
-                createdUser.getPhoneNumber(), infoMessage));
-
-        // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage(new Log("Admin user created. User id: " + createdUser.getId()));
-
-        return AdminUserConverter.toAdminUserDetailsResponse(createdUser);
-    }
 
     public AdminUserPaginatedResponse getAllUsers(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
@@ -155,5 +117,4 @@ public class AdminUserService {
 
         return user.getRoles().stream().map(Role::getName).toList();
     }
-
 }

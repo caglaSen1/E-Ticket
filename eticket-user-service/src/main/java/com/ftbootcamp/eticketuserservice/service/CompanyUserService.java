@@ -39,47 +39,7 @@ public class CompanyUserService {
     private final CompanyUserRepository companyUserRepository;
     private final CompanyUserBusinessRules companyUserBusinessRules;
     private final RoleBusinessRules roleBusinessRules;
-    private final RoleService roleService;
-    private final RabbitMqProducer rabbitMqProducer;
     private final KafkaProducer kafkaProducer;
-
-    public CompanyUserDetailsResponse createUser(CompanyUserSaveRequest request) {
-        //companyUserBusinessRules.checkEmailValid(request.getEmail());
-        companyUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
-        //companyUserBusinessRules.checkPasswordValid(request.getPassword());
-
-        // Hash password
-        //String hashedPassword = hashPassword(request.getPassword());
-
-        // Create User
-        CompanyUser createdUser = new CompanyUser(request.getEmail(), request.getPhoneNumber(), request.getPassword(),
-                request.getCompanyName(), request.getTaxNumber());
-        companyUserRepository.save(createdUser);
-
-        // Add default roles to corporate user (USER, CORPORATE_USER)
-        Role userRole = roleService.createRoleIfNotExist(RoleEntityConstants.USER_ROLE_NAME);
-        Role corporateUserRole = roleService.createRoleIfNotExist(RoleEntityConstants.CORPORATE_USER_ROLE_NAME);
-        createdUser.getRoles().add(userRole);
-        createdUser.getRoles().add(corporateUserRole);
-
-        companyUserRepository.save(createdUser);
-
-        // Send message to user with RabbitMQ Service (Asencronize):
-        String infoMessage = "Welcome to our system. Your account created successfully.";
-        List<NotificationType> notificationTypes = new ArrayList<>();
-        notificationTypes.add(NotificationType.EMAIL);
-        if (createdUser.getPhoneNumber() != null) {
-            notificationTypes.add(NotificationType.SMS);
-        }
-        rabbitMqProducer.sendMessage(new NotificationSendRequest(notificationTypes, createdUser.getEmail(),
-                createdUser.getPhoneNumber(), infoMessage));
-
-        // Send log message with Kafka for saving in MongoDB (Asencronize):
-        kafkaProducer.sendLogMessage(new Log("Company User created. Company User id: " + createdUser.getId()));
-
-        return CompanyUserConverter.toCompanyUserDetailsResponse(createdUser);
-    }
-
 
     public List<CompanyUserSummaryResponse> getAllCompanyUsers() {
         return CompanyUserConverter.toCompanyUserSummaryResponse(companyUserRepository.findAll());

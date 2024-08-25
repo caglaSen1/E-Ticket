@@ -14,8 +14,8 @@ public class GlobalExceptionHandler {
         return GenericResponse.failed(e.getMessage());
     }
 
-    @ExceptionHandler(UserClientException.class)
+  /*  @ExceptionHandler(UserClientException.class)
     public GenericResponse handleUserClientException(UserClientException e) {
         return GenericResponse.failed(e.getMessage());
-    }
+    }*/
 }

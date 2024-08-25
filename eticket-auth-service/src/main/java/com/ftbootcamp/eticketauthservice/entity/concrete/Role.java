@@ -1,6 +1,6 @@
-package com.ftbootcamp.eticketauthservice.model;
+package com.ftbootcamp.eticketauthservice.entity.concrete;
 
-import com.ftbootcamp.eticketauthservice.model.constant.EntityConstants;
+import com.ftbootcamp.eticketauthservice.entity.constant.RoleEntityConstants;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +18,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = EntityConstants.NAME, nullable = false)
+    @Column(name = RoleEntityConstants.NAME, nullable = false)
     private String name;
 
     public Role(String name) {
