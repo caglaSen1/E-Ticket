@@ -35,6 +35,22 @@ public class SecurityConfig {
 
     private final JwtRequestFilter jwtRequestFilter;
 
+    private static final String[] AUTH_WHITELIST = {
+            "/api/v1/users/login",
+            "/api/v1/users/register"
+    };
+
+    private static final String[] AUTH_WHITELIST2 = {
+            "/api/v1/auth/login","api/v1/auth/register"
+    };
+
+    private static final String[] AUTH_WHITELIST_USER = {
+            "/api/v1/searches/searchByCityAndDepartureDate",
+    };
+    private static final String[] AUTH_WHITELIST_ADMIN = {
+
+    };
+
     @Bean
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
         http
@@ -42,13 +58,14 @@ public class SecurityConfig {
                 .authorizeExchange(exchangeSpec ->
                         exchangeSpec
                                 .pathMatchers("/api/v1/auth/register-admin", "/api/v1/auth/register-company",
-                                        "/api/v1/auth/register-individual", "/api/v1/auth/login")
+                                        "/api/v1/auth/register-individual", "/api/v1/auth/login",
+                                        "/api/v1/tickets/all-cancelled")
                                 .permitAll()
+                                .pathMatchers("/api/v1/tickets/all-expired").hasRole("ADMIN")
+                                .pathMatchers("/api/v1/tickets/all-available").hasRole("USER")
                                 .anyExchange().authenticated()
                 )
-                .addFilterBefore(jwtRequestFilter, SecurityWebFiltersOrder.AUTHENTICATION)
-                    .securityContextRepository(NoOpServerSecurityContextRepository.getInstance());
+                .addFilterBefore(jwtRequestFilter, SecurityWebFiltersOrder.AUTHENTICATION);
         return http.build();
     }
 }
-

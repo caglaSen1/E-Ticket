@@ -45,15 +45,15 @@ public class IndividualUserService {
     private final KafkaProducer kafkaProducer;
 
     public IndividualUserDetailsResponse createUser(IndividualUserSaveRequest request) {
-        individualUserBusinessRules.checkEmailValid(request.getEmail());
+        //individualUserBusinessRules.checkEmailValid(request.getEmail());
         individualUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
-        individualUserBusinessRules.checkPasswordValid(request.getPassword());
+        //individualUserBusinessRules.checkPasswordValid(request.getPassword());
 
         // Hash password
-        String hashedPassword = hashPassword(request.getPassword());
+        //String hashedPassword = hashPassword(request.getPassword());
 
         // Create User
-        IndividualUser createdUser = new IndividualUser(request.getEmail(), request.getPhoneNumber(), hashedPassword,
+        IndividualUser createdUser = new IndividualUser(request.getEmail(), request.getPhoneNumber(), request.getPassword(),
                 request.getFirstName(), request.getLastName(), request.getNationalId(), request.getBirthDate(),
                 request.getGender());
         individualUserRepository.save(createdUser);

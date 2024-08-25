@@ -3,7 +3,7 @@ package com.ftbootcamp.eticketuserservice.controller;
 import com.ftbootcamp.eticketuserservice.dto.request.RoleSaveRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.RoleUpdateRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.GenericResponse;
-import com.ftbootcamp.eticketuserservice.dto.response.RoleResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.role.RoleResponse;
 import com.ftbootcamp.eticketuserservice.service.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,4 +1,4 @@
-package com.ftbootcamp.eticketuserservice.dto.response;
+package com.ftbootcamp.eticketuserservice.dto.response.role;
 
 import lombok.*;
 

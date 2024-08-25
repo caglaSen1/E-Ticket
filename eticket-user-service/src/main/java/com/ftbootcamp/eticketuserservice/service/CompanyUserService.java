@@ -44,15 +44,15 @@ public class CompanyUserService {
     private final KafkaProducer kafkaProducer;
 
     public CompanyUserDetailsResponse createUser(CompanyUserSaveRequest request) {
-        companyUserBusinessRules.checkEmailValid(request.getEmail());
+        //companyUserBusinessRules.checkEmailValid(request.getEmail());
         companyUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
-        companyUserBusinessRules.checkPasswordValid(request.getPassword());
+        //companyUserBusinessRules.checkPasswordValid(request.getPassword());
 
         // Hash password
-        String hashedPassword = hashPassword(request.getPassword());
+        //String hashedPassword = hashPassword(request.getPassword());
 
         // Create User
-        CompanyUser createdUser = new CompanyUser(request.getEmail(), request.getPhoneNumber(), hashedPassword,
+        CompanyUser createdUser = new CompanyUser(request.getEmail(), request.getPhoneNumber(), request.getPassword(),
                 request.getCompanyName(), request.getTaxNumber());
         companyUserRepository.save(createdUser);
 

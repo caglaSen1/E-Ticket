@@ -40,15 +40,15 @@ public class AdminUserService {
     private final KafkaProducer kafkaProducer;
 
     public AdminUserDetailsResponse createUser(AdminUserSaveRequest request) {
-        adminUserBusinessRules.checkEmailValid(request.getEmail());
+        //adminUserBusinessRules.checkEmailValid(request.getEmail());
         adminUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
-        adminUserBusinessRules.checkPasswordValid(request.getPassword());
+        //adminUserBusinessRules.checkPasswordValid(request.getPassword());
 
         // Hash password
-        String hashedPassword = hashPassword(request.getPassword());
+        //String hashedPassword = hashPassword(request.getPassword());
 
         // Create User
-        AdminUser createdUser = new AdminUser(request.getEmail(), request.getPhoneNumber(), hashedPassword,
+        AdminUser createdUser = new AdminUser(request.getEmail(), request.getPhoneNumber(), request.getPassword(),
                 request.getFirstName(), request.getLastName(), request.getNationalId(), request.getGender());
 
         // Add default role to admin user (USER, ADMIN_USER)

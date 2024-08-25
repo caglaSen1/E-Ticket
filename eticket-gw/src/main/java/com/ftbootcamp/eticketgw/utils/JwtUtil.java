@@ -4,11 +4,13 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import java.security.Key;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 @Component
@@ -42,14 +44,23 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-    public boolean validateToken(String token, UserDetails userDetails) {
+    public boolean validateToken(String token) {
         final String username = extractEmail(token);
-        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+        return  !isTokenExpired(token);
     }
 
     private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-}
 
+    public List<SimpleGrantedAuthority> extractAuthoritiesFromToken(String token) {
+
+        Map<String, Object> claims = extractAllClaims(token);
+        List<String> roles = (List<String>) claims.get("roles");
+
+        return roles != null ?
+                roles.stream().map(SimpleGrantedAuthority::new).toList() :
+                Collections.emptyList();
+    }
+}

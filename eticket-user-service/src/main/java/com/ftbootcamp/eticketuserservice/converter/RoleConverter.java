@@ -1,7 +1,7 @@
 package com.ftbootcamp.eticketuserservice.converter;
 
 import com.ftbootcamp.eticketuserservice.dto.request.RoleUpdateRequest;
-import com.ftbootcamp.eticketuserservice.dto.response.RoleResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.role.RoleResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import lombok.NoArgsConstructor;
 

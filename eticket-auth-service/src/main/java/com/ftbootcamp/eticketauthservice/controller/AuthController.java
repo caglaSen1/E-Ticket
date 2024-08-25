@@ -1,10 +1,10 @@
 package com.ftbootcamp.eticketauthservice.controller;
 
-import com.ftbootcamp.eticketauthservice.client.user.dto.UserDetailsResponse;
 import com.ftbootcamp.eticketauthservice.client.user.service.UserClientService;
 import com.ftbootcamp.eticketauthservice.dto.request.AdminUserSaveRequest;
 import com.ftbootcamp.eticketauthservice.dto.request.CompanyUserSaveRequest;
 import com.ftbootcamp.eticketauthservice.dto.request.IndividualUserSaveRequest;
+import com.ftbootcamp.eticketauthservice.dto.request.UserLoginRequest;
 import com.ftbootcamp.eticketauthservice.dto.response.AdminUserDetailsResponse;
 import com.ftbootcamp.eticketauthservice.dto.response.CompanyUserDetailsResponse;
 import com.ftbootcamp.eticketauthservice.dto.response.GenericResponse;
@@ -37,14 +37,8 @@ public class AuthController {
         return GenericResponse.success(authService.registerIndividual(request), HttpStatus.CREATED);
     }
 
-    /*
     @PostMapping(path = "/login")
-    public ResponseEntity<String> login(@RequestBody UserLoginRequest request) {
-        return ResponseEntity.ok(authService.login(request));
-    }*/
-
-    @GetMapping("/by-email/{email}")
-    GenericResponse<UserDetailsResponse> getUserByEmail(@PathVariable String email){
-        return GenericResponse.success(userClientService.getUserByEmail(email), HttpStatus.OK);
+    public GenericResponse<String> login(@RequestBody UserLoginRequest request) {
+        return GenericResponse.success(authService.login(request), HttpStatus.OK);
     }
 }

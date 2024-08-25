@@ -1,6 +1,5 @@
 package com.ftbootcamp.eticketauthservice.client.user;
 
-import com.ftbootcamp.eticketauthservice.client.user.dto.UserDetailsResponse;
 import com.ftbootcamp.eticketauthservice.dto.request.AdminUserSaveRequest;
 import com.ftbootcamp.eticketauthservice.dto.request.CompanyUserSaveRequest;
 import com.ftbootcamp.eticketauthservice.dto.request.IndividualUserSaveRequest;
@@ -25,7 +24,4 @@ public interface UserClient {
 
     @PostMapping("/individual-users")
     GenericResponse<IndividualUserDetailsResponse> createUser(@RequestBody IndividualUserSaveRequest request);
-
-    @GetMapping("/by-email/{email}")
-    GenericResponse<UserDetailsResponse> getUserByEmail(@PathVariable String email);
 }

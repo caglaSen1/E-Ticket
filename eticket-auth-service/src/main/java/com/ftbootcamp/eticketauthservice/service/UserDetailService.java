@@ -1,11 +1,9 @@
 package com.ftbootcamp.eticketauthservice.service;
 
-import com.ftbootcamp.eticketauthservice.client.user.dto.UserDetailsResponse;
-import com.ftbootcamp.eticketauthservice.client.user.service.UserClientService;
 import com.ftbootcamp.eticketauthservice.exception.ETicketException;
 import com.ftbootcamp.eticketauthservice.exception.ExceptionMessages;
+import com.ftbootcamp.eticketauthservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,18 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailService implements UserDetailsService {
 
-    private final UserClientService userClientService;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserDetailsResponse userDetailsResponse = userClientService.getUserByEmail(email);
-
-        if (userDetailsResponse == null) {
-            throw new ETicketException(ExceptionMessages.USER_NOT_FOUND);
-        }
-        return User.builder()
-                .username(userDetailsResponse.getEmail())
-                .password("")
-                .build();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ETicketException(ExceptionMessages.USER_NOT_FOUND));
     }
 }

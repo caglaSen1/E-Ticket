@@ -1,6 +1,6 @@
 package com.ftbootcamp.eticketuserservice.dto.response.company;
 
-import com.ftbootcamp.eticketuserservice.dto.response.RoleResponse;
+import com.ftbootcamp.eticketuserservice.dto.response.role.RoleResponse;
 import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
 import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
 import lombok.*;
