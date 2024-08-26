@@ -28,30 +28,27 @@ public class IndividualUserController {
     private final IndividualUserService individualUserService;
 
     @GetMapping("/admin-panel/all")
-    @Operation(summary = "Get all individual users", description = "Get all individual users, " +
-            "authorized for admin users only")
+    @Operation(summary = "Get all individual users")
     public GenericResponse<IndividualUserPaginatedResponse> getAllUsers(@RequestParam(defaultValue = "0") int page,
                                                                         @RequestParam(defaultValue = "10") int size) {
         return GenericResponse.success(individualUserService.getAllIndividualUsers(page, size), HttpStatus.OK);
     }
 
     @GetMapping("/profile")
-    @Operation(summary = "Get individual user by id", description = "Get individual user by id, " +
-            "authorized for admin users and individual users logged in")
+    @Operation(summary = "Get individual user by id", description = "Only active individual user can get his/her own " +
+            "information")
     public GenericResponse<IndividualUserDetailsResponse> getUserById(@RequestHeader("Authorization") String token) {
         return GenericResponse.success(individualUserService.getIndividualUserByToken(token), HttpStatus.OK);
     }
 
     @GetMapping("/admin-panel/{email}")
-    @Operation(summary = "Get individual user by email", description = "Get individual user by email, " +
-            "authorized for admin users and individual users logged in")
+    @Operation(summary = "Get individual user by email")
     public GenericResponse<IndividualUserDetailsResponse> getUserByEmail(@PathVariable String email) {
         return GenericResponse.success(individualUserService.getIndividualUserByEmail(email), HttpStatus.OK);
     }
 
     @GetMapping("/admin-panel/by-status")
-    @Operation(summary = "Get individual users by status list", description = "Get individual users by status list, " +
-            "authorized for admin users only")
+    @Operation(summary = "Get individual users by status list")
     public GenericResponse<IndividualUserPaginatedResponse> getUsersByStatusList(
                                                         @RequestParam(defaultValue = "0") int page,
                                                         @RequestParam(defaultValue = "10") int size,
@@ -61,8 +58,7 @@ public class IndividualUserController {
     }
 
     @GetMapping("/admin-panel/by-type")
-    @Operation(summary = "Get individual users by type list", description = "Get individual users by type list, " +
-            "authorized for admin users only")
+    @Operation(summary = "Get individual users by type list")
     public GenericResponse<IndividualUserPaginatedResponse> getUsersByTypeList(
                                                         @RequestParam(defaultValue = "0") int page,
                                                         @RequestParam(defaultValue = "10") int size,
@@ -72,23 +68,20 @@ public class IndividualUserController {
     }
 
     @GetMapping("/admin-panel/count")
-    @Operation(summary = "Get how many individual users", description = "Get how many individual users, " +
-            "authorized for admin users only")
+    @Operation(summary = "Get how many individual users")
     public GenericResponse<Integer> getHowManyUsers() {
         return GenericResponse.success(individualUserService.getHowManyIndividualUsers(), HttpStatus.OK);
     }
 
     @PutMapping("/admin-panel/{email}/{status}")
-    @Operation(summary = "Change individual user status", description = "Change status of user with given email, " +
-            "authorized for admin users only")
+    @Operation(summary = "Change individual user status")
     public GenericResponse<IndividualUserSummaryResponse> changeStatus(@PathVariable String email,
                                                              @PathVariable("status") StatusType status) {
         return GenericResponse.success(individualUserService.changeIndividualUserStatus(email, status), HttpStatus.OK);
     }
 
     @PutMapping("/admin-panel/status-bulk")
-    @Operation(summary = "Change individual user status bulk", description = "Change status of users with given email list, " +
-            "authorized for admin users only")
+    @Operation(summary = "Change individual user status bulk")
     public GenericResponse<IndividualUserPaginatedResponse> changeStatusBulk(
                                                             @RequestBody UserBulkStatusChangeRequest request) {
         return GenericResponse.success(individualUserService.changeIndividualUserStatusBulk(request),
@@ -96,16 +89,16 @@ public class IndividualUserController {
     }
 
     @PostMapping("/update/profile")
-    @Operation(summary = "Update individual user", description = "Update individual user with given user information, " +
-            "authorized for admin users and individual users logged in")
+    @Operation(summary = "Update individual user", description = "Only active individual user can update his/her own " +
+            "information")
     public GenericResponse<IndividualUserDetailsResponse> updateUser(@RequestBody IndividualUserUpdateRequest request,
                                                                      @RequestHeader("Authorization") String token) {
         return GenericResponse.success(individualUserService.updateUser(request, token), HttpStatus.OK);
     }
 
     @PutMapping("/change-password")
-    @Operation(summary = "Change individual user password", description = "Change password of user with given email, " +
-            "authorized for admin users and individual users logged in")
+    @Operation(summary = "Change individual user password", description = "Only active individual user can change " +
+            "his/her own password")
     public GenericResponse<Void> changePassword(@RequestBody UserPasswordChangeRequest request,
                                                 @RequestHeader("Authorization") String token) {
         individualUserService.changePassword(request, token);
@@ -113,24 +106,22 @@ public class IndividualUserController {
     }
 
     @PutMapping("/admin-panel/add-role")
-    @Operation(summary = "Add role to individual user", description = "Add not default role to user with given email, " +
-            "authorized for admin users only")
+    @Operation(summary = "Add role to individual user", description = "Add not default role to user with given email")
     public GenericResponse<Void> addRole(@RequestBody UserRoleRequest request) {
         individualUserService.addRoleToUser(request);
         return GenericResponse.success(null, HttpStatus.OK);
     }
 
     @PutMapping("/admin-panel/remove-role")
-    @Operation(summary = "Remove role from individual user", description = "Remove not default role from user with given email, " +
-            "authorized for admin users only")
+    @Operation(summary = "Remove role from individual user", description = "Remove not default role from user with given " +
+            "email")
     public GenericResponse<Void> removeRole(@RequestBody UserRoleRequest request) {
         individualUserService.removeRoleFromUser(request);
         return GenericResponse.success(null, HttpStatus.OK);
     }
 
     @GetMapping("/admin-panel/roles/{email}")
-    @Operation(summary = "Get individual user roles", description = "Get individual user roles with given email, " +
-            "authorized for admin users only")
+    @Operation(summary = "Get individual user roles", description = "Get individual user roles with given email")
     public GenericResponse<List<String>> getUserRoles(@PathVariable String email) {
         return GenericResponse.success(individualUserService.getUserRoles(email), HttpStatus.OK);
     }

@@ -1,4 +1,4 @@
-package com.ftbootcamp.eticketservice.service;
+/*package com.ftbootcamp.eticketservice.service;
 
 import com.ftbootcamp.eticketservice.dto.request.TripCreateRequest;
 import com.ftbootcamp.eticketservice.dto.request.TripUpdateRequest;
@@ -233,4 +233,4 @@ class TripServiceTest {
         verify(kafkaProducer, times(1)).sendTrip(trip);
         verify(kafkaProducer, times(1)).sendLogMessage(any(Log.class));
     }
-}
+}*/

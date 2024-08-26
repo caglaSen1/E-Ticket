@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EmailException.class)
     public GenericResponse handleEmailException(EmailException e){
-        kafkaProducer.sendExceptionLogMessage(new Log(e.getLogMessage()));
+        kafkaProducer.sendExceptionLogMessage(new Log(e.getMessage()));
 
         return GenericResponse.failed(e.getMessage());
     }

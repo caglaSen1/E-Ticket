@@ -17,6 +17,5 @@ public class TicketBuyRequest {
     private PaymentType paymentType;
 
     @NotNull(message = "Ticket ID is mandatory")
-    @Positive(message = "Ticket ID must be a positive number")
     private Long ticketId;
 }

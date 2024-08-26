@@ -19,6 +19,8 @@ public class IndividualUserConverter {
                 .lastName(user.getLastName())
                 .birthDate(user.getBirthDate())
                 .gender(user.getGender())
+                .userType(user.getUserType())
+                .statusType(user.getStatusType())
                 .createdDate(user.getCreatedDate())
                 .build();
     }
@@ -47,6 +49,8 @@ public class IndividualUserConverter {
                 .lastName(user.getLastName())
                 .birthDate(user.getBirthDate())
                 .gender(user.getGender())
+                .userType(user.getUserType())
+                .statusType(user.getStatusType())
                 .createdDate(user.getCreatedDate())
                 .roles(RoleConverter.roleToRoleResponse(user.getRoles()))
                 .build();

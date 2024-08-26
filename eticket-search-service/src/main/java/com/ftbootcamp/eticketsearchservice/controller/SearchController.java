@@ -28,7 +28,7 @@ public class SearchController {
     private final SearchService searchService;
 
     @GetMapping("/trips")
-    @Operation(summary = "Search trips", description = "Search trips with given search criteria, for all users")
+    @Operation(summary = "Search trips", description = "Search trips with given search criteria")
     public GenericResponse<List<TripSearchResponse>> searchTrips(
             @RequestParam(required = false) LocalDate date,
             @RequestParam(required = false) String departureCity,
@@ -52,7 +52,7 @@ public class SearchController {
         return GenericResponse.success(searchService.searchTrips(request), HttpStatus.OK);
     }
 
-    @GetMapping("/trips-for-admin")
+    @GetMapping("/admin-panel/trips")
     @Operation(summary = "Search trips for admin", description = "Search trips with given search criteria, " +
             "authorized for admin users only")
     public GenericResponse<List<TripSearchResponse>> searchTripsForAdmin(

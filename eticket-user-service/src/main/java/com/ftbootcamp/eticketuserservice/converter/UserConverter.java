@@ -65,7 +65,7 @@ public class UserConverter {
         } else if (user instanceof CompanyUser company) {
             userDetailsResponse.setCompanyName(company.getCompanyName());
             userDetailsResponse.setTaxNumber(company.getTaxNumber());
-            userDetailsResponse.setInstanceOf(RoleEntityConstants.CORPORATE_USER_ROLE_NAME);
+            userDetailsResponse.setInstanceOf(RoleEntityConstants.COMPANY_USER_ROLE_NAME);
         }
 
         return userDetailsResponse;

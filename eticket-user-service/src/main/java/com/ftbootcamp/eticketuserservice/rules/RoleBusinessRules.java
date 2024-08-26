@@ -43,7 +43,7 @@ public class RoleBusinessRules {
         if(roleToRemove.equals(RoleEntityConstants.USER_ROLE_NAME) ||
                 roleToRemove.equals(RoleEntityConstants.ADMIN_USER_ROLE_NAME) ||
                 roleToRemove.equals(RoleEntityConstants.INDIVIDUAL_USER_ROLE_NAME) ||
-                roleToRemove.equals(RoleEntityConstants.CORPORATE_USER_ROLE_NAME)){
+                roleToRemove.equals(RoleEntityConstants.COMPANY_USER_ROLE_NAME)){
             throw new ETicketException(ExceptionMessages.DEFAULT_ROLE_CANNOT_BE_ADDED_REMOVED +
                     " Role: " + roleToRemove);
         }

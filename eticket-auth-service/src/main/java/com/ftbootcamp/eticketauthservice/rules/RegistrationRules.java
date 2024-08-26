@@ -1,5 +1,8 @@
 package com.ftbootcamp.eticketauthservice.rules;
 
+import com.ftbootcamp.eticketauthservice.repository.AdminUserRepository;
+import com.ftbootcamp.eticketauthservice.repository.CompanyUserRepository;
+import com.ftbootcamp.eticketauthservice.repository.IndividualUserRepository;
 import com.ftbootcamp.eticketauthservice.rules.constants.PasswordConstants;
 import com.ftbootcamp.eticketauthservice.exception.ETicketException;
 import com.ftbootcamp.eticketauthservice.exception.ExceptionMessages;
@@ -11,7 +14,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegistrationRules {
 
-    private final UserRepository userRepository;
+    private final AdminUserRepository adminUserRepository;
+    private final CompanyUserRepository companyUserRepository;
+    private final IndividualUserRepository individualUserRepository;
 
     public void checkEmailValid(String email) {
         if (!email.contains("@")) {
@@ -20,7 +25,9 @@ public class RegistrationRules {
     }
 
     public void checkEmailAlreadyExist(String email) {
-        if (userRepository.findByEmail(email).isPresent()) {
+        if (adminUserRepository.findByEmail(email).isPresent() ||
+                companyUserRepository.findByEmail(email).isPresent()||
+                individualUserRepository.findByEmail(email).isPresent()) {
             throw new ETicketException(ExceptionMessages.USER_ALREADY_EXIST_BY_EMAIL + " Email: " + email);
         }
     }

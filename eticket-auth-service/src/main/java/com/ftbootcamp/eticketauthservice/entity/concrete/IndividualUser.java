@@ -52,6 +52,8 @@ public class IndividualUser extends User {
         this.nationalId = nationalId;
         this.birthDate = birthDate;
         this.gender = gender;
+        this.userType = UserType.STANDARD;
+        this.statusType = StatusType.WAITING_APPROVAL;
     }
 
     public String getFullName() {

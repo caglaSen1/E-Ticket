@@ -29,7 +29,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,9 +81,6 @@ public class AuthService {
         createdUser.getRoles().add(userRole);
         createdUser.getRoles().add(adminUserRole);
 
-        // Add default status and user type
-
-
         adminUserRepository.save(createdUser);
 
         // Send message to user with RabbitMQ Service (Asencronize):
@@ -115,7 +111,7 @@ public class AuthService {
 
         // Add default roles to corporate user (USER, CORPORATE_USER)
         Role userRole = roleService.createRoleIfNotExist(RoleEntityConstants.USER_ROLE_NAME);
-        Role corporateUserRole = roleService.createRoleIfNotExist(RoleEntityConstants.CORPORATE_USER_ROLE_NAME);
+        Role corporateUserRole = roleService.createRoleIfNotExist(RoleEntityConstants.COMPANY_USER_ROLE_NAME);
         createdUser.getRoles().add(userRole);
         createdUser.getRoles().add(corporateUserRole);
 

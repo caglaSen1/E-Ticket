@@ -23,6 +23,7 @@ import com.ftbootcamp.eticketservice.producer.rabbitmq.RabbitMqProducer;
 import com.ftbootcamp.eticketservice.producer.rabbitmq.dto.NotificationSendRequest;
 import com.ftbootcamp.eticketservice.producer.rabbitmq.enums.NotificationType;
 import com.ftbootcamp.eticketservice.repository.TicketRepository;
+import com.ftbootcamp.eticketservice.repository.TripRepository;
 import com.ftbootcamp.eticketservice.rules.TicketBusinessRules;
 import com.ftbootcamp.eticketservice.utils.ExtractFromToken;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,7 @@ import static com.ftbootcamp.eticketservice.utils.MessageUtils.generateTicketInf
 public class TicketService {
 
     private final TicketRepository ticketRepository;
+    private final TripRepository tripRepository;
     private final TicketBusinessRules ticketBusinessRules;
     private final UserClientService userService;
     private final RabbitMqProducer rabbitMqProducer;
@@ -83,6 +85,7 @@ public class TicketService {
         ticket.setSold(true);
         ticket.getTrip().setSoldTicketCount(ticket.getTrip().getSoldTicketCount() + 1);
 
+        tripRepository.save(ticket.getTrip());
         ticketRepository.save(ticket);
 
         // Generate ticket info message:
@@ -144,6 +147,7 @@ public class TicketService {
             ticket.setSold(true);
             ticket.getTrip().setSoldTicketCount(ticket.getTrip().getSoldTicketCount() + 1);
 
+            tripRepository.save(ticket.getTrip());
             ticketRepository.save(ticket);
         }
 
@@ -158,8 +162,6 @@ public class TicketService {
         kafkaProducer.sendLogMessage(new Log("Ticket buying process completed. Buyer: " + buyer.getEmail() +
                 " ticket ids: " + tickets.stream().map(Ticket::getId).toList()));
     }
-
-    // TODO: Get tickets of user
 
     public TicketResponse getTicketById(Long id) {;
         return TicketConverter.toTicketResponse(ticketBusinessRules.checkTicketExistById(id));
@@ -265,12 +267,12 @@ public class TicketService {
 
         if (instanceOf.equals(RoleNameConstants.INDIVIDUAL_USER_ROLE_NAME)) {
             tripTicketsMap.forEach((trip, ticketList) -> {
-                if (ticketList.size() > 2) {
+                if (ticketList.size() > 5) {
                     throw new ETicketException("Exception: Individual users can buy at most 5 tickets for a trip.");
                 }
             });
 
-            if (malePassengerCountForOrder > 1) {
+            if (malePassengerCountForOrder > 2) {
                 throw new ETicketException("Exception: Individual users can buy tickets for up to 2 male " +
                         "passengers in a single order.");
             }
@@ -278,7 +280,7 @@ public class TicketService {
 
         if (instanceOf.equals(RoleNameConstants.CORPORATE_USER_ROLE_NAME)) {
             tripTicketsMap.forEach((trip, ticketList) -> {
-                if (ticketList.size() > 2) {
+                if (ticketList.size() > 40) {
                     throw new ETicketException("Exception: Company users can buy at most 40 tickets for a trip.");
                 }
             });

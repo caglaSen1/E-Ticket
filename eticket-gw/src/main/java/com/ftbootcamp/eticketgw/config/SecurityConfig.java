@@ -55,7 +55,9 @@ public class SecurityConfig {
             "/api/v1/roles/admin-panel/**",
             "/api/v1/payments/admin-panel/**",
             "/api/v1/tickets/admin-panel/**",
-            "/api/v1/trips/admin-panel/**"
+            "/api/v1/trips/admin-panel/**",
+            "/api/v1/search/admin-panel/**",
+            "/api/v1/documents/admin-panel/trip-documents"
     };
     private static final String[] AUTH_WHITELIST_INDIVIDUAL_USER = {
             "/api/v1/users/individual-users/profile", "/api/v1/users/individual-users/update/profile",
@@ -64,7 +66,7 @@ public class SecurityConfig {
     private static final String[] AUTH_WHITELIST_INDIVIDUAL_CORPORATE_USERS = {
             "/api/v1/tickets/buy", "/api/v1/tickets/buy-multiple",
             "/api/v1/tickets/buyer/profile/all", "/api/v1/tickets/trips/{tripId}/all-available",
-            "/api/v1/trips/all-available"
+            "/api/v1/trips/all-available", "/api/v1/search/trips",
     };
 
     @Bean
