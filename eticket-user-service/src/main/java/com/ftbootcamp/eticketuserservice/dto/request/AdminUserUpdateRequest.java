@@ -1,5 +1,6 @@
 package com.ftbootcamp.eticketuserservice.dto.request;
 
+import com.ftbootcamp.eticketuserservice.entity.enums.Gender;
 import lombok.*;
 
 @Getter
@@ -7,11 +8,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CompanyUserSaveRequest {
+public class AdminUserUpdateRequest {
 
     private String email;
     private String phoneNumber;
     private String password;
-    private String companyName;
-    private Long taxNumber;
+    private String firstName;
+    private String lastName;
+    private long nationalId;
+    private Gender gender;
 }

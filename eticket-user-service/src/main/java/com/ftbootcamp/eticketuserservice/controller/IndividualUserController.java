@@ -98,7 +98,7 @@ public class IndividualUserController {
     @PostMapping("/update/profile")
     @Operation(summary = "Update individual user", description = "Update individual user with given user information, " +
             "authorized for admin users and individual users logged in")
-    public GenericResponse<IndividualUserDetailsResponse> updateUser(@RequestBody IndividualUserSaveRequest request,
+    public GenericResponse<IndividualUserDetailsResponse> updateUser(@RequestBody IndividualUserUpdateRequest request,
                                                                      @RequestHeader("Authorization") String token) {
         return GenericResponse.success(individualUserService.updateUser(request, token), HttpStatus.OK);
     }

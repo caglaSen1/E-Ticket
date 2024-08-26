@@ -10,14 +10,10 @@ import com.ftbootcamp.eticketuserservice.dto.response.individual.IndividualUserP
 import com.ftbootcamp.eticketuserservice.dto.response.individual.IndividualUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.IndividualUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
-import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
 import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
 import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
 import com.ftbootcamp.eticketuserservice.producer.kafka.Log;
 import com.ftbootcamp.eticketuserservice.producer.kafka.KafkaProducer;
-import com.ftbootcamp.eticketuserservice.producer.rabbitmq.RabbitMqProducer;
-import com.ftbootcamp.eticketuserservice.producer.rabbitmq.dto.NotificationSendRequest;
-import com.ftbootcamp.eticketuserservice.producer.rabbitmq.enums.NotificationType;
 import com.ftbootcamp.eticketuserservice.repository.IndividualUserRepository;
 import com.ftbootcamp.eticketuserservice.rules.IndividualUserBusinessRules;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
@@ -28,10 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.ftbootcamp.eticketuserservice.core.PasswordHasher.hashPassword;
 
 @Service
 @RequiredArgsConstructor
@@ -124,7 +117,7 @@ public class IndividualUserService {
         return IndividualUserConverter.toIndividualUserPaginatedResponse(individualUserPage);
     }
 
-    public IndividualUserDetailsResponse updateUser(IndividualUserSaveRequest request, String token) {
+    public IndividualUserDetailsResponse updateUser(IndividualUserUpdateRequest request, String token) {
         String email = ExtractFromToken.email(token);
 
         IndividualUser userToUpdate = individualUserBusinessRules.checkUserExistByEmail(email);

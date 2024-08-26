@@ -1,4 +1,4 @@
-package com.ftbootcamp.eticketauthservice.constants;
+package com.ftbootcamp.eticketauthservice.rules.constants;
 
 import lombok.NoArgsConstructor;
 

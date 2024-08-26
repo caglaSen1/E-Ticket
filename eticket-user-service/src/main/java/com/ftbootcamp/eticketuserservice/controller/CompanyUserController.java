@@ -11,7 +11,6 @@ import com.ftbootcamp.eticketuserservice.dto.response.GenericResponse;
 import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
 import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
 import com.ftbootcamp.eticketuserservice.service.CompanyUserService;
-import com.ftbootcamp.eticketuserservice.util.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -95,7 +94,7 @@ public class CompanyUserController {
     @PostMapping("/update/profile")
     @Operation(summary = "Update company user", description = "Update company user with given user information, for " +
             "admin users and company users for their own information")
-    public GenericResponse<CompanyUserDetailsResponse> updateUser(@RequestBody CompanyUserSaveRequest request,
+    public GenericResponse<CompanyUserDetailsResponse> updateUser(@RequestBody CompanyUserUpdateRequest request,
                                                                   @RequestHeader("Authorization") String token) {
         return GenericResponse.success(companyUserService.updateUser(request, token), HttpStatus.OK);
     }

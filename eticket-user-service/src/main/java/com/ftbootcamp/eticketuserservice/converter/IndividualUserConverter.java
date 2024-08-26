@@ -1,6 +1,6 @@
 package com.ftbootcamp.eticketuserservice.converter;
 
-import com.ftbootcamp.eticketuserservice.dto.request.IndividualUserSaveRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.IndividualUserUpdateRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.individual.IndividualUserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.individual.IndividualUserPaginatedResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.individual.IndividualUserSummaryResponse;
@@ -52,7 +52,7 @@ public class IndividualUserConverter {
                 .build();
     }
 
-    public static IndividualUser toUpdatedIndividualUser(IndividualUser user, IndividualUserSaveRequest request) {
+    public static IndividualUser toUpdatedIndividualUser(IndividualUser user, IndividualUserUpdateRequest request) {
         if(request.getEmail() != null) {
             user.setEmail(request.getEmail());
         }

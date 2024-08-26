@@ -9,6 +9,7 @@ import com.ftbootcamp.eticketservice.entity.enums.TicketCondition;
 import com.ftbootcamp.eticketservice.service.TicketService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class TicketController {
     @PostMapping("/buy")
     @Operation(summary = "Buy a ticket for active user herself/himself",
             description = "Active user can buy a ticket, just for herself/himself")
-    public GenericResponse<Void> buyTicket(@RequestBody TicketBuyRequest request,
+    public GenericResponse<Void> buyTicket(@Valid @RequestBody TicketBuyRequest request,
                                            @RequestHeader("Authorization") String token) {
         ticketService.takePaymentOfTicket(request, token);
         return GenericResponse.success(null, HttpStatus.CREATED);
@@ -34,7 +35,7 @@ public class TicketController {
     @PostMapping("/buy-multiple")
     @Operation(summary = "Buy more than one ticket for passengers with their info",
             description = "Buy more than one ticket for passengers with their info. Buyer is the active user.")
-    public GenericResponse<Void> buyMultipleTicket(@RequestBody TicketMultipleBuyRequest request,
+    public GenericResponse<Void> buyMultipleTicket(@Valid @RequestBody TicketMultipleBuyRequest request,
                                                    @RequestHeader("Authorization") String token) {
         ticketService.takePaymentOfMultipleTickets(request, token);
         return GenericResponse.success(null, HttpStatus.CREATED);

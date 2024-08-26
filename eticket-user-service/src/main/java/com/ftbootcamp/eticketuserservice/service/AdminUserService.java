@@ -1,19 +1,15 @@
 package com.ftbootcamp.eticketuserservice.service;
 
 import com.ftbootcamp.eticketuserservice.converter.AdminUserConverter;
-import com.ftbootcamp.eticketuserservice.dto.request.AdminUserSaveRequest;
+import com.ftbootcamp.eticketuserservice.dto.request.AdminUserUpdateRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.user.UserPasswordChangeRequest;
 import com.ftbootcamp.eticketuserservice.dto.request.user.UserRoleRequest;
 import com.ftbootcamp.eticketuserservice.dto.response.admin.AdminUserDetailsResponse;
 import com.ftbootcamp.eticketuserservice.dto.response.admin.AdminUserPaginatedResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.AdminUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
-import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
 import com.ftbootcamp.eticketuserservice.producer.kafka.Log;
 import com.ftbootcamp.eticketuserservice.producer.kafka.KafkaProducer;
-import com.ftbootcamp.eticketuserservice.producer.rabbitmq.RabbitMqProducer;
-import com.ftbootcamp.eticketuserservice.producer.rabbitmq.dto.NotificationSendRequest;
-import com.ftbootcamp.eticketuserservice.producer.rabbitmq.enums.NotificationType;
 import com.ftbootcamp.eticketuserservice.repository.AdminUserRepository;
 import com.ftbootcamp.eticketuserservice.rules.AdminUserBusinessRules;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
@@ -23,10 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.ftbootcamp.eticketuserservice.core.PasswordHasher.hashPassword;
 
 @Service
 @RequiredArgsConstructor
@@ -56,7 +49,7 @@ public class AdminUserService {
         return (int) adminUserRepository.count();
     }
 
-    public AdminUserDetailsResponse updateUser(AdminUserSaveRequest request, String token){
+    public AdminUserDetailsResponse updateUser(AdminUserUpdateRequest request, String token){
         String email = ExtractFromToken.email(token);
 
         AdminUser userToUpdate = adminUserBusinessRules.checkUserExistByEmail(email);

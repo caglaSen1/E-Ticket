@@ -1,6 +1,6 @@
 package com.ftbootcamp.eticketauthservice.exception;
 
-import com.ftbootcamp.eticketauthservice.constants.PasswordConstants;
+import com.ftbootcamp.eticketauthservice.rules.constants.PasswordConstants;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)

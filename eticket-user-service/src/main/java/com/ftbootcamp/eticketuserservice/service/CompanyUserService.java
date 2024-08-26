@@ -106,7 +106,7 @@ public class CompanyUserService {
                 .findByEmailList(emailList, pageRequest));
     }
 
-    public CompanyUserDetailsResponse updateUser(CompanyUserSaveRequest request, String token) {
+    public CompanyUserDetailsResponse updateUser(CompanyUserUpdateRequest request, String token) {
         String email = ExtractFromToken.email(token);
 
         CompanyUser userToUpdate = companyUserBusinessRules.checkUserExistByEmail(email);

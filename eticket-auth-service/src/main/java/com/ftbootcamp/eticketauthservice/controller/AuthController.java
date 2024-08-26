@@ -6,6 +6,7 @@ import com.ftbootcamp.eticketauthservice.dto.request.IndividualUserSaveRequest;
 import com.ftbootcamp.eticketauthservice.dto.request.UserLoginRequest;
 import com.ftbootcamp.eticketauthservice.dto.response.GenericResponse;
 import com.ftbootcamp.eticketauthservice.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,24 +22,24 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(path = "/login")
-    public GenericResponse<String> login(@RequestBody UserLoginRequest request) {
+    public GenericResponse<String> login(@Valid @RequestBody UserLoginRequest request) {
         return GenericResponse.success(authService.login(request), HttpStatus.OK);
     }
 
     @PostMapping(path = "/register-admin")
-    public GenericResponse<Void> registerAdmin(@RequestBody AdminUserSaveRequest request){
+    public GenericResponse<Void> registerAdmin(@Valid @RequestBody AdminUserSaveRequest request){
         authService.registerAdmin(request);
         return GenericResponse.success(null, HttpStatus.CREATED);
     }
 
     @PostMapping(path = "/register-company")
-    public GenericResponse<Void> registerCompany(@RequestBody CompanyUserSaveRequest request){
+    public GenericResponse<Void> registerCompany(@Valid @RequestBody CompanyUserSaveRequest request){
         authService.registerCompany(request);
         return GenericResponse.success(null, HttpStatus.CREATED);
     }
 
     @PostMapping(path = "/register-individual")
-    public GenericResponse<Void> registerIndividual(@RequestBody IndividualUserSaveRequest request){
+    public GenericResponse<Void> registerIndividual(@Valid @RequestBody IndividualUserSaveRequest request){
         authService.registerIndividual(request);
         return GenericResponse.success(null, HttpStatus.CREATED);
     }

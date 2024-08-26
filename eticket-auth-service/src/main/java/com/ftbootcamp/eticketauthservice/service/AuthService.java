@@ -23,7 +23,6 @@ import com.ftbootcamp.eticketauthservice.rules.RegistrationRules;
 import com.ftbootcamp.eticketauthservice.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -82,6 +81,9 @@ public class AuthService {
         Role adminUserRole = roleService.createRoleIfNotExist(RoleEntityConstants.ADMIN_USER_ROLE_NAME);
         createdUser.getRoles().add(userRole);
         createdUser.getRoles().add(adminUserRole);
+
+        // Add default status and user type
+
 
         adminUserRepository.save(createdUser);
 

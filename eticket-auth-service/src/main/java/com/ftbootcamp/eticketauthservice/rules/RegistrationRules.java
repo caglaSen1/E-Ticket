@@ -1,6 +1,6 @@
 package com.ftbootcamp.eticketauthservice.rules;
 
-import com.ftbootcamp.eticketauthservice.constants.PasswordConstants;
+import com.ftbootcamp.eticketauthservice.rules.constants.PasswordConstants;
 import com.ftbootcamp.eticketauthservice.exception.ETicketException;
 import com.ftbootcamp.eticketauthservice.exception.ExceptionMessages;
 import com.ftbootcamp.eticketauthservice.repository.UserRepository;

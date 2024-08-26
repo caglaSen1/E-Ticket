@@ -10,6 +10,7 @@ import com.ftbootcamp.eticketservice.entity.enums.TripCondition;
 import com.ftbootcamp.eticketservice.service.TripService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class TripController {
 
     @PostMapping("/admin-panel/add")
     @Operation(summary = "Add trip", description = "Add trip with given trip information. Only admin can add trip.")
-    public GenericResponse<TripResponse> addTrip(@RequestBody TripCreateRequest request) {
+    public GenericResponse<TripResponse> addTrip(@Valid @RequestBody TripCreateRequest request) {
         return GenericResponse.success(tripService.create(request), HttpStatus.CREATED);
     }
 
@@ -68,7 +69,7 @@ public class TripController {
     @PutMapping("/admin-panel/update")
     @Operation(summary = "Update trip", description = "Update trip with given trip information. " +
             "Only admin can update trip.")
-    public GenericResponse<TripResponse> updateTrip(@RequestBody TripUpdateRequest request) {
+    public GenericResponse<TripResponse> updateTrip(@Valid @RequestBody TripUpdateRequest request) {
         return GenericResponse.success(tripService.updateTrip(request), HttpStatus.OK);
     }
 
