@@ -16,10 +16,10 @@ public class UserClientService {
 
     private final UserClient userClient;
 
-    public UserDetailsResponse getUserById(Long id) {
+    public UserDetailsResponse getUserByEmail(String email) {
 
         try{
-            GenericResponse<UserDetailsResponse> response = userClient.getUserById(id);
+            GenericResponse<UserDetailsResponse> response = userClient.getUserByEmail(email);
 
             if (response.getStatus().equals(GenericResponseConstants.FAILED)) {
                 throw new ETicketException("Failed to get user" + response.getMessage());
@@ -29,7 +29,5 @@ public class UserClientService {
         } catch(FeignException e){
             throw new UserClientException("Failed to connect to user service. Please try again later.");
         }
-
     }
-
 }

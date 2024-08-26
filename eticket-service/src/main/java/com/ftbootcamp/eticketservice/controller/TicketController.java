@@ -25,16 +25,18 @@ public class TicketController {
     @PostMapping("/buy")
     @Operation(summary = "Buy a ticket for active user herself/himself",
             description = "Active user can buy a ticket, just for herself/himself")
-    public GenericResponse<Void> buyTicket(@RequestBody TicketBuyRequest request) {
-        ticketService.takePaymentOfTicket(request);
+    public GenericResponse<Void> buyTicket(@RequestBody TicketBuyRequest request,
+                                           @RequestHeader("Authorization") String token) {
+        ticketService.takePaymentOfTicket(request, token);
         return GenericResponse.success(null, HttpStatus.CREATED);
     }
 
     @PostMapping("/buy-multiple")
     @Operation(summary = "Buy more than one ticket for passengers with their info",
             description = "Buy more than one ticket for passengers with their info. Buyer is the active user.")
-    public GenericResponse<Void> buyMultipleTicket(@RequestBody TicketMultipleBuyRequest request) {
-        ticketService.takePaymentOfMultipleTickets(request);
+    public GenericResponse<Void> buyMultipleTicket(@RequestBody TicketMultipleBuyRequest request,
+                                                   @RequestHeader("Authorization") String token) {
+        ticketService.takePaymentOfMultipleTickets(request, token);
         return GenericResponse.success(null, HttpStatus.CREATED);
     }
 
@@ -43,7 +45,6 @@ public class TicketController {
     public GenericResponse<TicketResponse> getTicketById(@PathVariable Long id) {
         return GenericResponse.success(ticketService.getTicketById(id), HttpStatus.OK);
     }
-
 
     @GetMapping("/admin-panel/all")
     @Operation(summary = "Get all tickets", description = "Get all tickets. Only admin can get all tickets.")
@@ -58,11 +59,11 @@ public class TicketController {
         return GenericResponse.success(ticketService.getAllTicketsOfBuyer(email), HttpStatus.OK);
     }
 
-    @GetMapping("/buyer/all/{email}")
+    @GetMapping("/buyer/profile/all/")
     @Operation(summary = "Get all tickets of buyer with email", description = "Get all tickets by email. " +
             "admin and active user can get all tickets by email.")
-    public GenericResponse<List<TicketResponse>> getAllTicketsOfBuyer(@PathVariable String email) {
-        return GenericResponse.success(ticketService.getAllTicketsOfBuyer(email), HttpStatus.OK);
+    public GenericResponse<List<TicketResponse>> getAllTicketsOfBuyer(@RequestHeader("Authorization") String token) {
+        return GenericResponse.success(ticketService.getAllTicketsOfBuyer(token), HttpStatus.OK);
     }
 
     @GetMapping("/admin-panel/all/by-condition")

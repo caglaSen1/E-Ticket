@@ -16,5 +16,5 @@ public class ExceptionMessages {
     public static final String ROLE_NOT_FOUND = "Role not found.";
     public static final String ROLE_ALREADY_EXIST = "Role already exist.";
     public static final String DEFAULT_ROLE_CANNOT_BE_ADDED_REMOVED = "Default role cannot be added or removed.";
-    public static final String USER_NOT_FOUND_OR_PASSWORD_IS_WRONG = "User not found or password is wrong.";
+    public static final String CAN_NOT_ACCESS_THIS_PROFILE = "You can not access this profile.";
 }

@@ -35,11 +35,11 @@ public class IndividualUserController {
         return GenericResponse.success(individualUserService.getAllIndividualUsers(page, size), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/profile")
     @Operation(summary = "Get individual user by id", description = "Get individual user by id, " +
             "authorized for admin users and individual users logged in")
-    public GenericResponse<IndividualUserDetailsResponse> getUserById(@PathVariable Long id) {
-        return GenericResponse.success(individualUserService.getIndividualUserById(id), HttpStatus.OK);
+    public GenericResponse<IndividualUserDetailsResponse> getUserById(@RequestHeader("Authorization") String token) {
+        return GenericResponse.success(individualUserService.getIndividualUserByToken(token), HttpStatus.OK);
     }
 
     @GetMapping("/admin-panel/{email}")
@@ -95,20 +95,20 @@ public class IndividualUserController {
                 HttpStatus.OK);
     }
 
-    @PostMapping("/update")
-    //@PreAuthorize("hasRole('INDIVIDUAL_USER')")
+    @PostMapping("/update/profile")
     @Operation(summary = "Update individual user", description = "Update individual user with given user information, " +
             "authorized for admin users and individual users logged in")
-    public GenericResponse<IndividualUserDetailsResponse> updateUser(@RequestBody IndividualUserSaveRequest request) {
-        return GenericResponse.success(individualUserService.updateUser(request), HttpStatus.OK);
+    public GenericResponse<IndividualUserDetailsResponse> updateUser(@RequestBody IndividualUserSaveRequest request,
+                                                                     @RequestHeader("Authorization") String token) {
+        return GenericResponse.success(individualUserService.updateUser(request, token), HttpStatus.OK);
     }
 
     @PutMapping("/change-password")
-    //@PreAuthorize("hasRole('INDIVIDUAL_USER')")
     @Operation(summary = "Change individual user password", description = "Change password of user with given email, " +
             "authorized for admin users and individual users logged in")
-    public GenericResponse<Void> changePassword(@RequestBody UserPasswordChangeRequest request) {
-        individualUserService.changePassword(request);
+    public GenericResponse<Void> changePassword(@RequestBody UserPasswordChangeRequest request,
+                                                @RequestHeader("Authorization") String token) {
+        individualUserService.changePassword(request, token);
         return GenericResponse.success(null, HttpStatus.OK);
     }
 

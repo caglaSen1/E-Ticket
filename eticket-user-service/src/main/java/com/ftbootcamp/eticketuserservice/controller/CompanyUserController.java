@@ -11,6 +11,7 @@ import com.ftbootcamp.eticketuserservice.dto.response.GenericResponse;
 import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
 import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
 import com.ftbootcamp.eticketuserservice.service.CompanyUserService;
+import com.ftbootcamp.eticketuserservice.util.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -32,11 +33,11 @@ public class CompanyUserController {
         return GenericResponse.success(companyUserService.getAllCompanyUsers(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/profile")
     @Operation(summary = "Get company user by id", description = "Get company user by id, for admin users and company " +
             "users for their own id")
-    public GenericResponse<CompanyUserDetailsResponse> getUserById(@PathVariable Long id) {
-        return GenericResponse.success(companyUserService.getCompanyUserById(id), HttpStatus.OK);
+    public GenericResponse<CompanyUserDetailsResponse> getUserByToken(@RequestHeader("Authorization") String token) {
+        return GenericResponse.success(companyUserService.getCompanyUserByToken(token), HttpStatus.OK);
     }
 
     @GetMapping("/admin-panel/{email}")
@@ -91,18 +92,20 @@ public class CompanyUserController {
                 HttpStatus.OK);
     }
 
-    @PostMapping("/update")
+    @PostMapping("/update/profile")
     @Operation(summary = "Update company user", description = "Update company user with given user information, for " +
             "admin users and company users for their own information")
-    public GenericResponse<CompanyUserDetailsResponse> updateUser(@RequestBody CompanyUserSaveRequest request) {
-        return GenericResponse.success(companyUserService.updateUser(request), HttpStatus.OK);
+    public GenericResponse<CompanyUserDetailsResponse> updateUser(@RequestBody CompanyUserSaveRequest request,
+                                                                  @RequestHeader("Authorization") String token) {
+        return GenericResponse.success(companyUserService.updateUser(request, token), HttpStatus.OK);
     }
 
     @PutMapping("/change-password")
     @Operation(summary = "Change company user password", description = "Change password of user with given email, for " +
             "admin users and company users for their own password")
-    public GenericResponse<Void> changePassword(@RequestBody UserPasswordChangeRequest request) {
-        companyUserService.changePassword(request);
+    public GenericResponse<Void> changePassword(@RequestBody UserPasswordChangeRequest request,
+                                                @RequestHeader("Authorization") String token) {
+        companyUserService.changePassword(request, token);
         return GenericResponse.success(null, HttpStatus.OK);
     }
 

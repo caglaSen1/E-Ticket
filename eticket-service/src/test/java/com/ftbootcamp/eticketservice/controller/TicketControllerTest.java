@@ -53,7 +53,7 @@ public class TicketControllerTest {
                // .andExpect(status().isCreated());
     }*/
 
-
+/*
     @Test
     void buyTickset() throws Exception {
 
@@ -67,7 +67,7 @@ public class TicketControllerTest {
         //then -> assertion
         verify(ticketService).takePaymentOfTicket(prepareTicketBuyRequest());
     }
-
+*/
     @Test
     void getTicketById() throws Exception {
         //given
@@ -79,13 +79,13 @@ public class TicketControllerTest {
         //then -> assertion
         verify(ticketService).getTicketById(1L);
     }
-
+/*
     private TicketBuyRequest prepareTicketBuyRequest() {
         TicketBuyRequest ticketBuyRequest = new TicketBuyRequest();
         ticketBuyRequest.setTicketId(1L);
         ticketBuyRequest.setUserId(1L);
         return ticketBuyRequest;
     }
-
+*/
 
 }

@@ -14,6 +14,5 @@ import java.util.List;
 public class TicketMultipleBuyRequest {
 
     private PaymentType paymentType;
-    private long buyerId;
     private List<PassengerTicketRequest> passengerTicketRequests;
 }

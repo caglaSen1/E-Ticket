@@ -16,6 +16,7 @@ import com.ftbootcamp.eticketservice.entity.Ticket;
 import com.ftbootcamp.eticketservice.entity.Trip;
 import com.ftbootcamp.eticketservice.entity.enums.TicketCondition;
 import com.ftbootcamp.eticketservice.exception.ETicketException;
+import com.ftbootcamp.eticketservice.exception.ExceptionMessages;
 import com.ftbootcamp.eticketservice.producer.Log;
 import com.ftbootcamp.eticketservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketservice.producer.rabbitmq.RabbitMqProducer;
@@ -23,8 +24,10 @@ import com.ftbootcamp.eticketservice.producer.rabbitmq.dto.NotificationSendReque
 import com.ftbootcamp.eticketservice.producer.rabbitmq.enums.NotificationType;
 import com.ftbootcamp.eticketservice.repository.TicketRepository;
 import com.ftbootcamp.eticketservice.rules.TicketBusinessRules;
+import com.ftbootcamp.eticketservice.utils.ExtractFromToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -47,9 +50,11 @@ public class TicketService {
     private final KafkaProducer kafkaProducer;
     private final PaymentClientService paymentClientService;
 
-    public void takePaymentOfTicket(TicketBuyRequest request) {
+    public void takePaymentOfTicket(TicketBuyRequest request, String token) {
+        String email = ExtractFromToken.email(token);
+
         // Get user with userClient (sencronous):
-        UserDetailsResponse user = userService.getUserById(request.getUserId());
+        UserDetailsResponse user = userService.getUserByEmail(email);
 
         Ticket ticket = ticketBusinessRules.checkTicketExistById(request.getTicketId());
         ticketBusinessRules.checkTicketIsAvailable(ticket);
@@ -67,9 +72,9 @@ public class TicketService {
                 "Request: " + request));
     }
 
-    public void saveTicketAfterPayment(TicketBuyRequest request) {
+    public void saveTicketAfterPayment(TicketBuyRequest request, String userEmail) {
         // Get user with userClient (sencronous):
-        UserDetailsResponse user = userService.getUserById(request.getUserId());
+        UserDetailsResponse user = userService.getUserByEmail(userEmail);
 
         Ticket ticket = ticketBusinessRules.checkTicketExistById(request.getTicketId());
         ticketBusinessRules.checkTicketIsAvailable(ticket);
@@ -92,9 +97,11 @@ public class TicketService {
 
     }
 
-    public void takePaymentOfMultipleTickets(TicketMultipleBuyRequest request) {
+    public void takePaymentOfMultipleTickets(TicketMultipleBuyRequest request, String token) {
+        String email = ExtractFromToken.email(token);
+
         // Get user with userClient (sencronous):
-        UserDetailsResponse buyer = userService.getUserById(request.getBuyerId());
+        UserDetailsResponse buyer = userService.getUserByEmail(email);
 
         List<Ticket> tickets = ticketBusinessRules.checkTicketsExistByIdList(
                 request.getPassengerTicketRequests()
@@ -122,9 +129,9 @@ public class TicketService {
                 "Buyer: " + buyer.getEmail() + " ticket ids: " + tickets.stream().map(Ticket::getId).toList()));
     }
 
-    public void saveTicketsAfterPayment(TicketMultipleBuyRequest request) {
+    public void saveTicketsAfterPayment(TicketMultipleBuyRequest request, String userEmail) {
 
-        UserDetailsResponse buyer = userService.getUserById(request.getBuyerId());
+        UserDetailsResponse buyer = userService.getUserByEmail(userEmail);
 
         List<Ticket> tickets = ticketBusinessRules.checkTicketsExistByIdList(
                 request.getPassengerTicketRequests().stream()
@@ -162,7 +169,8 @@ public class TicketService {
         return TicketConverter.toTicketResponseList(ticketRepository.findAll());
     }
 
-    public List<TicketResponse> getAllTicketsOfBuyer(String email) {
+    public List<TicketResponse> getAllTicketsOfBuyer(String token) {
+        String email = ExtractFromToken.email(token);
         return TicketConverter.toTicketResponseList(ticketRepository.findAllByUserEmail(email));
     }
 

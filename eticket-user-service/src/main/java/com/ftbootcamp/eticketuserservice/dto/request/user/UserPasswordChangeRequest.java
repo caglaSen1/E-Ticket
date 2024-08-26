@@ -8,7 +8,5 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class UserPasswordChangeRequest {
-
-    private String email;
     private String password;
 }

@@ -37,12 +37,6 @@
             <version>4.1.3</version>
         </dependency>
 
-        <!-- Spring Boot WebFlux
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency> -->
-
         <!-- Spring Boot Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

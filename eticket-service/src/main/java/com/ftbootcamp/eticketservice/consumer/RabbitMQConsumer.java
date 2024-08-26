@@ -27,7 +27,7 @@ public class RabbitMQConsumer {
             TicketMultipleBuyRequest ticketRequest = objectMapper.convertValue(
                     request.getPaymentObject(), TicketMultipleBuyRequest.class);
 
-            ticketService.saveTicketsAfterPayment(ticketRequest);
+            ticketService.saveTicketsAfterPayment(ticketRequest, request.getUserEmail());
         }
 
         if("TicketBuyRequest".equals(request.getPaymentObjectType())){
@@ -36,7 +36,7 @@ public class RabbitMQConsumer {
             TicketBuyRequest ticketRequest = objectMapper.convertValue(
                     request.getPaymentObject(), TicketBuyRequest.class);
 
-            ticketService.saveTicketAfterPayment(ticketRequest);
+            ticketService.saveTicketAfterPayment(ticketRequest, request.getUserEmail());
         }
     }
 }

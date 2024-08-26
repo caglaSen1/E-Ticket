@@ -12,6 +12,5 @@ import lombok.*;
 public class TicketBuyRequest {
 
     private PaymentType paymentType;
-    private long userId;
     private long ticketId;
 }

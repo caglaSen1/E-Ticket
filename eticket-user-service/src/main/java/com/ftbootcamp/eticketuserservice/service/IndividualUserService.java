@@ -21,6 +21,7 @@ import com.ftbootcamp.eticketuserservice.producer.rabbitmq.enums.NotificationTyp
 import com.ftbootcamp.eticketuserservice.repository.IndividualUserRepository;
 import com.ftbootcamp.eticketuserservice.rules.IndividualUserBusinessRules;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
+import com.ftbootcamp.eticketuserservice.util.ExtractFromToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -49,9 +50,10 @@ public class IndividualUserService {
         return IndividualUserConverter.toIndividualUserPaginatedResponse(individualUserPage);
     }
 
-    public IndividualUserDetailsResponse getIndividualUserById(Long id) {
+    public IndividualUserDetailsResponse getIndividualUserByToken(String token) {
+        String email = ExtractFromToken.email(token);
         return IndividualUserConverter.toIndividualUserDetailsResponse(
-                individualUserBusinessRules.checkUserExistById(id));
+                individualUserBusinessRules.checkUserExistByEmail(email));
     }
 
     public IndividualUserDetailsResponse getIndividualUserByEmail(String email) {
@@ -122,13 +124,12 @@ public class IndividualUserService {
         return IndividualUserConverter.toIndividualUserPaginatedResponse(individualUserPage);
     }
 
-    public IndividualUserDetailsResponse updateUser(IndividualUserSaveRequest request) {
+    public IndividualUserDetailsResponse updateUser(IndividualUserSaveRequest request, String token) {
+        String email = ExtractFromToken.email(token);
 
-        // TODO: access user with userId in token
-        IndividualUser userToUpdate = individualUserBusinessRules.checkUserExistByEmail(request.getEmail());
-
+        IndividualUser userToUpdate = individualUserBusinessRules.checkUserExistByEmail(email);
         individualUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
-        // TODO: Other validations
+        individualUserBusinessRules.checkPasswordValid(request.getPassword());
 
         IndividualUser individualUserToUpdate = IndividualUserConverter
                 .toUpdatedIndividualUser(userToUpdate, request);
@@ -140,13 +141,12 @@ public class IndividualUserService {
         return IndividualUserConverter.toIndividualUserDetailsResponse(individualUserToUpdate);
     }
 
-    public void changePassword(UserPasswordChangeRequest request) {
-        String email = request.getEmail();
+    public void changePassword(UserPasswordChangeRequest request, String token) {
+        String email = ExtractFromToken.email(token);
         String password = request.getPassword();
 
-        individualUserBusinessRules.checkPasswordValid(password);
-
         IndividualUser user = individualUserBusinessRules.checkUserExistByEmail(email);
+        individualUserBusinessRules.checkPasswordValid(password);
 
         user.setPassword(password);
         individualUserRepository.save(user);

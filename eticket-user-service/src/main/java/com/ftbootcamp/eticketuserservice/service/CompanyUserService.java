@@ -10,26 +10,20 @@ import com.ftbootcamp.eticketuserservice.dto.response.company.CompanyUserPaginat
 import com.ftbootcamp.eticketuserservice.dto.response.company.CompanyUserSummaryResponse;
 import com.ftbootcamp.eticketuserservice.entity.concrete.CompanyUser;
 import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
-import com.ftbootcamp.eticketuserservice.entity.constant.RoleEntityConstants;
 import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
 import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
 import com.ftbootcamp.eticketuserservice.producer.kafka.Log;
 import com.ftbootcamp.eticketuserservice.producer.kafka.KafkaProducer;
-import com.ftbootcamp.eticketuserservice.producer.rabbitmq.RabbitMqProducer;
-import com.ftbootcamp.eticketuserservice.producer.rabbitmq.dto.NotificationSendRequest;
-import com.ftbootcamp.eticketuserservice.producer.rabbitmq.enums.NotificationType;
 import com.ftbootcamp.eticketuserservice.repository.CompanyUserRepository;
 import com.ftbootcamp.eticketuserservice.rules.CompanyUserBusinessRules;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
+import com.ftbootcamp.eticketuserservice.util.ExtractFromToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.ftbootcamp.eticketuserservice.core.PasswordHasher.hashPassword;
 
 @Service
 @RequiredArgsConstructor
@@ -45,8 +39,9 @@ public class CompanyUserService {
         return CompanyUserConverter.toCompanyUserSummaryResponse(companyUserRepository.findAll());
     }
 
-    public CompanyUserDetailsResponse getCompanyUserById(Long id) {
-        return CompanyUserConverter.toCompanyUserDetailsResponse(companyUserBusinessRules.checkUserExistById(id));
+    public CompanyUserDetailsResponse getCompanyUserByToken(String token) {
+        String email = ExtractFromToken.email(token);
+        return CompanyUserConverter.toCompanyUserDetailsResponse(companyUserBusinessRules.checkUserExistByEmail(email));
     }
 
     public CompanyUserDetailsResponse getCompanyUserByEmail(String email) {
@@ -111,8 +106,12 @@ public class CompanyUserService {
                 .findByEmailList(emailList, pageRequest));
     }
 
-    public CompanyUserDetailsResponse updateUser(CompanyUserSaveRequest request) {
-        CompanyUser userToUpdate = companyUserBusinessRules.checkUserExistByEmail(request.getEmail());
+    public CompanyUserDetailsResponse updateUser(CompanyUserSaveRequest request, String token) {
+        String email = ExtractFromToken.email(token);
+
+        CompanyUser userToUpdate = companyUserBusinessRules.checkUserExistByEmail(email);
+        companyUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
+        companyUserBusinessRules.checkPasswordValid(request.getPassword());
 
         CompanyUser updatedUser = CompanyUserConverter.toUpdatedCompanyUser(userToUpdate, request);
         companyUserRepository.save(updatedUser);
@@ -123,13 +122,12 @@ public class CompanyUserService {
         return CompanyUserConverter.toCompanyUserDetailsResponse(updatedUser);
     }
 
-    public void changePassword(UserPasswordChangeRequest request) {
-        String email = request.getEmail();
+    public void changePassword(UserPasswordChangeRequest request, String token) {
+        String email = ExtractFromToken.email(token);
         String password = request.getPassword();
 
-        companyUserBusinessRules.checkPasswordValid(password);
-
         CompanyUser user = companyUserBusinessRules.checkUserExistByEmail(email);
+        companyUserBusinessRules.checkPasswordValid(password);
 
         user.setPassword(password);
         companyUserRepository.save(user);

@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "payment-service", url = "localhost:9069/api/v1/payments")
+@FeignClient(name = "${payment-service.name}", url = "${payment-service.url}")
 public interface PaymentClient {
 
     @PostMapping("/process-and-send-queue")

@@ -30,11 +30,11 @@ public class AdminUserController {
         return GenericResponse.success(adminUserService.getAllUsers(page, size), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/profile")
     @Operation(summary = "Get admin user by id", description = "Get admin user by id, only for admin users, and " +
             "admin user can get only his/her own information")
-    public GenericResponse<AdminUserDetailsResponse> getUserById(@PathVariable Long id) {
-        return GenericResponse.success(adminUserService.getUserById(id), HttpStatus.OK);
+    public GenericResponse<AdminUserDetailsResponse> getUserById(@RequestHeader("Authorization") String token) {
+        return GenericResponse.success(adminUserService.getUserByToken(token), HttpStatus.OK);
     }
 
     @GetMapping("/by-email/{email}")
@@ -50,18 +50,20 @@ public class AdminUserController {
         return GenericResponse.success(adminUserService.getHowManyUsers(), HttpStatus.OK);
     }
 
-    @PostMapping("/update")
+    @PostMapping("/update/profile")
     @Operation(summary = "Update admin user", description = "Update admin user with given user information, " +
             "only for admin users")
-    public GenericResponse<AdminUserDetailsResponse> updateUser(@RequestBody AdminUserSaveRequest request) {
-        return GenericResponse.success(adminUserService.updateUser(request), HttpStatus.OK);
+    public GenericResponse<AdminUserDetailsResponse> updateUser(@RequestBody AdminUserSaveRequest request,
+                                                                @RequestHeader("Authorization") String token) {
+        return GenericResponse.success(adminUserService.updateUser(request, token), HttpStatus.OK);
     }
 
     @PutMapping("/change-password")
     @Operation(summary = "Change admin user password", description = "Change password of admin user with given email, " +
             "only for admin users")
-    public GenericResponse<Void> changePassword(@RequestBody UserPasswordChangeRequest request) {
-        adminUserService.changePassword(request);
+    public GenericResponse<Void> changePassword(@RequestBody UserPasswordChangeRequest request,
+                                                @RequestHeader("Authorization") String token) {
+        adminUserService.changePassword(request, token);
         return GenericResponse.success(null, HttpStatus.OK);
     }
 

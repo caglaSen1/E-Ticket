@@ -17,6 +17,7 @@ import com.ftbootcamp.eticketuserservice.producer.rabbitmq.enums.NotificationTyp
 import com.ftbootcamp.eticketuserservice.repository.AdminUserRepository;
 import com.ftbootcamp.eticketuserservice.rules.AdminUserBusinessRules;
 import com.ftbootcamp.eticketuserservice.rules.RoleBusinessRules;
+import com.ftbootcamp.eticketuserservice.util.ExtractFromToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -42,8 +43,9 @@ public class AdminUserService {
         return AdminUserConverter.toAdminUserPaginatedResponse(adminUserRepository.findAll(pageRequest));
     }
 
-    public AdminUserDetailsResponse getUserById(Long id) {
-        return AdminUserConverter.toAdminUserDetailsResponse(adminUserBusinessRules.checkUserExistById(id));
+    public AdminUserDetailsResponse getUserByToken(String token) {
+        String email = ExtractFromToken.email(token);
+        return AdminUserConverter.toAdminUserDetailsResponse(adminUserBusinessRules.checkUserExistByEmail(email));
     }
 
     public AdminUserDetailsResponse getUserByEmail(String email) {
@@ -54,12 +56,12 @@ public class AdminUserService {
         return (int) adminUserRepository.count();
     }
 
-    public AdminUserDetailsResponse updateUser(AdminUserSaveRequest request){
+    public AdminUserDetailsResponse updateUser(AdminUserSaveRequest request, String token){
+        String email = ExtractFromToken.email(token);
 
-        AdminUser userToUpdate = adminUserBusinessRules.checkUserExistByEmail(request.getEmail());
-
+        AdminUser userToUpdate = adminUserBusinessRules.checkUserExistByEmail(email);
         adminUserBusinessRules.checkEmailAlreadyExist(request.getEmail());
-        // TODO: Other validations
+        adminUserBusinessRules.checkPasswordValid(request.getPassword());
 
         AdminUser adminUserToUpdate = AdminUserConverter.toUpdatedAdminUser(userToUpdate, request);
         adminUserRepository.save(adminUserToUpdate);
@@ -67,13 +69,12 @@ public class AdminUserService {
         return AdminUserConverter.toAdminUserDetailsResponse(adminUserToUpdate);
     }
 
-    public void changePassword(UserPasswordChangeRequest request) {
-        String email = request.getEmail();
+    public void changePassword(UserPasswordChangeRequest request, String token) {
+        String email = ExtractFromToken.email(token);
         String password = request.getPassword();
 
-        adminUserBusinessRules.checkPasswordValid(password);
-
         AdminUser user = adminUserBusinessRules.checkUserExistByEmail(email);
+        adminUserBusinessRules.checkPasswordValid(password);
 
         user.setPassword(password);
         adminUserRepository.save(user);

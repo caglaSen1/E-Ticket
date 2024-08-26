@@ -18,4 +18,5 @@ public class ExceptionMessages {
     public static final String TICKET_ALREADY_SOLD = "Ticket already sold";
     public static final String TICKET_EXPIRED = "Ticket expired";
     public static final String TICKET_NOT_AVAILABLE = "Ticket is not available";
+    public static final String CAN_NOT_ACCESS_THIS_PROFILE = "You can not access this profile";
 }

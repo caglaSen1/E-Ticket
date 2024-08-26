@@ -9,6 +9,7 @@ import com.ftbootcamp.eticketauthservice.entity.concrete.CompanyUser;
 import com.ftbootcamp.eticketauthservice.entity.concrete.IndividualUser;
 import com.ftbootcamp.eticketauthservice.entity.concrete.Role;
 import com.ftbootcamp.eticketauthservice.entity.constant.RoleEntityConstants;
+import com.ftbootcamp.eticketauthservice.exception.ExceptionMessages;
 import com.ftbootcamp.eticketauthservice.model.CustomUser;
 import com.ftbootcamp.eticketauthservice.producer.kafka.KafkaProducer;
 import com.ftbootcamp.eticketauthservice.producer.kafka.Log;
@@ -22,8 +23,9 @@ import com.ftbootcamp.eticketauthservice.rules.RegistrationRules;
 import com.ftbootcamp.eticketauthservice.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.common.network.Send;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -48,15 +50,19 @@ public class AuthService {
     private final JwtUtil jwtUtil;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
     public String login(UserLoginRequest request) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+            );
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-        );
+            CustomUser user = (CustomUser) authentication.getPrincipal();
 
-        CustomUser user = (CustomUser) authentication.getPrincipal();
-
-        return jwtUtil.generateToken(user);
+            return jwtUtil.generateToken(user);
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException(ExceptionMessages.INVALID_USERNAME_OR_PASSWORD);
+        }
     }
 
     public void registerAdmin(AdminUserSaveRequest request) {
@@ -136,8 +142,8 @@ public class AuthService {
         request.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
 
         // Create User
-        IndividualUser createdUser = new IndividualUser(request.getEmail(), request.getPhoneNumber(), request.getPassword(),
-                request.getFirstName(), request.getLastName(), request.getNationalId(), request.getBirthDate(),
+        IndividualUser createdUser = new IndividualUser(request.getEmail(), request.getPhoneNumber(),
+                request.getPassword(), request.getFirstName(), request.getLastName(), request.getNationalId(), request.getBirthDate(),
                 request.getGender());
 
         // Add default role to individual user (USER, INDIVIDUAL_USER)

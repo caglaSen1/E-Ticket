@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "${user-service.name}", url = "${user-service.url}")
 public interface UserClient {
 
-    @GetMapping("/{id}")
-    GenericResponse<UserDetailsResponse> getUserById(@PathVariable Long id);
+    @GetMapping("/by-email/{email}")
+    GenericResponse<UserDetailsResponse> getUserByEmail(@PathVariable String email);
 }

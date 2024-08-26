@@ -18,7 +18,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping()
+    @GetMapping("/all")
     @Operation(summary = "Get all users", description = "Get all users, authorized for admin users only")
     public GenericResponse<UserSummaryPaginatedResponse> getAllUsers(@RequestParam(defaultValue = "0") int page,
                                                                      @RequestParam(defaultValue = "10") int size) {

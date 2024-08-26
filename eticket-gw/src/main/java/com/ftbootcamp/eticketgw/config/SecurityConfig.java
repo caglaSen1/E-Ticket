@@ -46,23 +46,24 @@ public class SecurityConfig {
     };
 
     private static final String[] AUTH_WHITELIST_CORPORATE_USER = {
-            "/api/v1/users/company-users/{id}", "/api/v1/users/company-users/update",
+            "/api/v1/users/company-users/profile", "/api/v1/users/company-users/update/profile",
             "/api/v1/users/company-users/change-password"
     };
     private static final String[] AUTH_WHITELIST_ADMIN = {
             "/api/v1/users/{dynamicSegment}/admin-panel/**",
+            "/api/v1/users/admin-panel/**",
             "/api/v1/roles/admin-panel/**",
             "/api/v1/payments/admin-panel/**",
             "/api/v1/tickets/admin-panel/**",
             "/api/v1/trips/admin-panel/**"
     };
     private static final String[] AUTH_WHITELIST_INDIVIDUAL_USER = {
-            "/api/v1/users/individual-users/{id}", "/api/v1/users/individual-users/update",
+            "/api/v1/users/individual-users/profile", "/api/v1/users/individual-users/update/profile",
             "/api/v1/users/individual-users/change-password"
     };
     private static final String[] AUTH_WHITELIST_INDIVIDUAL_CORPORATE_USERS = {
             "/api/v1/tickets/buy", "/api/v1/tickets/buy-multiple",
-            "/api/v1/tickets/buyer/all/{email}", "/api/v1/tickets/trips/{tripId}/all-available",
+            "/api/v1/tickets/buyer/profile/all", "/api/v1/tickets/trips/{tripId}/all-available",
             "/api/v1/trips/all-available"
     };
 

@@ -18,4 +18,10 @@ public class GlobalExceptionHandler {
         kafkaProducer.sendExceptionLogMessage(new Log(e.getMessage()));
         return GenericResponse.failed(e.getMessage());
     }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public GenericResponse handleBadCredentialsException(BadCredentialsException e){
+        kafkaProducer.sendExceptionLogMessage(new Log(e.getMessage()));
+        return GenericResponse.failed(e.getMessage());
+    }
 }
