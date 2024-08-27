@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class TicketResponse {
+public class TicketResponse implements java.io.Serializable{
 
     private TripResponse trip;
     private String seatNo;

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @ToString
-public class TripResponse {
+public class TripResponse implements java.io.Serializable{
 
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;

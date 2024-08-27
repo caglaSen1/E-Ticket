@@ -58,3 +58,9 @@ services:
     ports:
       - "9200:9200"
       - "9400:9400"
+
+  redis:
+    image: redis:7-alpine
+    container_name: eticket-redis
+    ports:
+      - "6379:6379"

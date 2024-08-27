@@ -29,8 +29,14 @@ import com.ftbootcamp.eticketservice.utils.ExtractFromToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.protocol.types.Field;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -167,7 +173,9 @@ public class TicketService {
         return TicketConverter.toTicketResponse(ticketBusinessRules.checkTicketExistById(id));
     }
 
+    @Cacheable(value = "tickets", cacheNames = "tickets")
     public List<TicketResponse> getAllTickets() {
+        log.info("datadan alındı");
         return TicketConverter.toTicketResponseList(ticketRepository.findAll());
     }
 
@@ -227,6 +235,10 @@ public class TicketService {
         });
     }
 
+    // Redis
+    @CacheEvict(cacheNames = "tickets", allEntries = true)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackForClassName = {"ETicketException.class"},
+            rollbackFor = SQLException.class)
     public void generateTicketsForTrip(Trip trip) {
         for (int i = 1; i <= trip.getTotalTicketCount(); i++) {
 
