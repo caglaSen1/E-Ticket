@@ -173,7 +173,7 @@ public class TicketService {
         return TicketConverter.toTicketResponse(ticketBusinessRules.checkTicketExistById(id));
     }
 
-    @Cacheable(value = "tickets", cacheNames = "tickets")
+    //@Cacheable(value = "tickets", cacheNames = "tickets")
     public List<TicketResponse> getAllTickets() {
         log.info("datadan alındı");
         return TicketConverter.toTicketResponseList(ticketRepository.findAll());
@@ -236,9 +236,9 @@ public class TicketService {
     }
 
     // Redis
-    @CacheEvict(cacheNames = "tickets", allEntries = true)
-    @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackForClassName = {"ETicketException.class"},
-            rollbackFor = SQLException.class)
+    //@CacheEvict(cacheNames = "tickets", allEntries = true)
+    //@Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackForClassName = {"ETicketException.class"},
+            //rollbackFor = SQLException.class)
     public void generateTicketsForTrip(Trip trip) {
         for (int i = 1; i <= trip.getTotalTicketCount(); i++) {
 

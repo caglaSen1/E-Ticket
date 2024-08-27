@@ -8,7 +8,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableDiscoveryClient
 @EnableFeignClients
-@EnableCaching
 @SpringBootApplication
 public class EticketServiceApplication {
 
