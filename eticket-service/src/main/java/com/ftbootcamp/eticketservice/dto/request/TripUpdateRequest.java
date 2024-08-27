@@ -32,7 +32,5 @@ public class TripUpdateRequest {
     @NotNull(message = "Vehicle type is mandatory")
     private VehicleType vehicleType;
 
-    private int totalTicketCount;
-
     private double price;
 }

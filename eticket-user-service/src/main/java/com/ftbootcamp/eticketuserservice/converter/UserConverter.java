@@ -55,6 +55,8 @@ public class UserConverter {
             userDetailsResponse.setFirstName(individual.getFirstName());
             userDetailsResponse.setLastName(individual.getLastName());
             userDetailsResponse.setBirthDate(individual.getBirthDate());
+            userDetailsResponse.setUserType(individual.getUserType());
+            userDetailsResponse.setStatusType(individual.getStatusType());
             userDetailsResponse.setGender(individual.getGender());
             userDetailsResponse.setInstanceOf(RoleEntityConstants.INDIVIDUAL_USER_ROLE_NAME);
         } else if (user instanceof AdminUser admin) {
@@ -65,6 +67,8 @@ public class UserConverter {
         } else if (user instanceof CompanyUser company) {
             userDetailsResponse.setCompanyName(company.getCompanyName());
             userDetailsResponse.setTaxNumber(company.getTaxNumber());
+            userDetailsResponse.setUserType(company.getUserType());
+            userDetailsResponse.setStatusType(company.getStatusType());
             userDetailsResponse.setInstanceOf(RoleEntityConstants.COMPANY_USER_ROLE_NAME);
         }
 

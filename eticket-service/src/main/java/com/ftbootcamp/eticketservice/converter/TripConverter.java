@@ -41,9 +41,6 @@ public class TripConverter {
         if(request.getVehicleType() != null) {
             trip.setVehicleType(request.getVehicleType());
         }
-        if(request.getTotalTicketCount() != 0) {
-            trip.setTotalTicketCount(request.getTotalTicketCount());
-        }
         if(request.getPrice() != 0) {
             trip.setPrice(request.getPrice());
         }

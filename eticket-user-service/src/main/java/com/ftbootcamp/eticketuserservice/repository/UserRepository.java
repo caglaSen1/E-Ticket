@@ -1,9 +1,7 @@
 package com.ftbootcamp.eticketuserservice.repository;
 
 import com.ftbootcamp.eticketuserservice.entity.abstracts.User;
-import com.ftbootcamp.eticketuserservice.entity.concrete.IndividualUser;
-import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
-import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
+import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,4 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             + "LEFT JOIN FETCH CompanyUser c ON u.id = c.id "
             + "WHERE u.email = :email")
     Optional<User> findUserWithDetailsByEmail(@Param("email") String email);
+
+    @Query("SELECT u FROM User u WHERE :role MEMBER u.roles")
+    List<User> findAllOfRole(Role role);
 }

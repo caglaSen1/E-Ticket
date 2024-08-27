@@ -54,7 +54,7 @@ public class TicketController {
     @GetMapping("/admin-panel/buyer/all/{email}")
     @Operation(summary = "Get all tickets of buyer with email", description = "Only admin can get all tickets by email.")
     public GenericResponse<List<TicketResponse>> getAllTicketsOfBuyerByEmail(@PathVariable String email) {
-        return GenericResponse.success(ticketService.getAllTicketsOfBuyer(email), HttpStatus.OK);
+        return GenericResponse.success(ticketService.getAllTicketsOfBuyerByEmail(email), HttpStatus.OK);
     }
 
     @GetMapping("/buyer/profile/all/")

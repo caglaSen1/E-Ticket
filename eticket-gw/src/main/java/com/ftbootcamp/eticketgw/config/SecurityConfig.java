@@ -45,7 +45,7 @@ public class SecurityConfig {
             "/swagger-ui/**", "/v3/api-docs/**"
     };
 
-    private static final String[] AUTH_WHITELIST_CORPORATE_USER = {
+    private static final String[] AUTH_WHITELIST_COMPANY_USER = {
             "/api/v1/users/company-users/profile", "/api/v1/users/company-users/update/profile",
             "/api/v1/users/company-users/change-password"
     };
@@ -63,7 +63,7 @@ public class SecurityConfig {
             "/api/v1/users/individual-users/profile", "/api/v1/users/individual-users/update/profile",
             "/api/v1/users/individual-users/change-password"
     };
-    private static final String[] AUTH_WHITELIST_INDIVIDUAL_CORPORATE_USERS = {
+    private static final String[] AUTH_WHITELIST_INDIVIDUAL_COMPANY_USERS = {
             "/api/v1/tickets/buy", "/api/v1/tickets/buy-multiple",
             "/api/v1/tickets/buyer/profile/all", "/api/v1/tickets/trips/{tripId}/all-available",
             "/api/v1/trips/all-available", "/api/v1/search/trips",
@@ -78,10 +78,10 @@ public class SecurityConfig {
                                 .pathMatchers(AUTH_WHITELIST_DENY_ALL).denyAll()
                                 .pathMatchers(AUTH_WHITELIST_PERMIT_ALL).permitAll()
                                 .pathMatchers(AUTH_WHITELIST_ADMIN).hasRole("ADMIN")
-                                .pathMatchers(AUTH_WHITELIST_CORPORATE_USER).hasRole("CORPORATE_USER")
+                                .pathMatchers(AUTH_WHITELIST_COMPANY_USER).hasRole("COMPANY_USER")
                                 .pathMatchers(AUTH_WHITELIST_INDIVIDUAL_USER).hasRole("INDIVIDUAL_USER")
-                                .pathMatchers(AUTH_WHITELIST_INDIVIDUAL_CORPORATE_USERS)
-                                .hasAnyRole("INDIVIDUAL_USER", "CORPORATE_USER")
+                                .pathMatchers(AUTH_WHITELIST_INDIVIDUAL_COMPANY_USERS)
+                                .hasAnyRole("INDIVIDUAL_USER", "COMPANY_USER")
 
                                 .anyExchange().authenticated()
                 )

@@ -123,7 +123,6 @@ public class TripService {
 
         tripBusinessRules.checkIfThereAreAnySoldTickets(tripToUpdate.getId());
         tripBusinessRules.checkArrivalTimeValid(request.getDepartureTime(), request.getArrivalTime());
-        tripBusinessRules.checkTotalTicketCountValid(request.getTotalTicketCount());
         tripBusinessRules.checkPriceValid(request.getPrice());
 
         Trip updatedTrip = TripConverter.toUpdatedTripEntity(tripToUpdate, request);

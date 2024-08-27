@@ -140,7 +140,7 @@ public class CompanyUserService {
         CompanyUser user = companyUserBusinessRules.checkUserExistByEmail(request.getEmail());
         Role role = roleBusinessRules.checkRoleExistByName(request.getRoleName());
 
-        roleBusinessRules.checkRoleToAddOrRemoveIsDefault(role.getName());
+        roleBusinessRules.checkRoleIsDefault(role.getName());
 
         user.getRoles().add(role);
 
@@ -155,7 +155,7 @@ public class CompanyUserService {
         CompanyUser user = companyUserBusinessRules.checkUserExistByEmail(request.getEmail());
         Role role = roleBusinessRules.checkRoleExistByName(request.getRoleName());
 
-        roleBusinessRules.checkRoleToAddOrRemoveIsDefault(role.getName());
+        roleBusinessRules.checkRoleIsDefault(role.getName());
 
         user.getRoles().remove(role);
 

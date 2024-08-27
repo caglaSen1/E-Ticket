@@ -171,6 +171,10 @@ public class TicketService {
         return TicketConverter.toTicketResponseList(ticketRepository.findAll());
     }
 
+    public List<TicketResponse> getAllTicketsOfBuyerByEmail(String email) {
+        return TicketConverter.toTicketResponseList(ticketRepository.findAllByUserEmail(email));
+    }
+
     public List<TicketResponse> getAllTicketsOfBuyer(String token) {
         String email = ExtractFromToken.email(token);
         return TicketConverter.toTicketResponseList(ticketRepository.findAllByUserEmail(email));

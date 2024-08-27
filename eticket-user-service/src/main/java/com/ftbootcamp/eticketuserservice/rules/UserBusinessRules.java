@@ -1,8 +1,6 @@
 package com.ftbootcamp.eticketuserservice.rules;
 
-import com.ftbootcamp.eticketuserservice.entity.abstracts.User;
 import com.ftbootcamp.eticketuserservice.entity.constant.UserEntityConstants;
-import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
 import com.ftbootcamp.eticketuserservice.exception.ETicketException;
 import com.ftbootcamp.eticketuserservice.exception.ExceptionMessages;
 import com.ftbootcamp.eticketuserservice.repository.UserRepository;
@@ -39,20 +37,16 @@ public class UserBusinessRules {
         }
     }
 
-    public User checkUserExistById(long id) {
+    public void checkUserExistById(long id) {
         if (userRepository.findById(id).isEmpty()) {
             throw new ETicketException(ExceptionMessages.USER_NOT_FOUND + " Id: " + id);
         }
-
-        return userRepository.findById(id).get();
     }
 
-    public User checkUserExistByEmail(String email) {
+    public void checkUserExistByEmail(String email) {
         if (userRepository.findByEmail(email).isEmpty()) {
             throw new ETicketException(ExceptionMessages.USER_NOT_FOUND + " Email: " + email);
         }
-
-        return userRepository.findByEmail(email).get();
     }
 
     /*

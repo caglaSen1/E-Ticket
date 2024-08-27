@@ -1,6 +1,7 @@
 package com.ftbootcamp.eticketuserservice.repository;
 
 import com.ftbootcamp.eticketuserservice.entity.concrete.IndividualUser;
+import com.ftbootcamp.eticketuserservice.entity.concrete.Role;
 import com.ftbootcamp.eticketuserservice.entity.enums.StatusType;
 import com.ftbootcamp.eticketuserservice.entity.enums.UserType;
 import org.springframework.data.domain.Page;
