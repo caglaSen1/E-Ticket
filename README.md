@@ -2,6 +2,11 @@
 
 Online uçak ve otobüs bileti satış uygulaması.
 
+
+## Kullanılan teknolojiler:
+- Kafka, RabbitMQ, PostgreSQL, MongoDB, Elasticsearch, Redis
+
+
 ## Servisler: 
 
 ### ETICKET-SERVICE-DISCOVERY: 
@@ -36,9 +41,6 @@ Payment varlığını içerir. PostgreSQL “paymentdb” veri tabanına bağlı
 
 ---------
 
-## Kullanılan teknolojiler:
-- Kafka, RabbitMQ, PostgreSQL, MongoDB, Elasticsearch, Redis
-
 ## Projenin çalıştırılması:
 
 1) Docker Desktop uygulamanız yok ise lütfen önce onun kurulumunu gerçekleştirin.
@@ -57,7 +59,9 @@ Payment varlığını içerir. PostgreSQL “paymentdb” veri tabanına bağlı
 
   “notificationdb” adında bir veri tabanı oluşturup altına “emails”, “push_notifications” ve “sms” dokümanları oluşturmalısınız.
 
-4) Sonrasında ETICKET-SERVICE-DISCOVERY, ETICKET-GW ve ETICKET-AUTH-SERVICE servisleri ile başlayarak projeyi ayağa kaldırabilirsiniz.
+4) Sonrasında ETICKET-SERVICE-DISCOVERY, ETICKET-GW ve ETICKET-AUTH-SERVICE servisleri ile başlayarak tüm servisleri ayağa kaldırabilirsiniz.
+   
+5) ([Postman Collection json dosyasını](https://github.com/caglaSen1/E-Ticket/blob/c9f5d4b4e40586d224f1ce2acb6e09adc482f31f/E-Ticket.postman_collection.json)) indirip postman uygulamanıza yükleyerek projeyi deneyebilirsiniz.
 
 ------------
 
