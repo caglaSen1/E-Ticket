@@ -1,0 +1,3138 @@
+{
+	"info": {
+		"_postman_id": "39525180-37ea-456e-b790-b0141475608c",
+		"name": "E-Ticket",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26949175"
+	},
+	"item": [
+		{
+			"name": "eticket-user-service",
+			"item": [
+				{
+					"name": "Role",
+					"item": [
+						{
+							"name": "Admin_Panel",
+							"item": [
+								{
+									"name": "Add Role",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDcwMjA2OCwiZXhwIjoxNzI0NzM4MDY4fQ.51Gz4LCM09RxQwyFoIREzFYHN7NExn5xGjXd_-xZ6RA",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"TEST\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:9090/api/v1/roles/admin-panel",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"admin-panel"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Role By Id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDcwMjA2OCwiZXhwIjoxNzI0NzM4MDY4fQ.51Gz4LCM09RxQwyFoIREzFYHN7NExn5xGjXd_-xZ6RA",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/roles/admin-panel/3",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"admin-panel",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Role By Name",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDcwMjA2OCwiZXhwIjoxNzI0NzM4MDY4fQ.51Gz4LCM09RxQwyFoIREzFYHN7NExn5xGjXd_-xZ6RA",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/roles/admin-panel/by-name/test",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"admin-panel",
+												"by-name",
+												"test"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Role",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDcwMjA2OCwiZXhwIjoxNzI0NzM4MDY4fQ.51Gz4LCM09RxQwyFoIREzFYHN7NExn5xGjXd_-xZ6RA",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 2,\r\n    \"name\": \"new\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:9090/api/v1/roles/admin-panel/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"admin-panel",
+												"update"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Role By Id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDcwMjA2OCwiZXhwIjoxNzI0NzM4MDY4fQ.51Gz4LCM09RxQwyFoIREzFYHN7NExn5xGjXd_-xZ6RA",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/roles/admin-panel/3",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"roles",
+												"admin-panel",
+												"3"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Admin_Panel",
+							"item": [
+								{
+									"name": "Get All Users",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDcwMjA2OCwiZXhwIjoxNzI0NzM4MDY4fQ.51Gz4LCM09RxQwyFoIREzFYHN7NExn5xGjXd_-xZ6RA",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/admin-panel/all?page=0&size=5",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"admin-panel",
+												"all"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "0"
+												},
+												{
+													"key": "size",
+													"value": "5"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get User By Id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDcwMjA2OCwiZXhwIjoxNzI0NzM4MDY4fQ.51Gz4LCM09RxQwyFoIREzFYHN7NExn5xGjXd_-xZ6RA",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/admin-panel/6",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"admin-panel",
+												"6"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get User By Email",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MTQsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwic3ViIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNzI0NzA3NDI3LCJleHAiOjE3MjQ3NDM0Mjd9.ugND69LuMh5hw2B-0tdUOVepIfxeGyElVBJ1w6Lo01s",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/admin-panel/by-email/individual@gmail.com",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"admin-panel",
+												"by-email",
+												"individual@gmail.com"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get How Many Users",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MTQsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwic3ViIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNzI0NzA3NDI3LCJleHAiOjE3MjQ3NDM0Mjd9.ugND69LuMh5hw2B-0tdUOVepIfxeGyElVBJ1w6Lo01s",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/admin-panel/count",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"admin-panel",
+												"count"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Individual User",
+					"item": [
+						{
+							"name": "Admin-Panel",
+							"item": [
+								{
+									"name": "Get All Individual Users",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDcwMjA2OCwiZXhwIjoxNzI0NzM4MDY4fQ.51Gz4LCM09RxQwyFoIREzFYHN7NExn5xGjXd_-xZ6RA",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/individual-users/admin-panel/all?page=0&size",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"individual-users",
+												"admin-panel",
+												"all"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "0"
+												},
+												{
+													"key": "size",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Individual User By Email",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6OCwiZW1haWwiOiJhZG1pbjVAZ21haWwuY29tIiwic3ViIjoiYWRtaW41QGdtYWlsLmNvbSIsImlhdCI6MTcyNDY5Mjk4NSwiZXhwIjoxNzI0NzI4OTg1fQ.K_rp-Z1DYTzK64lYXiOSOb2dWAL_BUTaVEYJQr7dTxk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/individual-users/admin-panel/individual@gmail.com",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"individual-users",
+												"admin-panel",
+												"individual@gmail.com"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Individual Users By Type List",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDcwMjA2OCwiZXhwIjoxNzI0NzM4MDY4fQ.51Gz4LCM09RxQwyFoIREzFYHN7NExn5xGjXd_-xZ6RA",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/individual-users/admin-panel/by-type?page&size&typeList=PREMIUM,STANDARD",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"individual-users",
+												"admin-panel",
+												"by-type"
+											],
+											"query": [
+												{
+													"key": "typeList",
+													"value": "",
+													"disabled": true
+												},
+												{
+													"key": "page",
+													"value": null
+												},
+												{
+													"key": "size",
+													"value": null
+												},
+												{
+													"key": "typeList",
+													"value": "PREMIUM,STANDARD",
+													"description": "PREMIUM, STANDARD"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Individual Users By Status List",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDcwMjA2OCwiZXhwIjoxNzI0NzM4MDY4fQ.51Gz4LCM09RxQwyFoIREzFYHN7NExn5xGjXd_-xZ6RA",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/individual-users/admin-panel/by-status?statusList=WAITING_APPROVAL,APPROVED&page&size",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"individual-users",
+												"admin-panel",
+												"by-status"
+											],
+											"query": [
+												{
+													"key": "statusList",
+													"value": "WAITING_APPROVAL,APPROVED"
+												},
+												{
+													"key": "page",
+													"value": null
+												},
+												{
+													"key": "size",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get How Many Users",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDcwMjA2OCwiZXhwIjoxNzI0NzM4MDY4fQ.51Gz4LCM09RxQwyFoIREzFYHN7NExn5xGjXd_-xZ6RA",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/individual-users/admin-panel/count",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"individual-users",
+												"admin-panel",
+												"count"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Change Individual User Status",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6OCwiZW1haWwiOiJhZG1pbjVAZ21haWwuY29tIiwic3ViIjoiYWRtaW41QGdtYWlsLmNvbSIsImlhdCI6MTcyNDY5Mjk4NSwiZXhwIjoxNzI0NzI4OTg1fQ.K_rp-Z1DYTzK64lYXiOSOb2dWAL_BUTaVEYJQr7dTxk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/individual-users/admin-panel/individual@gmail.com/APPROVED?statusType=APPROVED",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"individual-users",
+												"admin-panel",
+												"individual@gmail.com",
+												"APPROVED"
+											],
+											"query": [
+												{
+													"key": "statusType",
+													"value": "APPROVED"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Change Individual User Status Bulk",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDcwMjA2OCwiZXhwIjoxNzI0NzM4MDY4fQ.51Gz4LCM09RxQwyFoIREzFYHN7NExn5xGjXd_-xZ6RA",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10,\r\n    \"emailList\": [\r\n        \"individual3@gmail.com\", \r\n        \"individual2@gmail.com\"\r\n    ],\r\n    \"statusType\": \"APPROVED\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/individual-users/admin-panel/status-bulk",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"individual-users",
+												"admin-panel",
+												"status-bulk"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add Role To User",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6OCwiZW1haWwiOiJhZG1pbjVAZ21haWwuY29tIiwic3ViIjoiYWRtaW41QGdtYWlsLmNvbSIsImlhdCI6MTcyNDY5Mjk4NSwiZXhwIjoxNzI0NzI4OTg1fQ.K_rp-Z1DYTzK64lYXiOSOb2dWAL_BUTaVEYJQr7dTxk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"individual@gmail.com\",\r\n    \"roleName\": \"test\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/individual-users/admin-panel/add-role",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"individual-users",
+												"admin-panel",
+												"add-role"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove Role From User",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0lORElWSURVQUxfVVNFUiIsIlJPTEVfVVNFUiJdLCJ1c2VySWQiOjQ5LCJlbWFpbCI6ImluZEBnbWFpbC5jb20iLCJzdWIiOiJpbmRAZ21haWwuY29tIiwiaWF0IjoxNzI0NjA0MTc3LCJleHAiOjE3MjQ2NDAxNzd9.eqY4P1JfA-ls08u_dybIJg8aUYRKv2QOFdB1NHoWJq4",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"irem@gmail.com\",\r\n    \"roleName\": \"deneme\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/individual-users/admin-panel/remove-role",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"individual-users",
+												"admin-panel",
+												"remove-role"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get User Roles",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6OCwiZW1haWwiOiJhZG1pbjVAZ21haWwuY29tIiwic3ViIjoiYWRtaW41QGdtYWlsLmNvbSIsImlhdCI6MTcyNDY5Mjk4NSwiZXhwIjoxNzI0NzI4OTg1fQ.K_rp-Z1DYTzK64lYXiOSOb2dWAL_BUTaVEYJQr7dTxk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/individual-users/admin-panel/individual@gmail.com",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"individual-users",
+												"admin-panel",
+												"individual@gmail.com"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get User Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0lORElWSURVQUxfVVNFUiIsIlJPTEVfVVNFUiJdLCJ1c2VySWQiOjksImVtYWlsIjoiaW5kaXZpZHVhbDRAZ21haWwuY29tIiwic3ViIjoiaW5kaXZpZHVhbDRAZ21haWwuY29tIiwiaWF0IjoxNzI0NzExMDgxLCJleHAiOjE3MjQ3NDcwODF9.2Vj977qAgH6dngaz44_xKl8zpZowcaDtooYWpvMWusI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/individual-users/profile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"individual-users",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0lORElWSURVQUxfVVNFUiIsIlJPTEVfVVNFUiJdLCJ1c2VySWQiOjksImVtYWlsIjoiaW5kaXZpZHVhbDRAZ21haWwuY29tIiwic3ViIjoiaW5kaXZpZHVhbDRAZ21haWwuY29tIiwiaWF0IjoxNzI0NzExMDgxLCJleHAiOjE3MjQ3NDcwODF9.2Vj977qAgH6dngaz44_xKl8zpZowcaDtooYWpvMWusI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"individuall@gmail.com\",\n    \"phoneNumber\": \"12345678\",\n    \"password\": \"deneme\",\n    \"firstName\": \"Çağla\",\n    \"lastName\": \"Şen\",\n    \"nationalId\": \"12345678\",\n    \"birthDate\": \"2024-08-18T09:02:28\",\n    \"gender\": \"FEMALE\"\n    \n}"
+								},
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/individual-users/update/profile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"individual-users",
+										"update",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Change Password",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0lORElWSURVQUxfVVNFUiIsIlJPTEVfVVNFUiJdLCJ1c2VySWQiOjksImVtYWlsIjoiaW5kaXZpZHVhbDRAZ21haWwuY29tIiwic3ViIjoiaW5kaXZpZHVhbDRAZ21haWwuY29tIiwiaWF0IjoxNzI0NzExMDgxLCJleHAiOjE3MjQ3NDcwODF9.2Vj977qAgH6dngaz44_xKl8zpZowcaDtooYWpvMWusI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\": \"newpassword\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/individual-users/change-password",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"individual-users",
+										"change-password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Company User",
+					"item": [
+						{
+							"name": "Admin_Panel",
+							"item": [
+								{
+									"name": "Get All Company Users",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/company-users/admin-panel/all",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"company-users",
+												"admin-panel",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Company User By Email",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/company-users/admin-panel/company@gmail.com",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"company-users",
+												"admin-panel",
+												"company@gmail.com"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Company Users By Status List",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/company-users/admin-panel/by-status?page&size&statusList=WAITING_APPROVAL,APPROVED",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"company-users",
+												"admin-panel",
+												"by-status"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": null
+												},
+												{
+													"key": "size",
+													"value": null
+												},
+												{
+													"key": "statusList",
+													"value": "WAITING_APPROVAL,APPROVED"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Company Users By Type List",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/company-users/admin-panel/by-type?typeList=PREMIUM,STANDARD&page&size",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"company-users",
+												"admin-panel",
+												"by-type"
+											],
+											"query": [
+												{
+													"key": "typeList",
+													"value": "PREMIUM,STANDARD"
+												},
+												{
+													"key": "page",
+													"value": null
+												},
+												{
+													"key": "size",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get How Many Company Users",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/company-users/admin-panel/count",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"company-users",
+												"admin-panel",
+												"count"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Change Company User Status",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/company-users/admin-panel/company@gmail.com/APPROVED",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"company-users",
+												"admin-panel",
+												"company@gmail.com",
+												"APPROVED"
+											],
+											"query": [
+												{
+													"key": "statusType",
+													"value": "string",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Change Company User Status Bulk",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10,\r\n    \"emailList\": [\"company@gmail.com\"],\r\n    \"statusType\": \"APPROVED\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/company-users/admin-panel/status-bulk",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"company-users",
+												"admin-panel",
+												"status-bulk"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add Role To User",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"company@gmail.com\",\r\n    \"roleName\": \"test\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/company-users/admin-panel//add-role",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"company-users",
+												"admin-panel",
+												"",
+												"add-role"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove Role From User",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"company@gmail.com\",\r\n    \"roleName\": \"Company_user\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/company-users/admin-panel/remove-role",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"company-users",
+												"admin-panel",
+												"remove-role"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get User Roles",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/users/company-users/admin-panel/roles/company@gmail.com",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"company-users",
+												"admin-panel",
+												"roles",
+												"company@gmail.com"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get Company User Logged In",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/company-users/profile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"company-users",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Company User Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"aaaaxa@gmail.com\",\n    \"phoneNumber\": \"123456\",\n\t\"password\": \"dcweveevwwev\",\n    \"companyName\": \"Company\",\n    \"taxNumber\": 12345\n}"
+								},
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/company-users/update/profile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"company-users",
+										"update",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Change Password",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\": \"12trtrtbr3\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/company-users/change-password",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"company-users",
+										"change-password"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Admin User",
+					"item": [
+						{
+							"name": "Get All Admin Users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0lORElWSURVQUxfVVNFUiIsIlJPTEVfVVNFUiJdLCJ1c2VySWQiOjksImVtYWlsIjoiaW5kaXZpZHVhbDRAZ21haWwuY29tIiwic3ViIjoiaW5kaXZpZHVhbDRAZ21haWwuY29tIiwiaWF0IjoxNzI0NzExMDgxLCJleHAiOjE3MjQ3NDcwODF9.2Vj977qAgH6dngaz44_xKl8zpZowcaDtooYWpvMWusI",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/admin-users/admin-panel/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"admin-users",
+										"admin-panel",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Admin User Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NiwiZW1haWwiOiJhZG1pbjNAZ21haWwuY29tIiwic3ViIjoiYWRtaW4zQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY1NjgzNCwiZXhwIjoxNzI0NjkyODM0fQ.gGVEhYcJUHBIaAwDnrFFhPtqq-tfKv0KoOQH_rS2gOw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/admin-users/admin-panel/profile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"admin-users",
+										"admin-panel",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Admin User By Email",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/admin-users/admin-panel/by-email/admin2@gmail.com",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"admin-users",
+										"admin-panel",
+										"by-email",
+										"admin2@gmail.com"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get How Many Admin Users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/admin-users/admin-panel/count",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"admin-users",
+										"admin-panel",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Admin User Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"adminnn1@gmail.com\",\n    \"phoneNumber\": \"123456\",\n\t\"password\": \"admin12345\",\n    \"firstName\": \"Admin\",\n    \"lastName\": \"Admin\",\n    \"nationalId\": 12345678,\n    \"gender\": \"MALE\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/admin-users/admin-panel/update/profile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"admin-users",
+										"admin-panel",
+										"update",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Change Admin User Password",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ2Mzg4NTYsImV4cCI6MTcyNDY3NDg1Nn0.Fj_oe6zqqL4smEalL9pnrBzxes9dvD9ZYZskAhF5tUU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"password\": \"12trtrtbr3\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/admin-users/admin-panel/change-password",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"admin-users",
+										"admin-panel",
+										"change-password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Role To Admin User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY0MzQyNCwiZXhwIjoxNzI0Njc5NDI0fQ.4U0DX-3XcMZsbXt4fC78gIdNZ6X-VC5iNVJU8EzX_5k",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"irem@gmail.com\",\r\n    \"roleName\": \"a\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/admin-users/admin-panel/add-role",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"admin-users",
+										"admin-panel",
+										"add-role"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Role From Admin User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NTEsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwic3ViIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNzI0NjEwODQ3LCJleHAiOjE3MjQ2NDY4NDd9.jZ8WmZgQqcLTwBpn-GwUoDq_zkVPVbKWyea0YT1uxN0",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"irem@gmail.com\",\r\n    \"roleName\": \"deneme\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/admin-users/admin-panel/remove-role",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"admin-users",
+										"admin-panel",
+										"remove-role"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Admin User Roles",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NSwiZW1haWwiOiJhZG1pbjJAZ21haWwuY29tIiwic3ViIjoiYWRtaW4yQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY0MzQyNCwiZXhwIjoxNzI0Njc5NDI0fQ.4U0DX-3XcMZsbXt4fC78gIdNZ6X-VC5iNVJU8EzX_5k",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/users/admin-users/admin-panel/roles/admin2@gmail.com",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"admin-users",
+										"admin-panel",
+										"roles",
+										"admin2@gmail.com"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "eticket-service",
+			"item": [
+				{
+					"name": "Trip",
+					"item": [
+						{
+							"name": "Admin-Panel",
+							"item": [
+								{
+									"name": "Add Trip",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MjQ3MTE2MzIsImV4cCI6MTcyNDc0NzYzMn0.Zx0Rdy02Txfay2ZPOd6o-3x85_3M74av3pqaD0SmRG0",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"departureTime\": \"2024-10-20T10:00:00\",\r\n    \"arrivalTime\": \"2024-10-20T15:00:00\",\r\n    \"departureCity\": \"İzmir\",\r\n    \"arrivalCity\": \"Bolu\",\r\n    \"vehicleType\": \"PLANE\",\r\n    \"price\": 400\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:9090/api/v1/trips/admin-panel/add",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"trips",
+												"admin-panel",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Trip By Id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6OCwiZW1haWwiOiJhZG1pbjVAZ21haWwuY29tIiwic3ViIjoiYWRtaW41QGdtYWlsLmNvbSIsImlhdCI6MTcyNDY5Mjk4NSwiZXhwIjoxNzI0NzI4OTg1fQ.K_rp-Z1DYTzK64lYXiOSOb2dWAL_BUTaVEYJQr7dTxk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/trips/admin-panel/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"trips",
+												"admin-panel",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All By Condition",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6OCwiZW1haWwiOiJhZG1pbjVAZ21haWwuY29tIiwic3ViIjoiYWRtaW41QGdtYWlsLmNvbSIsImlhdCI6MTcyNDY5Mjk4NSwiZXhwIjoxNzI0NzI4OTg1fQ.K_rp-Z1DYTzK64lYXiOSOb2dWAL_BUTaVEYJQr7dTxk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/trips/admin-panel/all/by-condition?condition=EXPIRED",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"trips",
+												"admin-panel",
+												"all",
+												"by-condition"
+											],
+											"query": [
+												{
+													"key": "condition",
+													"value": "EXPIRED",
+													"description": "EXPIRED, CANCELLED"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get General Trip Statistics",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6OCwiZW1haWwiOiJhZG1pbjVAZ21haWwuY29tIiwic3ViIjoiYWRtaW41QGdtYWlsLmNvbSIsImlhdCI6MTcyNDY5Mjk4NSwiZXhwIjoxNzI0NzI4OTg1fQ.K_rp-Z1DYTzK64lYXiOSOb2dWAL_BUTaVEYJQr7dTxk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/trips/admin-panel/statistics",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"trips",
+												"admin-panel",
+												"statistics"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Trip Statistics By Id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6OCwiZW1haWwiOiJhZG1pbjVAZ21haWwuY29tIiwic3ViIjoiYWRtaW41QGdtYWlsLmNvbSIsImlhdCI6MTcyNDY5Mjk4NSwiZXhwIjoxNzI0NzI4OTg1fQ.K_rp-Z1DYTzK64lYXiOSOb2dWAL_BUTaVEYJQr7dTxk",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/trips/admin-panel/statistics/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"trips",
+												"admin-panel",
+												"statistics",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Trip",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NTksImVtYWlsIjoiYWRtaW5ubkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbm5uQGdtYWlsLmNvbSIsImlhdCI6MTcyNDYyMTgyNiwiZXhwIjoxNzI0NjU3ODI2fQ.KCDLp12hc4xXF-vxogOEYJCfyxNPi9ywjBdDcuxKWr4",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 27,\r\n    \"departureTime\": \"2024-08-18T09:02:28\",\r\n    \"arrivalTime\": \"2024-08-18T09:02:28\",\r\n    \"departureCity\": \"İstanbul\",\r\n    \"arrivalCity\": \"İstanbul\",\r\n    \"vehicleType\": \"PLANE\",\r\n    \"totalTicketCount\": 1,\r\n    \"price\": 550\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:9090/api/v1/trips/admin-panel/update",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"trips",
+												"admin-panel",
+												"update"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Cancel Trip",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NTksImVtYWlsIjoiYWRtaW5ubkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbm5uQGdtYWlsLmNvbSIsImlhdCI6MTcyNDYyMTgyNiwiZXhwIjoxNzI0NjU3ODI2fQ.KCDLp12hc4xXF-vxogOEYJCfyxNPi9ywjBdDcuxKWr4",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/trips/admin-panel/cancel/4",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"trips",
+												"admin-panel",
+												"cancel",
+												"4"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get All Available Trips",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0lORElWSURVQUxfVVNFUiIsIlJPTEVfVVNFUiJdLCJ1c2VySWQiOjksImVtYWlsIjoiaW5kaXZpZHVhbDFAZ21haWwuY29tIiwic3ViIjoiaW5kaXZpZHVhbDFAZ21haWwuY29tIiwiaWF0IjoxNzI0Njk2Mjg2LCJleHAiOjE3MjQ3MzIyODZ9.6Q-kk2onFH2SCbfW3kJ-GC7W05Fo-pF3gDS5oIgtj_o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/trips/all-available",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"trips",
+										"all-available"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Ticket",
+					"item": [
+						{
+							"name": "Admin-Panel",
+							"item": [
+								{
+									"name": "Get By Id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NiwiZW1haWwiOiJhZG1pbjNAZ21haWwuY29tIiwic3ViIjoiYWRtaW4zQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY0Nzg1MywiZXhwIjoxNzI0NjgzODUzfQ.UOzeuGbvxnqIrpahy47G5JU-v9adyDaU34lvhgdsKj4",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/tickets/admin-panel/2",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"tickets",
+												"admin-panel",
+												"2"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Tickets",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NiwiZW1haWwiOiJhZG1pbjNAZ21haWwuY29tIiwic3ViIjoiYWRtaW4zQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY0Nzg1MywiZXhwIjoxNzI0NjgzODUzfQ.UOzeuGbvxnqIrpahy47G5JU-v9adyDaU34lvhgdsKj4",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/tickets/admin-panel/all",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"tickets",
+												"admin-panel",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Tickets By Email",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NiwiZW1haWwiOiJhZG1pbjNAZ21haWwuY29tIiwic3ViIjoiYWRtaW4zQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY0Nzg1MywiZXhwIjoxNzI0NjgzODUzfQ.UOzeuGbvxnqIrpahy47G5JU-v9adyDaU34lvhgdsKj4",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/tickets/admin-panel/buyer/all/admin2@gmail.com",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"tickets",
+												"admin-panel",
+												"buyer",
+												"all",
+												"admin2@gmail.com"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All By Condition",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0lORElWSURVQUxfVVNFUiIsIlJPTEVfVVNFUiJdLCJ1c2VySWQiOjQsImVtYWlsIjoiaW5kaXZpZHVhbEBnbWFpbC5jb20iLCJzdWIiOiJpbmRpdmlkdWFsQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY0ODM5MiwiZXhwIjoxNzI0Njg0MzkyfQ.6-kEj5yIFrvaE0ogmKlSgHbejri1tMx8ZM2p-mTCN74",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/tickets/admin-panel/all/by-condition?condition=AVAILABLE",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"tickets",
+												"admin-panel",
+												"all",
+												"by-condition"
+											],
+											"query": [
+												{
+													"key": "condition",
+													"value": "AVAILABLE"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Tickets By Trip Id",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0lORElWSURVQUxfVVNFUiIsIlJPTEVfVVNFUiJdLCJ1c2VySWQiOjQsImVtYWlsIjoiaW5kaXZpZHVhbEBnbWFpbC5jb20iLCJzdWIiOiJpbmRpdmlkdWFsQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY0ODM5MiwiZXhwIjoxNzI0Njg0MzkyfQ.6-kEj5yIFrvaE0ogmKlSgHbejri1tMx8ZM2p-mTCN74",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/tickets/admin-panel/trips/1/all",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"tickets",
+												"admin-panel",
+												"trips",
+												"1",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get General Ticket Statistics",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NiwiZW1haWwiOiJhZG1pbjNAZ21haWwuY29tIiwic3ViIjoiYWRtaW4zQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY1MDc1NSwiZXhwIjoxNzI0Njg2NzU1fQ.SnM6bloWGtS46LpuhU1Ed_zswXG80w_yKdYZ6kmzQZU",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:9090/api/v1/tickets/admin-panel/statistics",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"tickets",
+												"admin-panel",
+												"statistics"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Buy Ticket",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0NPTVBBTllfVVNFUiIsIlJPTEVfVVNFUiJdLCJ1c2VySWQiOjIsImVtYWlsIjoiY29tcGFueUBnbWFpbC5jb20iLCJzdWIiOiJjb21wYW55QGdtYWlsLmNvbSIsImlhdCI6MTcyNDcxMjU0NCwiZXhwIjoxNzI0NzQ4NTQ0fQ.AoGimMQ612SdQ6JWjO2XiTrEXg5ASNfG0uOuW6B7Tak",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"paymentType\": \"CREDIT_CARD\",\r\n    \"ticketId\": 181\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:9090/api/v1/tickets/buy",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "9090",
+											"path": [
+												"api",
+												"v1",
+												"tickets",
+												"buy"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Buy Multiple Ticket",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0lORElWSURVQUxfVVNFUiIsIlJPTEVfVVNFUiJdLCJ1c2VySWQiOjQsImVtYWlsIjoiaW5kaXZpZHVhbEBnbWFpbC5jb20iLCJzdWIiOiJpbmRpdmlkdWFsQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY0ODM5MiwiZXhwIjoxNzI0Njg0MzkyfQ.6-kEj5yIFrvaE0ogmKlSgHbejri1tMx8ZM2p-mTCN74",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"paymentType\": \"EFT\",\r\n    \"passengerTicketRequests\": [\r\n        {\r\n            \"passengerFirstName\": \"Çağla\",\r\n            \"passengerLastName\": \"Şen\",\r\n            \"gender\": \"FEMALE\",\r\n            \"ticketId\": 15\r\n        },\r\n        {\r\n            \"passengerFirstName\": \"Mehmet\",\r\n            \"passengerLastName\": \"Şen\",\r\n            \"gender\": \"MALE\",\r\n            \"ticketId\": 16\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api/v1/tickets/buy-multiple",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"tickets",
+										"buy-multiple"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Tickets Of User",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0lORElWSURVQUxfVVNFUiIsIlJPTEVfVVNFUiJdLCJ1c2VySWQiOjQsImVtYWlsIjoiaW5kaXZpZHVhbEBnbWFpbC5jb20iLCJzdWIiOiJpbmRpdmlkdWFsQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY0ODM5MiwiZXhwIjoxNzI0Njg0MzkyfQ.6-kEj5yIFrvaE0ogmKlSgHbejri1tMx8ZM2p-mTCN74",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/tickets/buyer/profile/all/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"tickets",
+										"buyer",
+										"profile",
+										"all",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Available Tickets Of Trip Id",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0lORElWSURVQUxfVVNFUiIsIlJPTEVfVVNFUiJdLCJ1c2VySWQiOjksImVtYWlsIjoiaW5kaXZpZHVhbDFAZ21haWwuY29tIiwic3ViIjoiaW5kaXZpZHVhbDFAZ21haWwuY29tIiwiaWF0IjoxNzI0Njk2Mjg2LCJleHAiOjE3MjQ3MzIyODZ9.6Q-kk2onFH2SCbfW3kJ-GC7W05Fo-pF3gDS5oIgtj_o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/tickets/trips/1/all-available",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"tickets",
+										"trips",
+										"1",
+										"all-available"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "notification-service",
+			"item": [
+				{
+					"name": "Email Template",
+					"item": [
+						{
+							"name": "Add Email Template",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"user created\",\r\n    \"text\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api/v1/email-templates",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"email-templates"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Email Templates",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NTksImVtYWlsIjoiYWRtaW5ubkBnbWFpbC5jb20iLCJzdWIiOiJhZG1pbm5uQGdtYWlsLmNvbSIsImlhdCI6MTcyNDYyMTgyNiwiZXhwIjoxNzI0NjU3ODI2fQ.KCDLp12hc4xXF-vxogOEYJCfyxNPi9ywjBdDcuxKWr4",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/email-templates",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"email-templates"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Template By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/email-templates/66c385c338600d47b742eeb2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"email-templates",
+										"66c385c338600d47b742eeb2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Template By Name",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/email-templates/by-name/new template",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"email-templates",
+										"by-name",
+										"new template"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Template",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"66c3a7ed9d8f4058b35d9727\",\r\n    \"name\": \"user created\",\r\n    \"text\": \"new text\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api/v1/email-templates/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"email-templates",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Template",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/email-templates/66c385c338600d47b742eeb2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"email-templates",
+										"66c385c338600d47b742eeb2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Template By Name",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/email-templates/by-name/new",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"email-templates",
+										"by-name",
+										"new"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Email",
+					"item": [
+						{
+							"name": "Send Email",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"to\": \"cagla@gmail.com\",\r\n    \"text\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api/v1/emails",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"emails"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Send Email With Template",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"to\": \"cagla@gmail.com\",\r\n    \"emailTemplateName\": \"user created\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9090/api/v1/emails/by-template",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"emails",
+										"by-template"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Emails",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/emails",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"emails"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Email By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/emails/66c3a7529d8f4058b35d9726",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"emails",
+										"66c3a7529d8f4058b35d9726"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "eticket-index-service",
+			"item": [
+				{
+					"name": "Admin-Panel",
+					"item": [
+						{
+							"name": "Get Trip Documents",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/documents/admin-panel/trip-documents",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"documents",
+										"admin-panel",
+										"trip-documents"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "eticket-search-service",
+			"item": [
+				{
+					"name": "Search Trips",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NiwiZW1haWwiOiJhZG1pbjNAZ21haWwuY29tIiwic3ViIjoiYWRtaW4zQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY1NjgzNCwiZXhwIjoxNzI0NjkyODM0fQ.gGVEhYcJUHBIaAwDnrFFhPtqq-tfKv0KoOQH_rS2gOw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/v1/search/trips?departureCity=&arrivalCity=&vehicleType=&sortBy=PRICE&sortDirection&page=0&size=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"search",
+								"trips"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2024-05-20",
+									"disabled": true
+								},
+								{
+									"key": "departureCity",
+									"value": ""
+								},
+								{
+									"key": "arrivalCity",
+									"value": ""
+								},
+								{
+									"key": "vehicleType",
+									"value": ""
+								},
+								{
+									"key": "sortBy",
+									"value": "PRICE"
+								},
+								{
+									"key": "sortDirection",
+									"value": null
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Trips - Admin Panel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIiwiUk9MRV9VU0VSIl0sInVzZXJJZCI6NiwiZW1haWwiOiJhZG1pbjNAZ21haWwuY29tIiwic3ViIjoiYWRtaW4zQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY1MDc1NSwiZXhwIjoxNzI0Njg2NzU1fQ.SnM6bloWGtS46LpuhU1Ed_zswXG80w_yKdYZ6kmzQZU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/v1/search/admin-panel/trips",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"search",
+								"admin-panel",
+								"trips"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2024-05-20",
+									"disabled": true
+								},
+								{
+									"key": "departureCity",
+									"value": "Ankara",
+									"disabled": true
+								},
+								{
+									"key": "arrivalCity",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "vehicleType",
+									"value": "PLane",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "PRICE",
+									"disabled": true
+								},
+								{
+									"key": "sortDirection",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "7",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "payment-service",
+			"item": [
+				{
+					"name": "Admin-Panel",
+					"item": [
+						{
+							"name": "Get All Payments",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0lORElWSURVQUxfVVNFUiIsIlJPTEVfVVNFUiJdLCJ1c2VySWQiOjksImVtYWlsIjoiaW5kaXZpZHVhbDFAZ21haWwuY29tIiwic3ViIjoiaW5kaXZpZHVhbDFAZ21haWwuY29tIiwiaWF0IjoxNzI0Njk2Mjg2LCJleHAiOjE3MjQ3MzIyODZ9.6Q-kk2onFH2SCbfW3kJ-GC7W05Fo-pF3gDS5oIgtj_o",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9090/api/v1/payments/admin-panel/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9090",
+									"path": [
+										"api",
+										"v1",
+										"payments",
+										"admin-panel",
+										"all"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "eticket-auth-service",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"admin@gmail.com\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@gmail.com\",\n    \"phoneNumber\": \"123423432478\",\n    \"password\": \"admin123\",\n    \"firstName\": \"Admin\",\n    \"lastName\": \"Admin\",\n    \"nationalId\": \"12781243443\",\n    \"birthDate\": \"2024-08-18T09:02:28\",\n    \"gender\": \"FEMALE\"\n    \n}"
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/v1/auth/register-admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register-admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Company",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"company4@gmail.com\",\n    \"phoneNumber\": \"5301234567\",\n\t\"password\": \"Company\",\n    \"companyName\": \"Company\",\n    \"taxNumber\": 1234567890\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/v1/auth/register-company",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register-company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Individual",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"individual4@gmail.com\",\n    \"phoneNumber\": \"05301234567\",\n    \"password\": \"individual\",\n    \"firstName\": \"individual\",\n    \"lastName\": \"individual\",\n    \"nationalId\": \"12364248904\",\n    \"birthDate\": \"2024-08-18T09:02:28\",\n    \"gender\": \"MALE\"\n    \n}"
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/v1/auth/register-individual",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register-individual"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
